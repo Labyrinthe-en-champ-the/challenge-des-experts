@@ -6,35 +6,26 @@
 
 'use strict';
 
-// ============================================================
-// TOKEN D'ACCÈS GLOBAL (écran d'accueil)
-// Ce token est dans l'URL du QR code d'entrée du labyrinthe
-// ============================================================
-const ACCESS_TOKEN = 'ECT-2Xk9mPqL7vR';
+const ACCESS_TOKEN = 'ECT2025-GRANDCOUDE';
 
-// ============================================================
-// TABLE DES TOKENS QR PAR QUESTION
-// Chaque token est unique et imprévisible
-// Ces tokens sont gravés dans les QR codes des pancartes
-// ============================================================
 const QR_TOKENS = {
-  'P8nZx2mKqL': 1,
-  'Wj4rY9cNvT': 2,
-  'Hd7sB3fGpX': 3,
-  'Qm5tR6wJkE': 4,
-  'Lv2nC8hDyU': 5,
-  'Xb9pM4zFsA': 6,
-  'Yk3wN7gRcI': 7,
-  'Fq6xT1mHoV': 8,
-  'Zn8dK5jWbS': 9,
-  'Gc4vL2pXeN': 10,
-  'Uh7mQ9rBwD': 11,
-  'Tj3kF6nYsP': 12,
-  'Rv5cH8xMaL': 13,
-  'Ew2bG4tKzO': 14,
-  'Ai9nJ7qWfC': 15,
-  'Mo6pD3yXvB': 16,
-  'Bs1wR8hNtG': 17
+  '7x9mK2pLqR': 1,
+  'Qr4nW8vZbT': 2,
+  'Hj2sY6cNwX': 3,
+  'Pf5tA3mKdL': 4,
+  'Zc8rV1nJyQ': 5,
+  'Wm3hB9sEkU': 6,
+  'Tn6xC4pGfI': 7,
+  'Lb7uD2wMrO': 8,
+  'Xk1vF8jHnS': 9,
+  'Gy4oE5cPtA': 10,
+  'Rf9iN3bQlW': 11,
+  'Vd2yM7kZeX': 12,
+  'Jn5pT1sRoC': 13,
+  'Uh8wK6mFqB': 14,
+  'Ec3bL9nGvY': 15,
+  'Aw6jP4hXiD': 16,
+  'Sq1mR7tNkF': 17
 };
 
 // ============================================================
