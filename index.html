@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1A3A2A" />
+  <title>Challenge des Experts · Labyrinthe En-Champ-Thé</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@400;700&family=Inter:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ÉCRAN ACCÈS REFUSÉ -->
+  <section id="screen-blocked" class="screen" aria-label="Accès refusé">
+    <div class="blocked-content">
+      <img src="images/logo-blanc.png" alt="Labyrinthe En-Champ-Thé" class="blocked-logo" />
+      <h1 class="blocked-title">Accès réservé</h1>
+      <p class="blocked-msg">Ce jeu est réservé aux visiteurs du Labyrinthe En-Champ-Thé.<br/>Scannez le QR code à l'entrée pour commencer l'aventure.</p>
+      <p class="blocked-addr">18 rue Émile Mussard · Grand-Coude · La Réunion</p>
+    </div>
+  </section>
+
+  <!-- ÉCRAN D'ACCUEIL -->
+  <section id="screen-welcome" class="screen" aria-label="Écran d'accueil">
+    <div class="welcome-bg" aria-hidden="true">
+      <div class="leaf-fall leaf-f1">🍃</div>
+      <div class="leaf-fall leaf-f2">🌿</div>
+      <div class="leaf-fall leaf-f3">🍃</div>
+      <div class="leaf-fall leaf-f4">🌿</div>
+    </div>
+    <div class="welcome-content">
+      <img src="images/logo-blanc.png" alt="Labyrinthe En-Champ-Thé" class="welcome-logo" />
+      <h1 class="game-title">Challenge<br/><em>des Experts</em></h1>
+      <p class="game-subtitle">17 pancartes · 17 questions · 1 mot-clé secret</p>
+
+      <!-- Règles du jeu -->
+      <div class="welcome-rules" aria-label="Règles du jeu">
+        <div class="rule-item">
+          <span class="rule-icon" aria-hidden="true">🍃</span>
+          <span>17 pancartes vous attendent dans le labyrinthe</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-icon" aria-hidden="true">📱</span>
+          <span>Scannez le QR code de chaque pancarte pour répondre à la question</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-icon" aria-hidden="true">🔡</span>
+          <span>Chaque bonne réponse révèle une lettre du mot-clé secret</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-icon" aria-hidden="true">🏅</span>
+          <span>Trouvez les 17 lettres pour devenir Expert du Labyrinthe En-Champ-Thé !</span>
+        </div>
+      </div>
+
+      <div class="keyword-preview" aria-label="Mot-clé secret à découvrir">
+        <div class="keyword-row" id="welcome-word1"></div>
+        <div class="keyword-sep" aria-hidden="true">et</div>
+        <div class="keyword-row" id="welcome-word2"></div>
+      </div>
+
+      <!-- Instruction de démarrage -->
+      <div class="welcome-start-hint" aria-label="Comment commencer">
+        <span class="start-hint-icon" aria-hidden="true">👉</span>
+        <p>Rendez-vous sur la <strong>pancarte n°1</strong> dans le labyrinthe et scannez son QR code pour commencer !</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉCRAN PRINCIPAL GRILLE -->
+  <section id="screen-game" class="screen" aria-label="Grille des questions">
+    <header class="game-header">
+      <img src="images/logo-blanc.png" alt="Labyrinthe En-Champ-Thé" class="header-logo" />
+      <div class="header-progress" aria-live="polite">
+        <span id="progress-text">0 / 17</span>
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="17" aria-valuenow="0">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="questions-grid" id="questions-grid" aria-label="Questions du labyrinthe"></main>
+
+    <div class="grid-actions">
+      <button class="btn-restart-grid" id="btn-restart-grid" aria-label="Recommencer le jeu">
+        🔄 Recommencer le jeu
+      </button>
+    </div>
+
+    <div class="keyword-strip" id="keyword-strip" aria-label="Lettres révélées">
+      <div class="strip-label">Mot-clé secret</div>
+      <div class="strip-words">
+        <div class="strip-word" id="strip-word1"></div>
+        <div class="strip-sep" aria-hidden="true">et</div>
+        <div class="strip-word" id="strip-word2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL DE QUESTION -->
+  <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card" id="modal-card">
+      <button class="modal-close" id="btn-close-modal" aria-label="Fermer">✕</button>
+      <div class="modal-header">
+        <span class="modal-num" id="modal-num"></span>
+        <h2 class="modal-section" id="modal-title"></h2>
+      </div>
+      <p class="modal-question" id="modal-question"></p>
+      <div class="modal-options" id="modal-options"></div>
+      <div class="modal-feedback" id="modal-feedback" aria-live="assertive"></div>
+      <div class="modal-image-wrap hidden" id="modal-image-wrap">
+        <img id="modal-image" src="" alt="" class="modal-image" />
+        <p class="modal-image-caption" id="modal-image-caption"></p>
+      </div>
+      <button class="btn-hint hidden" id="btn-hint" aria-label="Voir un indice">💡 Voir un indice</button>
+      <div class="hint-box hidden" id="hint-box" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- ÉCRAN DE VICTOIRE -->
+  <section id="screen-victory" class="screen" aria-label="Félicitations !">
+    <div class="victory-content">
+      <img src="images/logo-blanc.png" alt="Labyrinthe En-Champ-Thé" class="victory-logo" />
+      <div class="victory-medal" aria-hidden="true">🏅</div>
+      <h2 class="victory-title">Félicitations !</h2>
+      <p class="victory-sub">Vous êtes un véritable</p>
+      <p class="victory-expert">Expert du Labyrinthe<br/>En-Champ-Thé</p>
+      <div class="victory-keyword" aria-label="Mot-clé : Patrimoine et Terroir">
+        <div class="victory-word" id="victory-word1">PATRIMOINE</div>
+        <div class="victory-et">et</div>
+        <div class="victory-word" id="victory-word2">TERROIR</div>
+      </div>
+      <p class="victory-message">Vous connaissez désormais l'histoire et les secrets du thé réunionnais. Grand-Coude vous remercie !</p>
+      <div class="victory-actions">
+        <button class="btn-primary" id="btn-share">📤 Partager ma réussite</button>
+        <button class="btn-secondary" id="btn-restart-victory">🔄 Recommencer</button>
+      </div>
+    </div>
+  </section>
+
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
