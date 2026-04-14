@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Correction · Équipe En-Champ-Thé</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Georgia, serif; background: #f5f5f0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
+    .card {
+      background: #1A3A2A; color: white;
+      border: 3px solid #D4AF37; border-radius: 16px;
+      padding: 2rem 2.5rem; text-align: center;
+      max-width: 360px; width: 100%;
+      page-break-inside: avoid;
+    }
+    .logo { width: 70px; margin-bottom: 1rem; }
+    h1 { font-size: 1.1rem; color: #D4AF37; margin-bottom: 0.3rem; }
+    .sub { font-size: 0.8rem; color: #8FBA9F; margin-bottom: 1.5rem; }
+    .qr-wrap { display: flex; justify-content: center; margin-bottom: 1.25rem; }
+    .instructions { font-size: 0.78rem; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 1rem; }
+    .instructions strong { color: #D4AF37; }
+    .confidential { font-size: 0.65rem; color: rgba(143,186,159,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1rem; }
+    .btn-print { display: block; margin: 1.5rem auto 0; background: #D4AF37; color: #1A3A2A; border: none; border-radius: 6px; padding: 0.6rem 1.5rem; font-size: 0.9rem; cursor: pointer; font-family: Georgia, serif; font-weight: bold; }
+    @media print { .btn-print { display: none !important; } body { background: white; } }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="card">
+      <img src="images/logo-blanc.png" alt="Logo" class="logo" />
+      <h1>Correction Challenge des Experts</h1>
+      <p class="sub">Labyrinthe En-Champ-Thé · Document équipe</p>
+      <div class="qr-wrap"><div id="qr-correction"></div></div>
+      <div class="instructions">
+        Scannez ce QR code pour accéder à la <strong>correction complète</strong> avec toutes les bonnes réponses.<br/><br/>
+        À remettre au visiteur <strong>uniquement après</strong> qu'il ait terminé le jeu.
+      </div>
+      <div class="confidential">⚠ Document confidentiel — Ne pas afficher</div>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimer cette feuille</button>
+  </div>
+
+  <script>
+    const BASE_URL        = 'https://labyrinthe-en-champ-the.github.io/challenge-des-experts';
+    const CORRECTION_TOKEN = 'CORR-ECT-STAFF-2025';
+    const url = `${BASE_URL}/?correction=${CORRECTION_TOKEN}`;
+
+    new QRCode(document.getElementById('qr-correction'), {
+      text: url,
+      width: 180, height: 180,
+      colorDark:  '#D4AF37',
+      colorLight: '#1A3A2A',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  </script>
+</body>
+</html>
