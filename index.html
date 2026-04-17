@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#1A3A2A"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <title>Challenge des Experts · Labyrinthe En-Champ-Thé</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@400;700&family=Inter:wght@500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ===== ÉCRAN ACCÈS REFUSÉ ===== -->
+  <section id="screen-denied" class="screen">
+    <div class="center-wrap">
+      <img src="logo-blanc.png" alt="Labyrinthe En-Champ-Thé" class="logo-img"/>
+      <h1 class="denied-title">Accès réservé</h1>
+      <p class="denied-msg">Ce jeu est réservé aux visiteurs du<br/><strong>Labyrinthe En-Champ-Thé</strong>.<br/>Scannez le QR code à l'entrée du labyrinthe pour commencer.</p>
+      <div class="address-pill">📍 18 rue Émile Mussard · Grand-Coude · La Réunion</div>
+    </div>
+  </section>
+
+  <!-- ===== ÉCRAN ACCUEIL ===== -->
+  <section id="screen-welcome" class="screen">
+    <div class="leaves-bg" aria-hidden="true">
+      <span class="leaf l1">🍃</span>
+      <span class="leaf l2">🌿</span>
+      <span class="leaf l3">🍃</span>
+      <span class="leaf l4">🌿</span>
+      <span class="leaf l5">🍃</span>
+    </div>
+    <div class="welcome-wrap">
+      <img src="logo-blanc.png" alt="Labyrinthe En-Champ-Thé" class="logo-img logo-welcome"/>
+      <h1 class="game-title">Challenge<br/><em>des Experts</em></h1>
+      <p class="game-sub">17 pancartes · 17 questions · 1 mot-clé secret</p>
+      <div class="rules-box">
+        <div class="rule"><span>🍃</span><span>17 pancartes vous attendent dans le labyrinthe</span></div>
+        <div class="rule"><span>📱</span><span>Scannez le QR code de chaque pancarte pour répondre</span></div>
+        <div class="rule"><span>🔡</span><span>Chaque bonne réponse révèle une lettre du mot-clé</span></div>
+        <div class="rule"><span>🏅</span><span>Trouvez les 17 lettres pour devenir Expert !</span></div>
+      </div>
+      <div class="keyword-preview">
+        <div class="kw-row" id="kw-row-0"></div>
+        <div class="kw-et">et</div>
+        <div class="kw-row" id="kw-row-1"></div>
+      </div>
+      <div class="hint-banner">
+        <span>👉</span>
+        <p>Parcourez le labyrinthe et <strong>scannez les pancartes dans l'ordre que vous voulez !</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ÉCRAN JEU (GRILLE) ===== -->
+  <section id="screen-game" class="screen">
+    <div class="leaves-bg" aria-hidden="true">
+      <span class="leaf l1">🍃</span><span class="leaf l3">🌿</span><span class="leaf l5">🍃</span>
+    </div>
+    <header class="game-header">
+      <img src="logo-blanc.png" alt="Logo" class="logo-img logo-header"/>
+      <div class="header-right">
+        <div class="prog-wrap">
+          <span id="prog-text">0 / 17</span>
+          <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+        </div>
+        <button class="hbtn" id="btn-scan" title="Scanner une pancarte">📷</button>
+        <button class="hbtn hbtn-finish" id="btn-finish">Terminer</button>
+        <button class="hbtn" id="btn-reset" title="Recommencer">↺</button>
+      </div>
+    </header>
+    <main class="grid" id="grid"></main>
+    <div class="kw-strip">
+      <div class="strip-label">Répondez aux questions pour révéler les lettres</div>
+      <div class="strip-words">
+        <div class="strip-word" id="strip-0"></div>
+        <div class="strip-et">et</div>
+        <div class="strip-word" id="strip-1"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODAL QUESTION ===== -->
+  <div id="modal" class="modal-bg hidden" role="dialog" aria-modal="true">
+    <div class="modal-card" id="modal-card">
+      <button class="modal-x" id="btn-modal-close" aria-label="Fermer">✕</button>
+      <div class="modal-top">
+        <span class="modal-num" id="modal-num"></span>
+        <h2 class="modal-section" id="modal-section"></h2>
+      </div>
+      <div class="modal-illus" id="modal-illus"></div>
+      <div class="modal-pancarte" id="modal-pancarte"></div>
+      <p class="modal-question" id="modal-question"></p>
+      <div class="modal-opts" id="modal-opts"></div>
+      <button class="btn-hint hidden" id="btn-hint">💡 Voir un indice</button>
+      <div class="hint-text hidden" id="hint-text"></div>
+      <div class="modal-confirm hidden" id="modal-confirm">
+        <p id="confirm-txt"></p>
+        <button class="btn-valider" id="btn-valider">Valider →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL SCANNER ===== -->
+  <div id="scanner-modal" class="modal-bg hidden" role="dialog" aria-modal="true">
+    <div class="modal-card scanner-card">
+      <button class="modal-x" id="btn-scanner-close" style="color:#fff;background:rgba(255,255,255,0.1);">✕</button>
+      <h2 style="font-family:var(--serif);color:var(--gold);text-align:center;margin-bottom:1rem;">Scanner une pancarte</h2>
+      <div class="scanner-wrap">
+        <video id="scan-video" autoplay playsinline muted></video>
+        <div class="scan-overlay">
+          <div class="scan-frame"></div>
+          <div class="scan-line"></div>
+        </div>
+      </div>
+      <p style="text-align:center;color:rgba(255,255,255,0.55);font-size:.82rem;margin-top:.75rem;">Pointez la caméra vers le QR code</p>
+      <p id="scan-error" class="hidden" style="color:#C0392B;text-align:center;font-size:.82rem;margin-top:.5rem;"></p>
+    </div>
+  </div>
+
+  <!-- ===== ÉCRAN RÉSULTATS ===== -->
+  <section id="screen-results" class="screen">
+    <header class="results-header">
+      <img src="logo-blanc.png" alt="Logo" class="logo-img logo-header"/>
+      <span class="results-title">Votre résumé</span>
+    </header>
+    <div class="results-body">
+
+      <!-- Score -->
+      <div class="score-card">
+        <div class="score-label">Votre score</div>
+        <div class="score-num"><span id="score-val">0</span><span class="score-denom"> / 17</span></div>
+        <div class="score-mention" id="score-mention"></div>
+      </div>
+
+      <!-- Drag & Drop -->
+      <div class="dd-section">
+        <div class="dd-title">🔡 Assemblez le mot-clé secret</div>
+        <div class="dd-sub" id="dd-sub">Glissez les lettres dans les cases pour former les mots !</div>
+        <div class="dd-pool" id="dd-pool"></div>
+        <div class="dd-targets" id="dd-targets"></div>
+        <div class="dd-actions">
+          <button class="btn-check" id="btn-check">Vérifier ✓</button>
+          <button class="btn-reset-dd" id="btn-reset-dd">Réinitialiser</button>
+        </div>
+        <div class="dd-result" id="dd-result"></div>
+        <div style="text-align:center;margin-top:.65rem;">
+          <button class="btn-gold hidden" id="btn-go-victory">🏅 Voir la victoire !</button>
+        </div>
+      </div>
+
+      <!-- Liste réponses -->
+      <div class="results-list-title">Détail des réponses</div>
+      <div id="results-list"></div>
+
+      <!-- Actions -->
+      <div class="results-actions">
+        <button class="btn-outline" id="btn-resume">🔍 Reprendre le jeu</button>
+        <button class="btn-green" id="btn-share">📤 Partager mon score</button>
+        <button class="btn-ghost" id="btn-restart-results">Recommencer depuis le début</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ÉCRAN VICTOIRE ===== -->
+  <section id="screen-victory" class="screen">
+    <div class="leaves-bg" aria-hidden="true">
+      <span class="leaf l1">🍃</span><span class="leaf l2">🌿</span>
+      <span class="leaf l3">🍃</span><span class="leaf l4">🌿</span>
+    </div>
+    <div class="victory-wrap">
+      <img src="logo-blanc.png" alt="Logo" class="logo-img logo-victory"/>
+      <div class="victory-medal">🏅</div>
+      <h2 class="victory-title">Félicitations !</h2>
+      <p class="victory-sub">Vous êtes un véritable</p>
+      <p class="victory-expert">Expert du Labyrinthe En-Champ-Thé</p>
+      <div class="victory-kw">
+        <div class="victory-word">PATRIMOINE</div>
+        <div class="victory-et">et</div>
+        <div class="victory-word">TERROIR</div>
+      </div>
+      <p class="victory-score" id="victory-score"></p>
+      <p class="victory-msg">Vous connaissez désormais l'histoire et les secrets du thé réunionnais. Grand-Coude vous dit merci !</p>
+      <div class="victory-actions">
+        <button class="btn-gold" id="btn-share-victory">📤 Partager sur Instagram / Facebook</button>
+        <button class="btn-outline" id="btn-restart-victory">🔄 Recommencer</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ÉCRAN CORRECTION (staff) ===== -->
+  <section id="screen-correction" class="screen">
+    <div class="correction-header">
+      <img src="logo-blanc.png" alt="Logo" class="logo-img" style="height:45px;"/>
+      <h1 style="font-family:var(--serif);color:var(--gold);font-size:1.4rem;">Correction · Challenge des Experts</h1>
+      <p style="color:var(--sprout);font-size:.82rem;">Document réservé à l'équipe du Labyrinthe En-Champ-Thé</p>
+    </div>
+    <div id="correction-list" style="width:100%;max-width:700px;display:flex;flex-direction:column;gap:.6rem;padding:1rem;"></div>
+  </section>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
