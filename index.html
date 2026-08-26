@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Challenge des Experts - Labyrinthe En-Champ-Thé</title>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <style>
+    :root {
+      --primary: #2d5a27;
+      --primary-dark: #1b3817;
+      --accent: #c29b38;
+      --bg: #f7f9f6;
+      --card-bg: #ffffff;
+      --text: #2c3e50;
+      --text-muted: #667085;
+      --success: #2e7d32;
+      --danger: #d32f2f;
+      --radius: 12px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 70px; }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    header h1 { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px; }
+
+    .lang-switch {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    main { padding: 16px; max-width: 600px; margin: 0 auto; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e8f5e9;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 12px; }
+    p { margin-bottom: 12px; font-size: 0.95rem; }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:active { background: var(--primary-dark); }
+    .btn-accent { background: var(--accent); color: white; margin-top: 10px; }
+    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-top: 10px; }
+
+    .option-btn {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      width: 100%;
+      text-align: left;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .option-btn.selected-correct { background: #e8f5e9; border-color: var(--success); color: var(--success); font-weight: 600; }
+    .option-btn.selected-wrong { background: #ffebee; border-color: var(--danger); color: var(--danger); }
+
+    .feedback {
+      padding: 12px;
+      border-radius: var(--radius);
+      margin-top: 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: none;
+    }
+    .feedback.success { background: #e8f5e9; color: var(--success); display: block; }
+    .feedback.danger { background: #ffebee; color: var(--danger); display: block; }
+
+    /* Grille Mot Mystère */
+    .word-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .char-box {
+      width: 32px;
+      height: 40px;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: white;
+    }
+    .char-box:focus { border-color: var(--primary); outline: none; }
+    .char-box.separator { width: 18px; border: none; background: transparent; font-weight: bold; line-height: 40px; }
+
+    .harvested-pool {
+      background: #f1f5f9;
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+    .harvested-pool h3 { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
+    .letters-flex { display: flex; flex-wrap: wrap; gap: 8px; }
+    .letter-chip {
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .letter-chip.used { opacity: 0.35; border-color: #cbd5e1; color: #94a3b8; }
+
+    /* Scanner */
+    #reader { width: 100%; border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; }
+
+    /* Bottom Nav */
+    nav.bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .nav-item.active { color: var(--primary); font-weight: 700; }
+    .nav-item svg { width: 22px; height: 22px; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 id="app-title">🌿 Challenge des Experts</h1>
+    <button class="lang-switch" id="lang-btn" onclick="toggleLanguage()">EN 🇬🇧</button>
+  </header>
+
+  <main>
+    <!-- ÉCRAN 1 : SCANNER -->
+    <section id="screen-scan" class="screen active">
+      <div class="card">
+        <span class="badge" id="scan-badge">Scanner</span>
+        <h2 id="scan-title">Scannez le panneau</h2>
+        <p id="scan-desc">Approchez la caméra du QR Code du panneau d'étape pour déverrouiller la question.</p>
+        <div id="reader"></div>
+        <button class="btn btn-primary" onclick="startCamera()" id="btn-camera">Activer la caméra</button>
+      </div>
+    </section>
+
+    <!-- ÉCRAN 2 : QUESTION / ÉTAPE -->
+    <section id="screen-step" class="screen">
+      <div class="card">
+        <span class="badge" id="step-badge">Étape 1 / 17</span>
+        <h2 id="step-title">Titre de l'étape</h2>
+        
+        <!-- Texte explicatif (Uniquement affiché en anglais ou lors de la correction finale) -->
+        <div id="step-text" style="display: none; margin-bottom: 16px; background:#f8fafc; padding:12px; border-radius:8px; font-size:0.9rem;"></div>
+
+        <div id="step-question-box">
+          <p id="step-question" style="font-weight: 600;"></p>
+          <div id="step-options"></div>
+          <div id="step-feedback" class="feedback"></div>
+        </div>
+
+        <button class="btn btn-accent" onclick="showScreen('screen-grid')" style="margin-top: 15px;" id="btn-to-grid">Voir mon mot mystère</button>
+      </div>
+    </section>
+
+    <!-- ÉCRAN 3 : PANNEAU DU MOT MYSTÈRE -->
+    <section id="screen-grid" class="screen">
+      <div class="card">
+        <span class="badge" id="grid-badge">Mot Mystère</span>
+        <h2 id="grid-title">Décodez l'énigme</h2>
+        <p id="grid-desc">Cliquez sur vos lettres récoltées ou tapez directement dans les cases :</p>
+        
+        <div class="harvested-pool">
+          <h3 id="pool-title">Vos lettres récoltées (<span id="letter-count">0</span>/17)</h3>
+          <div class="letters-flex" id="letters-pool">
+            <!-- Puces de lettres récoltées -->
+          </div>
+        </div>
+
+        <div class="word-grid" id="word-grid">
+          <!-- 17 cases générées en JS -->
+        </div>
+
+        <button class="btn btn-primary" onclick="validateSecretWord()" id="btn-validate">Valider le mot mystère</button>
+      </div>
+    </section>
+
+    <!-- ÉCRAN 4 : SUCCÈS & CORRECTION DU JEU -->
+    <section id="screen-review" class="screen">
+      <div class="card" style="text-align: center;">
+        <span class="badge" style="background:#dcfce7; color:#15803d;">Félicitations</span>
+        <h2 id="review-title">Challenge Réussi ! 🎉</h2>
+        <p id="review-desc">Vous avez percé tous les secrets de notre domaine et de l'histoire du thé à La Réunion.</p>
+        <p style="font-size: 1.2rem; font-weight:bold; color:var(--primary); margin: 15px 0;">TRADITIONS & TERROIR</p>
+        <button class="btn btn-outline" onclick="renderAllQuestionsReview()" id="btn-show-all">Consulter toutes les explications & réponses</button>
+      </div>
+      <div id="review-questions-list"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="showScreen('screen-scan');" id="nav-scan">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 4h-4v2h6v-6h-2v4zM7 7h10v10H7z"/></svg>
+      <span>Scanner</span>
+    </div>
+    <div class="nav-item" onclick="showScreen('screen-grid')" id="nav-grid">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-4h4v4zm0-6H7V7h4v4zm6 6h-4v-4h4v4zm0-6h-4V7h4v4z"/></svg>
+      <span>Mot Mystère</span>
+    </div>
+  </nav>
+
+  <script>
+    // BASE DE DONNÉES DU JEU (17 ÉTAPES)
+    const GAME_DATA = [
+      {
+        id: 1, token: "gc_t83a9", letter: "T",
+        title_fr: "Naissance et développement de Grand Coude",
+        title_en: "Birth and development of Grand Coude village",
+        text_en: "Perched between 1,000 and 1,300 meters above sea level, the plateau spans 530 hectares. In the early 1900s, settlers planted geranium, introduced in 1887 by Henri Boisjoli-Potier.",
+        q_fr: "Quelle personnalité a structuré l'économie agricole locale en développant la culture du géranium au Tampon à la fin du XIXe siècle ?",
+        q_en: "Who structured the local agricultural economy by developing geranium cultivation in Le Tampon at the end of the 19th century?",
+        options_fr: [{id: "T", text: "Mr Henri Boisjoli-Potier", correct: true}, {id: "B", text: "Mr Charles Payet", correct: false}],
+        options_en: [{id: "T", text: "Mr. Henri Boisjoli-Potier", correct: true}, {id: "B", text: "Mr. Charles Payet", correct: false}]
+      },
+      {
+        id: 2, token: "gc_k92b1", letter: "R",
+        title_fr: "Transition des cultures Géranium/Thé",
+        title_en: "Crop transition: Geranium to Tea",
+        text_en: "After WWII, geranium cultivation collapsed. In 1955, acclimatization trials for tea began at Bagatelle and Menciol before expanding to Grand Coude.",
+        q_fr: "Avant de concentrer les efforts dans les hauts du Sud, sur quels terrains d'essais de la côte Est la culture du thé a-t-elle été testée en 1955 ?",
+        q_en: "Before concentrating efforts in the southern heights, on which eastern test grounds was tea tested in 1955?",
+        options_fr: [{id: "C", text: "Plaines des Palmistes et Grand Coude", correct: false}, {id: "R", text: "Bagatelle et Menciol", correct: true}],
+        options_en: [{id: "C", text: "Plaines des Palmistes and Grand Coude", correct: false}, {id: "R", text: "Bagatelle and Menciol", correct: true}]
+      },
+      {
+        id: 3, token: "gc_m34c7", letter: "A",
+        title_fr: "Début de l'aventure du Thé à La Réunion",
+        title_en: "Early days of tea in Reunion Island",
+        text_en: "In 1957, an expert analyzed a sample and concluded that Reunion tea had strong economic potential and premium quality.",
+        q_fr: "Qu'a démontré l'expertise technique de 1957 pour rassurer la Direction des Services Agricoles et lancer la filière ?",
+        q_en: "What did the 1957 technical report demonstrate to reassure authorities and launch the industry?",
+        options_fr: [{id: "A", text: "L'excellente qualité du produit et son potentiel économique", correct: true}, {id: "G", text: "Un rendement immédiatement supérieur à la canne", correct: false}],
+        options_en: [{id: "A", text: "The excellent quality and economic potential", correct: true}, {id: "G", text: "A yield immediately superior to sugarcane", correct: false}]
+      },
+      {
+        id: 4, token: "gc_p88d2", letter: "D",
+        title_fr: "Développement de l'aventure du Thé",
+        title_en: "Expansion of the tea sector",
+        text_en: "The program aimed to plant 910 hectares across the island (and 2,000 hectares long-term), securing income for over 5,000 workers.",
+        q_fr: "Dans la planification sociale des années 50, quelle surface globale devait atteindre la filière pour créer du travail pour 5 000 personnes à terme ?",
+        q_en: "What overall surface area was planned in the 1950s to provide jobs for 5,000 people?",
+        options_fr: [{id: "D", text: "2 000 hectares", correct: true}, {id: "S", text: "500 hectares", correct: false}],
+        options_en: [{id: "D", text: "2,000 hectares", correct: true}, {id: "S", text: "500 hectares", correct: false}]
+      },
+      {
+        id: 5, token: "gc_v51e6", letter: "I",
+        title_fr: "Pionniers de Grand Coude",
+        title_en: "Pioneers of Grand Coude",
+        text_en: "In Grand Coude, two daring planters, Charles Payet and Yves Mondon, pioneered tea planting in 1959 starting on 40 hectares.",
+        q_fr: "Quels planteurs audacieux ont été les premiers à installer leurs parcelles de thé sur les terres de Grand Coude en 1959 ?",
+        q_en: "Which daring planters set up the first tea plots in Grand Coude in 1959?",
+        options_fr: [{id: "U", text: "Benoit Mondon et Charles Henri", correct: false}, {id: "I", text: "Charles Payet et Yves Mondon", correct: true}],
+        options_en: [{id: "U", text: "Benoit Mondon and Charles Henri", correct: false}, {id: "I", text: "Charles Payet and Yves Mondon", correct: true}]
+      },
+      {
+        id: 6, token: "gc_x74f0", letter: "T",
+        title_fr: "Commercialisation du thé",
+        title_en: "Commercialization on international markets",
+        text_en: "In 1960, Bourbon tea was auctioned in London, competing directly with top Ceylon and Indian teas at 7.12 francs/kg.",
+        q_fr: "À l'époque de son âge d'or, sur quel grand marché international le « Thé de Bourbon » était-il vendu ?",
+        q_en: "In its golden age, on which major international market was 'Bourbon Tea' auctioned?",
+        options_fr: [{id: "Y", text: "La Réunion", correct: false}, {id: "T", text: "Londres", correct: true}],
+        options_en: [{id: "Y", text: "Reunion Island", correct: false}, {id: "T", text: "London", correct: true}]
+      },
+      {
+        id: 7, token: "gc_q19g8", letter: "I",
+        title_fr: "Restructuration par la SAFER",
+        title_en: "Restructuring by SAFER",
+        text_en: "With clonal varieties from Kenya, Grand Coude farmers achieved the island's best yield: 5 tons/ha in 1969.",
+        q_fr: "En adoptant les plants importés du Kenya, quel niveau de récolte exceptionnel notre village est-il parvenu à produire ?",
+        q_en: "Using Kenyan clonal plants, what record yield did Grand Coude achieve?",
+        options_fr: [{id: "I", text: "5 tonnes par hectare", correct: true}, {id: "B", text: "6 tonnes par hectare", correct: false}],
+        options_en: [{id: "I", text: "5 tons per hectare", correct: true}, {id: "B", text: "6 tons per hectare", correct: false}]
+      },
+      {
+        id: 8, token: "gc_z63h4", letter: "O",
+        title_fr: "Déclin et fin de l'aventure thé",
+        title_en: "Decline and closure",
+        text_en: "On January 4, 1972, the General Council voted to discontinue subsidies, sealing the industry's fate.",
+        q_fr: "Quel arrêté politique met fin au soutien financier et scelle le sort de la filière théière au début des années 70 ?",
+        q_en: "What political decree ended subsidies in the early 1970s?",
+        options_fr: [{id: "O", text: "La décision du Conseil Général du 4 janvier 1972", correct: true}, {id: "R", text: "La fermeture de l'usine en 1970", correct: false}],
+        options_en: [{id: "O", text: "General Council decision on Jan 4, 1972", correct: true}, {id: "R", text: "Factory closure in 1970", correct: false}]
+      },
+      {
+        id: 9, token: "gc_b82j3", letter: "N",
+        title_fr: "Les raisons de l'échec économique",
+        title_en: "Economic factors behind the decline",
+        text_en: "Wage increases pushed picking costs to 5.62 F/kg by 1970, rendering Reunion uncompetitive against East African producers.",
+        q_fr: "Quel facteur économique principal a rendu le thé réunionnais non compétitif entre 1960 et 1970 ?",
+        q_en: "What economic factor caused Reunion tea to lose competitiveness between 1960 and 1970?",
+        options_fr: [{id: "N", text: "Le coût de cueillette passant de 3.82 F à 5.62 F", correct: true}, {id: "C", text: "La conversion des coûts de francs en euros", correct: false}],
+        options_en: [{id: "N", text: "Picking cost rising from 3.82 F to 5.62 F", correct: true}, {id: "C", text: "Franc to Euro conversion", correct: false}]
+      },
+      {
+        id: 10, token: "gc_w14k9", letter: "S",
+        title_fr: "Le Thé dans le monde",
+        title_en: "Tea around the world",
+        text_en: "The Assamica variety from India was selected in Reunion for its resilience, tannin content, and large leaves.",
+        q_fr: "La sous-espèce Assamica puise ses origines botaniques dans quel pays ?",
+        q_en: "From which country does the subspecies Assamica originate?",
+        options_fr: [{id: "A", text: "Chine", correct: false}, {id: "S", text: "Inde", correct: true}],
+        options_en: [{id: "A", text: "China", correct: false}, {id: "S", text: "India", correct: true}]
+      },
+      {
+        id: 11, token: "gc_l47m2", letter: "&",
+        title_fr: "Le thé au naturel",
+        title_en: "Wild tea trees",
+        text_en: "Unpruned, Indian tea trees (Assamica) can reach 15 to 20 meters in height.",
+        q_fr: "En l'absence de taille d'entretien, quelle dimension un théier de souche indienne peut-il développer à l'état sauvage ?",
+        q_en: "How tall can an unpruned Indian tea tree grow in the wild?",
+        options_fr: [{id: "V", text: "10 à 12 mètres", correct: false}, {id: "&", text: "15 à 20 mètres", correct: true}],
+        options_en: [{id: "V", text: "10 to 12 meters", correct: false}, {id: "&", text: "15 to 20 meters", correct: true}]
+      },
+      {
+        id: 12, token: "gc_n66p5", letter: "T",
+        title_fr: "Le thé cultivé",
+        title_en: "Cultivated tea",
+        text_en: "Tea bushes begin producing 4 to 5 years after sowing, pruned into a harvesting table at waist height.",
+        q_fr: "Combien d'années de développement végétatif sont nécessaires avant la première taille de formation et récolte ?",
+        q_en: "How many years of growth are needed before the first formation pruning and harvest?",
+        options_fr: [{id: "D", text: "2 à 3 ans", correct: false}, {id: "T", text: "4 à 5 ans", correct: true}],
+        options_en: [{id: "D", text: "2 to 3 years", correct: false}, {id: "T", text: "4 to 5 years", correct: true}]
+      },
+      {
+        id: 13, token: "gc_h29r1", letter: "E",
+        title_fr: "Cueillir le thé",
+        title_en: "Harvesting methods",
+        text_en: "At the estate, black tea is crafted exclusively from 'Grand Cru' hand-picked young shoots.",
+        q_fr: "Quelle gamme de cueillette manuelle est exclusivement utilisée au domaine pour élaborer le thé noir ?",
+        q_en: "Which hand-picking grade is exclusively used at the estate to produce black tea?",
+        options_fr: [{id: "E", text: "La cueillette 'Grand Cru'", correct: true}, {id: "W", text: "La cueillette 'Impériale'", correct: false}],
+        options_en: [{id: "E", text: "The 'Grand Cru' picking", correct: true}, {id: "W", text: "The 'Imperial' picking", correct: false}]
+      },
+      {
+        id: 14, token: "gc_c73s8", letter: "R",
+        title_fr: "Les différentes sortes de thé",
+        title_en: "Types of tea",
+        text_en: "Historically, Reunion produced exclusively black tea. White and green were revived in 2005.",
+        q_fr: "Autrefois, quel était le seul type de thé fabriqué par les anciens à La Réunion ?",
+        q_en: "In the past, what was the only type of tea manufactured in Reunion?",
+        options_fr: [{id: "L", text: "Le thé blanc", correct: false}, {id: "R", text: "Le thé noir", correct: true}],
+        options_en: [{id: "L", text: "White tea", correct: false}, {id: "R", text: "Black tea", correct: true}]
+      },
+      {
+        id: 15, token: "gc_y38t4", letter: "R",
+        title_fr: "La renaissance du Labyrinthe",
+        title_en: "Rebirth with Labyrinthe En-Champ-Thé",
+        text_en: "Founded in 2005 by Johny and Emmanuelle Guichard over 10 hectares, rehabilitating 6 hectares of tea plots.",
+        q_fr: "À Grand Coude, quelle superficie a été réhabilitée au Labyrinthe pour relancer l'activité ?",
+        q_en: "How many hectares were rehabilitated at the Labyrinth to restart tea production?",
+        options_fr: [{id: "R", text: "6 hectares", correct: true}, {id: "I", text: "10 hectares", correct: false}],
+        options_en: [{id: "R", text: "6 hectares", correct: true}, {id: "I", text: "10 hectares", correct: false}]
+      },
+      {
+        id: 16, token: "gc_e91u6", letter: "O",
+        title_fr: "L'avenir et le cadre légal",
+        title_en: "Future and recognition",
+        text_en: "In 2014, the tea plant was officially reinstated in France's official register of aromatic and medicinal plants.",
+        q_fr: "En quelle année la réinscription du théier sur la liste officielle a-t-elle offert un cadre légal à sa renaissance ?",
+        q_en: "In what year was the tea tree officially reinstated on the aromatic/medicinal plant list?",
+        options_fr: [{id: "O", text: "2014", correct: true}, {id: "H", text: "2005", correct: false}],
+        options_en: [{id: "O", text: "2014", correct: true}, {id: "H", text: "2005", correct: false}]
+      },
+      {
+        id: 17, token: "gc_j55v0", letter: "R",
+        title_fr: "Distinctions et reconnaissance",
+        title_en: "Awards & International Recognition",
+        text_en: "In 2026, during the Tea Symposium, Hadong (South Korea, UNESCO) presented the estate with a traditional wok.",
+        q_fr: "Quelle année marque l'attribution du wok coréen concrétisant la reconnaissance internationale du Domaine ?",
+        q_en: "Which year marks the gifting of the Korean wok acknowledging the Domain's international standing?",
+        options_fr: [{id: "E", text: "2024", correct: false}, {id: "R", text: "2026", correct: true}],
+        options_en: [{id: "E", text: "2024", correct: false}, {id: "R", text: "2026", correct: true}]
+      }
+    ];
+
+    const SECRET_TARGET = "TRADITIONS & TERROIR";
+    let currentLang = 'fr';
+    let gameState = {
+      harvested: {}, // { stepId: 'T' }
+      answered: {},  // { stepId: selectedOptionId }
+      unlockedAll: false
+    };
+
+    let html5QrCode = null;
+
+    // INITIALISATION
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      buildGrid();
+      checkUrlParams();
+    });
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'fr' ? 'en' : 'fr';
+      document.getElementById('lang-btn').innerText = currentLang === 'fr' ? 'EN 🇬🇧' : 'FR 🇫🇷';
+      updateUITexts();
+      // Rafraîchir l'étape en cours si active
+      const activeStepId = document.getElementById('screen-step').dataset.stepId;
+      if (activeStepId) {
+        renderStep(parseInt(activeStepId));
+      }
+    }
+
+    function updateUITexts() {
+      const isFr = currentLang === 'fr';
+      document.getElementById('app-title').innerText = isFr ? "🌿 Challenge des Experts" : "🌿 Experts Challenge";
+      document.getElementById('scan-title').innerText = isFr ? "Scannez le panneau" : "Scan the board";
+      document.getElementById('scan-desc').innerText = isFr ? "Approchez la caméra du QR Code pour déverrouiller la question." : "Point your camera at the board's QR code to unlock the question.";
+      document.getElementById('btn-camera').innerText = isFr ? "Activer la caméra" : "Start Camera";
+      document.getElementById('grid-title').innerText = isFr ? "Décodez l'énigme" : "Decode the mystery word";
+      document.getElementById('grid-desc').innerText = isFr ? "Cliquez sur vos lettres récoltées ou tapez dans les cases :" : "Click your harvested letters or type into boxes:";
+      document.getElementById('btn-validate').innerText = isFr ? "Valider le mot mystère" : "Check Secret Word";
+      document.getElementById('btn-to-grid').innerText = isFr ? "Voir mon mot mystère" : "View Mystery Word";
+    }
+
+    // GESTION NAVIGATION
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      if (screenId === 'screen-scan') document.getElementById('nav-scan').classList.add('active');
+      if (screenId === 'screen-grid') {
+        document.getElementById('nav-grid').classList.add('active');
+        renderPool();
+      }
+
+      if (screenId !== 'screen-scan' && html5QrCode && html5QrCode.isScanning) {
+        html5QrCode.stop().catch(() => {});
+      }
+    }
+
+    // SCANNER QR CODE INTÉGRÉ
+    function startCamera() {
+      html5QrCode = new html5Qrcode("reader");
+      const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+      
+      html5QrCode.start({ facingMode: "environment" }, config, (decodedText) => {
+        handleQrPayload(decodedText);
+      }).catch(err => {
+        alert(currentLang === 'fr' ? "Erreur caméra : veuillez autoriser l'accès." : "Camera error: please allow access.");
+      });
+    }
+
+    function handleQrPayload(text) {
+      try {
+        const url = new URL(text);
+        const token = url.searchParams.get('token');
+        const lang = url.searchParams.get('lang');
+        if (lang) {
+          currentLang = lang;
+          document.getElementById('lang-btn').innerText = currentLang === 'fr' ? 'EN 🇬🇧' : 'FR 🇫🇷';
+          updateUITexts();
+        }
+        if (token) {
+          const step = GAME_DATA.find(s => s.token === token);
+          if (step) {
+            if (html5QrCode && html5QrCode.isScanning) html5QrCode.stop();
+            renderStep(step.id);
+            showScreen('screen-step');
+            return;
+          }
+        }
+      } catch (e) {}
+      alert(currentLang === 'fr' ? "QR code non reconnu." : "Unrecognized QR code.");
+    }
+
+    function checkUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      const lang = params.get('lang');
+      if (lang) currentLang = lang;
+      if (token) {
+        const step = GAME_DATA.find(s => s.token === token);
+        if (step) {
+          renderStep(step.id);
+          showScreen('screen-step');
+        }
+      }
+    }
+
+    // AFFICHAGE DE L'ÉTAPE
+    function renderStep(stepId) {
+      const step = GAME_DATA.find(s => s.id === stepId);
+      const isFr = currentLang === 'fr';
+      const screen = document.getElementById('screen-step');
+      screen.dataset.stepId = stepId;
+
+      document.getElementById('step-badge').innerText = `${isFr ? 'Étape' : 'Step'} ${step.id} / 17`;
+      document.getElementById('step-title').innerText = isFr ? step.title_fr : step.title_en;
+      
+      // Texte en anglais ou affiché si le jeu est terminé
+      const textBox = document.getElementById('step-text');
+      if (!isFr || gameState.unlockedAll) {
+        textBox.innerText = isFr ? (step.text_fr || step.title_fr) : step.text_en;
+        textBox.style.display = 'block';
+      } else {
+        textBox.style.display = 'none';
+      }
+
+      document.getElementById('step-question').innerText = isFr ? step.q_fr : step.q_en;
+      
+      const optionsBox = document.getElementById('step-options');
+      optionsBox.innerHTML = '';
+      const feedbackBox = document.getElementById('step-feedback');
+      feedbackBox.className = 'feedback';
+      feedbackBox.style.display = 'none';
+
+      const options = isFr ? step.options_fr : step.options_en;
+      const alreadyAnswered = gameState.answered[step.id];
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<strong>${opt.id}/</strong>&nbsp;${opt.text}`;
+        
+        if (alreadyAnswered) {
+          if (opt.correct) btn.classList.add('selected-correct');
+          if (alreadyAnswered === opt.id && !opt.correct) btn.classList.add('selected-wrong');
+        } else {
+          btn.onclick = () => selectOption(step, opt);
+        }
+        optionsBox.appendChild(btn);
+      });
+
+      if (alreadyAnswered) {
+        const correct = options.find(o => o.id === alreadyAnswered)?.correct;
+        feedbackBox.innerHTML = correct 
+          ? (isFr ? `Bravo ! Lettre récoltée : <strong>${step.letter}</strong>` : `Correct! Harvested letter: <strong>${step.letter}</strong>`)
+          : (isFr ? `Mauvaise réponse. Aucune lettre récoltée.` : `Wrong answer. No letter gained.`);
+        feedbackBox.className = `feedback ${correct ? 'success' : 'danger'}`;
+      }
+    }
+
+    function selectOption(step, selectedOpt) {
+      gameState.answered[step.id] = selectedOpt.id;
+      if (selectedOpt.correct) {
+        gameState.harvested[step.id] = step.letter;
+      }
+      saveState();
+      renderStep(step.id);
+      renderPool();
+    }
+
+    // MOT MYSTÈRE & LETTRES RÉCOLTÉES
+    function buildGrid() {
+      const grid = document.getElementById('word-grid');
+      grid.innerHTML = '';
+      for (let i = 0; i < SECRET_TARGET.length; i++) {
+        const char = SECRET_TARGET[i];
+        if (char === ' ') {
+          const sep = document.createElement('div');
+          sep.className = 'char-box separator';
+          grid.appendChild(sep);
+        } else if (char === '&') {
+          const sep = document.createElement('div');
+          sep.className = 'char-box separator';
+          sep.innerText = '&';
+          grid.appendChild(sep);
+        } else {
+          const input = document.createElement('input');
+          input.className = 'char-box';
+          input.maxLength = 1;
+          input.dataset.index = i;
+          input.oninput = (e) => {
+            e.target.value = e.target.value.toUpperCase();
+            if (e.target.value && input.nextElementSibling) {
+              input.nextElementSibling.focus();
+            }
+          };
+          grid.appendChild(input);
+        }
+      }
+    }
+
+    function renderPool() {
+      const pool = document.getElementById('letters-pool');
+      pool.innerHTML = '';
+      const letters = Object.values(gameState.harvested);
+      document.getElementById('letter-count').innerText = letters.length;
+
+      letters.forEach(letter => {
+        const chip = document.createElement('div');
+        chip.className = 'letter-chip';
+        chip.innerText = letter;
+        chip.onclick = () => fillNextEmptyInput(letter);
+        pool.appendChild(chip);
+      });
+    }
+
+    function fillNextEmptyInput(letter) {
+      const inputs = document.querySelectorAll('.word-grid input');
+      for (let input of inputs) {
+        if (!input.value) {
+          input.value = letter;
+          break;
+        }
+      }
+    }
+
+    function validateSecretWord() {
+      const inputs = document.querySelectorAll('.word-grid input');
+      let word = "";
+      let idx = 0;
+      for (let i = 0; i < SECRET_TARGET.length; i++) {
+        if (SECRET_TARGET[i] === ' ' || SECRET_TARGET[i] === '&') {
+          word += SECRET_TARGET[i];
+        } else {
+          word += (inputs[idx].value || "_");
+          idx++;
+        }
+      }
+
+      if (word.toUpperCase() === SECRET_TARGET) {
+        gameState.unlockedAll = true;
+        saveState();
+        showScreen('screen-review');
+      } else {
+        alert(currentLang === 'fr' ? "Le mot n'est pas tout à fait correct, cherchez encore !" : "Not quite right, keep trying!");
+      }
+    }
+
+    function renderAllQuestionsReview() {
+      const list = document.getElementById('review-questions-list');
+      list.innerHTML = '';
+      const isFr = currentLang === 'fr';
+
+      GAME_DATA.forEach(step => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <span class="badge">${isFr ? 'Panneau' : 'Board'} ${step.id} (Lettre: ${step.letter})</span>
+          <h2>${isFr ? step.title_fr : step.title_en}</h2>
+          <p style="font-size:0.9rem; color:#475569; margin-bottom:10px;">${isFr ? (step.text_fr || '') : step.text_en}</p>
+          <p><strong>Q:</strong> ${isFr ? step.q_fr : step.q_en}</p>
+          <p style="color:var(--success); font-weight:600;">✓ ${isFr ? step.options_fr.find(o=>o.correct).text : step.options_en.find(o=>o.correct).text}</p>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function saveState() {
+      localStorage.setItem('enchampthe_challenge_state', JSON.stringify(gameState));
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem('enchampthe_challenge_state');
+      if (raw) gameState = JSON.parse(raw);
+    }
+  </script>
+</body>
+</html>
