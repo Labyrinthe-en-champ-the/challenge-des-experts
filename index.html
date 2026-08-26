@@ -4,99 +4,162 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Challenge des Experts - Labyrinthe En-Champ-Thé</title>
+  
+  <!-- Polices Élégantes & Lisibles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Scanner QR -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
   <style>
     :root {
-      --primary: #2d5a27;
-      --primary-dark: #1b3817;
-      --accent: #c29b38;
-      --bg: #f7f9f6;
-      --card-bg: #ffffff;
-      --text: #2c3e50;
-      --text-muted: #667085;
-      --success: #2e7d32;
-      --danger: #d32f2f;
-      --radius: 12px;
-      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+      --primary: #1E3F20;
+      --primary-light: #2D5A2F;
+      --primary-dark: #122613;
+      --accent: #C59B27;
+      --accent-light: #F4E8C1;
+      --bg: #F7F5F0;
+      --card-bg: #FFFFFF;
+      --text: #18231C;
+      --text-muted: #5C6B60;
+      --success: #1E6B35;
+      --danger: #991B1B;
+      --wood-border: #D1C7B7;
+      --radius: 16px;
+      --shadow-sm: 0 2px 6px rgba(18, 38, 19, 0.05);
+      --shadow: 0 8px 24px rgba(18, 38, 19, 0.08);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 70px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 80px; }
 
+    /* En-tête */
     header {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
-      padding: 12px 16px;
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      border-bottom: 2px solid var(--accent);
     }
-    header h1 { font-size: 1.05rem; font-weight: 700; }
+    header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
     .lang-switch {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--accent);
       color: white;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 20px;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       cursor: pointer;
+      backdrop-filter: blur(4px);
     }
 
-    main { padding: 16px; max-width: 600px; margin: 0 auto; }
+    main { padding: 16px; max-width: 580px; margin: 0 auto; }
     .screen { display: none; }
-    .screen.active { display: block; }
+    .screen.active { display: block; animation: fadeIn 0.25s ease-out; }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cartes */
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 22px 18px;
       box-shadow: var(--shadow);
       margin-bottom: 16px;
+      border: 1px solid var(--wood-border);
+      position: relative;
     }
 
     .badge {
-      display: inline-block;
-      background: #e8f5e9;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #EAF2EB;
       color: var(--primary);
       font-size: 0.75rem;
       font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 6px;
-      margin-bottom: 8px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      margin-bottom: 12px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 12px; }
-    p { margin-bottom: 12px; font-size: 0.95rem; }
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      line-height: 1.35;
+    }
+    p { margin-bottom: 12px; font-size: 0.95rem; color: var(--text); }
 
+    /* Boutons Principaux */
     .btn {
       display: block;
       width: 100%;
-      padding: 14px;
+      padding: 14px 18px;
       border: none;
       border-radius: var(--radius);
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
       transition: all 0.2s ease;
       text-decoration: none;
     }
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:active { background: var(--primary-dark); }
-    .btn-accent { background: var(--accent); color: white; margin-top: 10px; }
-    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-top: 10px; }
-    .btn-text { background: transparent; color: var(--text-muted); font-size: 0.85rem; margin-top: 8px; text-decoration: underline; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      box-shadow: 0 4px 12px rgba(30, 63, 32, 0.25);
+    }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent), #d6ae3c);
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(197, 155, 39, 0.25);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      margin-top: 10px;
+    }
+    .btn-text {
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 12px;
+      text-decoration: underline;
+    }
 
+    /* Options QCM */
     .option-btn {
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
+      background: #FAF8F5;
+      border: 2px solid var(--wood-border);
       border-radius: var(--radius);
       padding: 14px 16px;
       width: 100%;
@@ -104,79 +167,127 @@
       font-size: 0.95rem;
       margin-bottom: 10px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.15s ease;
     }
-    .option-btn.selected-correct { background: #e8f5e9; border-color: var(--success); color: var(--success); font-weight: 600; }
-    .option-btn.selected-wrong { background: #ffebee; border-color: var(--danger); color: var(--danger); }
+    .option-btn:active { transform: scale(0.99); }
+    .option-tag {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #E5DFD5;
+      color: var(--primary-dark);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+    }
+    .option-btn.selected-correct {
+      background: #EAF7ED;
+      border-color: var(--success);
+      color: var(--success);
+      font-weight: 600;
+    }
+    .option-btn.selected-correct .option-tag { background: var(--success); color: white; }
+    .option-btn.selected-wrong {
+      background: #FDF2F2;
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+    .option-btn.selected-wrong .option-tag { background: var(--danger); color: white; }
 
+    /* Retours */
     .feedback {
-      padding: 12px;
+      padding: 14px;
       border-radius: var(--radius);
       margin-top: 14px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
       display: none;
     }
-    .feedback.success { background: #e8f5e9; color: var(--success); display: block; }
-    .feedback.danger { background: #ffebee; color: var(--danger); display: block; }
+    .feedback.success { background: #EAF7ED; color: var(--success); border: 1px solid #B8E4C1; display: block; }
+    .feedback.danger { background: #FDF2F2; color: var(--danger); border: 1px solid #F8B4B4; display: block; }
 
-    .word-grid {
+    /* Grille des Mots Magiques */
+    .word-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
+      gap: 5px;
       justify-content: center;
-      margin: 20px 0;
+      margin: 10px 0;
     }
     .char-box {
-      width: 30px;
-      height: 38px;
-      border: 2px solid #cbd5e1;
-      border-radius: 6px;
+      width: 32px;
+      height: 42px;
+      border: 2px solid var(--wood-border);
+      border-radius: 8px;
       text-align: center;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 700;
       text-transform: uppercase;
-      background: white;
+      background: #FFFDF9;
+      color: var(--primary-dark);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
     }
-    .char-box:focus { border-color: var(--primary); outline: none; }
-    .char-box.separator { width: 14px; border: none; background: transparent; font-weight: bold; line-height: 38px; }
+    .char-box:focus { border-color: var(--accent); outline: none; background: #FFFFFF; }
 
+    /* Réserve de Lettres Récoltées */
     .harvested-pool {
-      background: #f1f5f9;
+      background: #F3EFE6;
       border-radius: var(--radius);
-      padding: 12px;
-      margin-bottom: 16px;
+      padding: 14px;
+      margin-bottom: 18px;
+      border: 1px dashed var(--wood-border);
     }
-    .harvested-pool h3 { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
-    .letters-flex { display: flex; flex-wrap: wrap; gap: 6px; }
-    .letter-chip {
-      background: var(--card-bg);
-      border: 2px solid var(--accent);
-      color: var(--accent);
+    .harvested-pool h3 {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       font-weight: 700;
-      font-size: 1.05rem;
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
+    }
+    .letters-flex { display: flex; flex-wrap: wrap; gap: 8px; }
+    
+    /* Jeton façon Sceau de Bois / Cuivre */
+    .letter-chip {
+      background: linear-gradient(135deg, #FFFDF8, #F3E7C4);
+      border: 2px solid var(--accent);
+      color: #7D5D08;
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      box-shadow: 0 3px 6px rgba(197, 155, 39, 0.2);
+      transition: transform 0.15s ease;
     }
+    .letter-chip:active { transform: scale(0.9); }
 
-    #reader { width: 100%; border-radius: var(--radius); overflow: hidden; margin-bottom: 12px; }
+    #reader { width: 100%; border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; border: 2px dashed var(--primary-light); }
 
+    /* Barre de Navigation Basse */
     nav.bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 60px;
-      background: white;
-      border-top: 1px solid #e2e8f0;
+      height: 64px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--wood-border);
       display: flex;
       justify-content: space-around;
       align-items: center;
       z-index: 100;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
     }
     .nav-item {
       display: flex;
@@ -185,9 +296,10 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       cursor: pointer;
+      font-weight: 500;
     }
     .nav-item.active { color: var(--primary); font-weight: 700; }
-    .nav-item svg { width: 22px; height: 22px; margin-bottom: 2px; }
+    .nav-item svg { width: 22px; height: 22px; margin-bottom: 3px; }
   </style>
 </head>
 <body>
@@ -201,7 +313,7 @@
     <!-- ACCUEIL & SCANNER -->
     <section id="screen-scan" class="screen active">
       <div class="card">
-        <span class="badge" id="scan-badge">Bienvenue</span>
+        <span class="badge" id="scan-badge">Bienvenue au Domaine</span>
         <h2 id="scan-title">Carnet de quête ouvert !</h2>
         <p id="scan-desc">Votre mission : sillonner les allées à la recherche des 17 pancartes réparties dans le Labyrinthe (dans l'ordre de votre choix). À chaque étape, scannez le QR code et répondez à la question : chaque bonne réponse libère une lettre magique !</p>
         <div id="reader"></div>
@@ -214,10 +326,10 @@
       <div class="card">
         <span class="badge" id="step-badge">Pancarte</span>
         <h2 id="step-title">Titre</h2>
-        <div id="step-text" style="display: none; margin-bottom: 16px; background:#f8fafc; padding:12px; border-radius:8px; font-size:0.9rem;"></div>
+        <div id="step-text" style="display: none; margin-bottom: 16px; background:#FAF8F5; padding:14px; border-radius:12px; font-size:0.92rem; border-left:3px solid var(--accent);"></div>
         <div id="step-question-box">
-          <p id="step-question" style="font-weight: 600;"></p>
-          <div id="step-options"></div>
+          <p id="step-question" style="font-weight: 600; font-size: 1rem;"></p>
+          <div id="step-options" style="margin-top: 14px;"></div>
           <div id="step-feedback" class="feedback"></div>
         </div>
         <button class="btn btn-accent" onclick="showScreen('screen-grid')" style="margin-top: 15px;" id="btn-to-grid">Voir les mots magiques</button>
@@ -236,7 +348,11 @@
           <div class="letters-flex" id="letters-pool"></div>
         </div>
 
-        <div class="word-grid" id="word-grid"></div>
+        <div id="grid-container" style="margin: 15px 0;">
+          <div class="word-row" id="row-traditions"></div>
+          <div style="text-align: center; font-size: 1.3rem; font-weight: 800; color: var(--accent); margin: 4px 0;">&</div>
+          <div class="word-row" id="row-terroir"></div>
+        </div>
 
         <button class="btn btn-primary" onclick="validateSecretWord()" id="btn-validate">Valider les mots magiques</button>
         <button class="btn btn-text" onclick="forceFinishGame()" id="btn-give-up">Terminer le jeu et voir les réponses</button>
@@ -246,10 +362,10 @@
     <!-- ÉCRAN DE FIN -->
     <section id="screen-review" class="screen">
       <div class="card" style="text-align: center;">
-        <span class="badge" style="background:#dcfce7; color:#15803d;" id="review-badge">Challenge Réussi</span>
+        <span class="badge" style="background:#EAF7ED; color:var(--success);" id="review-badge">Challenge Réussi</span>
         <h2 id="review-title">Félicitations ! 🎉</h2>
-        <p id="review-secret" style="font-size: 1.3rem; font-weight:bold; color:var(--primary); margin: 12px 0; letter-spacing: 1px;">TRADITIONS & TERROIR</p>
-        <p id="review-desc">Grâce à votre perspicacité, l'histoire et le savoir-faire de notre Domaine à Grand-Coude n'ont plus de secret pour vous. Après cette belle exploration au cœur du Labyrinthe, une dégustation de nos thés artisanaux est bien méritée !</p>
+        <p id="review-secret" style="font-family: 'Cinzel', serif; font-size: 1.35rem; font-weight: 800; color: var(--primary); margin: 14px 0; letter-spacing: 1.5px; border-top: 1px solid var(--wood-border); border-bottom: 1px solid var(--wood-border); padding: 8px 0;">TRADITIONS & TERROIR</p>
+        <p id="review-desc" style="color: var(--text-muted); font-size: 0.95rem;">Grâce à votre perspicacité, l'histoire et le savoir-faire de notre Domaine à Grand-Coude n'ont plus de secret pour vous. Après cette belle exploration au cœur du Labyrinthe, une dégustation de nos thés artisanaux est bien méritée !</p>
         <button class="btn btn-outline" onclick="renderAllQuestionsReview()" id="btn-show-all">Consulter toutes les explications & réponses</button>
       </div>
       <div id="review-questions-list"></div>
@@ -458,7 +574,6 @@
       }
     ];
 
-    const SECRET_TARGET = "TRADITIONS & TERROIR";
     let currentLang = 'fr';
     let gameState = {
       harvested: {},
@@ -486,6 +601,7 @@
     function updateUITexts() {
       const isFr = currentLang === 'fr';
       document.getElementById('app-title').innerText = isFr ? "🌿 Challenge des Experts" : "🌿 Experts Challenge";
+      document.getElementById('scan-badge').innerText = isFr ? "Bienvenue au Domaine" : "Welcome to the Estate";
       document.getElementById('scan-title').innerText = isFr ? "Carnet de quête ouvert !" : "Quest log activated!";
       document.getElementById('scan-desc').innerText = isFr 
         ? "Votre mission : sillonner les allées à la recherche des 17 pancartes réparties dans le Labyrinthe (dans l'ordre de votre choix). À chaque étape, scannez le QR code et répondez à la question : chaque bonne réponse libère une lettre magique !"
@@ -532,7 +648,7 @@
         }
 
         html5QrCode = new Html5Qrcode("reader");
-        const qrBoxSize = Math.min(window.innerWidth * 0.7, 250);
+        const qrBoxSize = Math.min(window.innerWidth * 0.7, 240);
 
         await html5QrCode.start(
           { facingMode: "environment" },
@@ -619,7 +735,7 @@
       options.forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.innerHTML = `<strong>${opt.id}/</strong>&nbsp;${opt.text}`;
+        btn.innerHTML = `<span class="option-tag">${opt.id}</span> <span>${opt.text}</span>`;
         
         if (alreadyAnswered) {
           if (opt.correct) btn.classList.add('selected-correct');
@@ -633,7 +749,7 @@
       if (alreadyAnswered) {
         const correct = options.find(o => o.id === alreadyAnswered)?.correct;
         feedbackBox.innerHTML = correct 
-          ? (isFr ? `Bravo ! Lettre récoltée : <strong>${step.letter}</strong>` : `Correct! Harvested letter: <strong>${step.letter}</strong>`)
+          ? (isFr ? `✓ Bravo ! Lettre remportée : <strong>${step.letter}</strong>` : `✓ Correct! Letter collected: <strong>${step.letter}</strong>`)
           : (isFr ? `Mauvaise réponse. Aucune lettre récoltée.` : `Wrong answer. No letter gained.`);
         feedbackBox.className = `feedback ${correct ? 'success' : 'danger'}`;
       }
@@ -650,32 +766,31 @@
     }
 
     function buildGrid() {
-      const grid = document.getElementById('word-grid');
-      grid.innerHTML = '';
-      for (let i = 0; i < SECRET_TARGET.length; i++) {
-        const char = SECRET_TARGET[i];
-        if (char === ' ') {
-          const sep = document.createElement('div');
-          sep.className = 'char-box separator';
-          grid.appendChild(sep);
-        } else if (char === '&') {
-          const sep = document.createElement('div');
-          sep.className = 'char-box separator';
-          sep.innerText = '&';
-          grid.appendChild(sep);
-        } else {
-          const input = document.createElement('input');
-          input.className = 'char-box';
-          input.maxLength = 1;
-          input.dataset.index = i;
-          input.oninput = (e) => {
-            e.target.value = e.target.value.toUpperCase();
-            if (e.target.value && input.nextElementSibling) {
-              input.nextElementSibling.focus();
-            }
-          };
-          grid.appendChild(input);
-        }
+      const row1 = document.getElementById('row-traditions');
+      const row2 = document.getElementById('row-terroir');
+      row1.innerHTML = '';
+      row2.innerHTML = '';
+
+      // TRADITIONS (10 lettres)
+      createInputBoxes("TRADITIONS", row1, 0);
+      // TERROIR (7 lettres)
+      createInputBoxes("TERROIR", row2, 10);
+    }
+
+    function createInputBoxes(word, container, offset) {
+      for (let i = 0; i < word.length; i++) {
+        const input = document.createElement('input');
+        input.className = 'char-box';
+        input.maxLength = 1;
+        input.dataset.globalIndex = offset + i;
+        input.oninput = (e) => {
+          e.target.value = e.target.value.toUpperCase();
+          if (e.target.value) {
+            const next = input.nextElementSibling || (container.id === 'row-traditions' ? document.querySelector('#row-terroir input') : null);
+            if (next) next.focus();
+          }
+        };
+        container.appendChild(input);
       }
     }
 
@@ -695,7 +810,7 @@
     }
 
     function fillNextEmptyInput(letter) {
-      const inputs = document.querySelectorAll('.word-grid input');
+      const inputs = document.querySelectorAll('.char-box');
       for (let input of inputs) {
         if (!input.value) {
           input.value = letter;
@@ -705,19 +820,13 @@
     }
 
     function validateSecretWord() {
-      const inputs = document.querySelectorAll('.word-grid input');
-      let word = "";
-      let idx = 0;
-      for (let i = 0; i < SECRET_TARGET.length; i++) {
-        if (SECRET_TARGET[i] === ' ' || SECRET_TARGET[i] === '&') {
-          word += SECRET_TARGET[i];
-        } else {
-          word += (inputs[idx].value || "_");
-          idx++;
-        }
-      }
+      const inputs1 = document.querySelectorAll('#row-traditions input');
+      const inputs2 = document.querySelectorAll('#row-terroir input');
+      
+      let w1 = Array.from(inputs1).map(i => i.value || "_").join('');
+      let w2 = Array.from(inputs2).map(i => i.value || "_").join('');
 
-      if (word.toUpperCase() === SECRET_TARGET) {
+      if (w1.toUpperCase() === "TRADITIONS" && w2.toUpperCase() === "TERROIR") {
         finishGameSuccess();
       } else {
         alert(currentLang === 'fr' ? "Les mots ne sont pas tout à fait corrects, cherchez encore !" : "Not quite right, keep searching!");
