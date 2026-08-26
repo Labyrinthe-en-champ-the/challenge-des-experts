@@ -21,6 +21,7 @@
       --card-bg: #FFFFFF;
       --text: #18231C;
       --text-muted: #5C6B60;
+      --selected: #2D5A2F;
       --success: #1E6B35;
       --danger: #991B1B;
       --wood-border: #D1C7B7;
@@ -28,13 +29,15 @@
       --shadow: 0 8px 24px rgba(18, 38, 19, 0.08);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 80px; }
 
+    /* Header avec fond végétal subtil */
     header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background: linear-gradient(135deg, rgba(30,63,32,0.95), rgba(18,38,19,0.98)), url('./width_1599.webp');
+      background-size: cover;
       color: white;
-      padding: 14px 18px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -44,25 +47,20 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.15);
       border-bottom: 2px solid var(--accent);
     }
-    header h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+    .header-logo { height: 34px; object-fit: contain; }
 
     .lang-switch {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.15);
       border: 1px solid var(--accent);
       color: white;
       padding: 5px 12px;
       border-radius: 20px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.8rem;
       cursor: pointer;
     }
 
-    main { padding: 16px; max-width: 580px; margin: 0 auto; }
+    main { padding: 14px; max-width: 580px; margin: 0 auto; }
     .screen { display: none; }
     .screen.active { display: block; animation: fadeIn 0.25s ease-out; }
 
@@ -74,10 +72,16 @@
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 22px 18px;
+      padding: 18px 16px;
       box-shadow: var(--shadow);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       border: 1px solid var(--wood-border);
+      position: relative;
+    }
+
+    .card-pattern {
+      background-image: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), url('./width_1599.webp');
+      background-size: cover;
     }
 
     .badge {
@@ -88,20 +92,20 @@
       color: var(--primary);
       font-size: 0.75rem;
       font-weight: 700;
-      padding: 5px 10px;
+      padding: 4px 10px;
       border-radius: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-transform: uppercase;
     }
 
     h2 {
       font-family: 'Cinzel', serif;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       color: var(--primary-dark);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       line-height: 1.35;
     }
-    p { margin-bottom: 12px; font-size: 0.95rem; }
+    p { margin-bottom: 10px; font-size: 0.93rem; }
 
     .btn {
       display: block;
@@ -110,7 +114,7 @@
       border: none;
       border-radius: var(--radius);
       font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       text-align: center;
       transition: all 0.2s ease;
@@ -124,7 +128,6 @@
     .btn-accent {
       background: linear-gradient(135deg, var(--accent), #d6ae3c);
       color: var(--primary-dark);
-      font-weight: 700;
       margin-top: 10px;
     }
     .btn-outline {
@@ -137,28 +140,29 @@
       background: transparent;
       color: var(--text-muted);
       font-size: 0.85rem;
-      margin-top: 12px;
+      margin-top: 10px;
       text-decoration: underline;
     }
 
-    /* Options QCM */
+    /* Options QCM Sobre (Pas de spoil vert/rouge) */
     .option-btn {
       background: #FAF8F5;
       border: 2px solid var(--wood-border);
       border-radius: var(--radius);
-      padding: 14px 16px;
+      padding: 12px 14px;
       width: 100%;
       text-align: left;
-      font-size: 0.95rem;
-      margin-bottom: 10px;
+      font-size: 0.93rem;
+      margin-bottom: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      transition: all 0.15s ease;
     }
     .option-tag {
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: #E5DFD5;
       color: var(--primary-dark);
@@ -167,63 +171,82 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      font-size: 0.85rem;
     }
-    .option-btn.selected-correct {
-      background: #EAF7ED;
-      border-color: var(--success);
-      color: var(--success);
+    .option-btn.selected-neutral {
+      background: #EAF2EB;
+      border-color: var(--selected);
+      color: var(--selected);
       font-weight: 600;
     }
-    .option-btn.selected-correct .option-tag { background: var(--success); color: white; }
-    .option-btn.selected-wrong {
-      background: #FDF2F2;
-      border-color: var(--danger);
-      color: var(--danger);
-    }
-    .option-btn.selected-wrong .option-tag { background: var(--danger); color: white; }
+    .option-btn.selected-neutral .option-tag { background: var(--selected); color: white; }
 
-    .feedback {
-      padding: 14px;
-      border-radius: var(--radius);
-      margin-top: 14px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      display: none;
+    /* Liste des Questions Hub */
+    .steps-menu-item {
+      background: #FFFFFF;
+      border: 1px solid var(--wood-border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
     }
-    .feedback.success { background: #EAF7ED; color: var(--success); border: 1px solid #B8E4C1; display: block; }
-    .feedback.danger { background: #FDF2F2; color: var(--danger); border: 1px solid #F8B4B4; display: block; }
+    .steps-menu-item.answered { border-left: 4px solid var(--accent); background: #FAF8F5; }
+    .steps-menu-item.locked { opacity: 0.65; }
 
-    /* Grille Mots Magiques */
-    .word-row { display: flex; gap: 5px; justify-content: center; margin: 10px 0; }
-    .char-box {
+    .target-badge {
       width: 32px;
-      height: 42px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid var(--accent);
+      color: white;
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+
+    /* Grille Mots Magiques Responsive Samsung/iPhone */
+    .word-row {
+      display: flex;
+      gap: min(1.2vw, 5px);
+      justify-content: center;
+      margin: 8px 0;
+      width: 100%;
+    }
+    .char-box {
+      width: min(8.5vw, 34px);
+      height: min(11.5vw, 44px);
       border: 2px solid var(--wood-border);
-      border-radius: 8px;
+      border-radius: 6px;
       text-align: center;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: min(4.5vw, 1.25rem);
+      font-weight: 800;
       text-transform: uppercase;
       background: #FFFDF9;
       color: var(--primary-dark);
+      user-select: none;
     }
-    .char-box:focus { border-color: var(--accent); outline: none; }
+    .char-box:focus { border-color: var(--accent); outline: none; background: #FFFFFF; }
+    .char-box.drag-over { border-color: var(--accent); background: #FDF4DC; }
 
+    /* Lettres Récoltées (Jetons Drag & Drop) */
     .harvested-pool {
       background: #F3EFE6;
       border-radius: var(--radius);
-      padding: 14px;
-      margin-bottom: 18px;
+      padding: 12px;
+      margin-bottom: 14px;
       border: 1px dashed var(--wood-border);
     }
-    .harvested-pool h3 {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-    .letters-flex { display: flex; flex-wrap: wrap; gap: 8px; }
+    .letters-flex { display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; align-items: center; }
+    
     .letter-chip {
       background: linear-gradient(135deg, #FFFDF8, #F3E7C4);
       border: 2px solid var(--accent);
@@ -233,35 +256,36 @@
       font-size: 1.15rem;
       width: 38px;
       height: 38px;
-      border-radius: 10px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      box-shadow: 0 3px 6px rgba(197, 155, 39, 0.2);
     }
+    .letter-chip.dragging { opacity: 0.4; }
 
-    /* Menu Liste des Questions Débloquées */
-    .steps-menu-item {
-      background: #FAF8F5;
-      border: 1px solid var(--wood-border);
-      border-radius: var(--radius);
-      padding: 14px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
+    /* Scanner Modal Plein Écran */
+    #scanner-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      cursor: pointer;
+      padding: 16px;
     }
-    .steps-menu-item.answered { border-left: 4px solid var(--success); background: #FFFFFF; }
-    .steps-menu-item.locked { opacity: 0.6; cursor: not-allowed; }
+    #scanner-modal.active { display: flex; }
+    #reader { width: 100%; max-width: 360px; border-radius: var(--radius); overflow: hidden; background: black; }
 
-    #reader { width: 100%; border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; border: 2px dashed var(--primary-light); }
-
+    /* Navigation Basse */
     nav.bottom-nav {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       height: 64px;
       background: #FFFFFF;
       border-top: 1px solid var(--wood-border);
@@ -277,111 +301,127 @@
       font-size: 0.72rem;
       color: var(--text-muted);
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 600;
     }
-    .nav-item.active { color: var(--primary); font-weight: 700; }
-    .nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; }
+    .nav-item.active { color: var(--primary); font-weight: 800; }
+    .nav-item svg { width: 22px; height: 22px; margin-bottom: 2px; }
   </style>
 </head>
 <body>
 
   <header>
-    <h1 id="app-title">🌿 Challenge des Experts</h1>
+    <img src="./Challenge des expert 2026.png" alt="Challenge des Experts" class="header-logo">
     <button class="lang-switch" id="lang-btn" onclick="toggleLanguage()">EN 🇬🇧</button>
   </header>
 
   <main>
-    <!-- 1. ACCUEIL & SCANNER -->
-    <section id="screen-scan" class="screen active">
+    <!-- 1. HUB CENTRAL : PARCOURS & SCANNER -->
+    <section id="screen-hub" class="screen active">
+      <div class="card card-pattern">
+        <span class="badge" id="hub-badge">Aventure au Labyrinthe</span>
+        <h2 id="hub-title">Bienvenue au Labyrinthe !</h2>
+        <p id="hub-desc">Parcourez les allées et retrouvez les 17 pancartes (dans l'ordre de votre choix). Scannez le QR code de chaque borne pour répondre aux questions.</p>
+        
+        <button class="btn btn-primary" onclick="openScannerModal()" id="btn-open-scan" style="margin-top: 10px;">
+          📷 Scanner une pancarte
+        </button>
+      </div>
+
       <div class="card">
-        <span class="badge" id="scan-badge">Bienvenue au Domaine</span>
-        <h2 id="scan-title">Carnet de quête ouvert !</h2>
-        <p id="scan-desc">Votre mission : sillonner les allées à la recherche des 17 pancartes réparties dans le Labyrinthe (dans l'ordre de votre choix). À chaque étape, scannez le QR code et répondez à la question : chaque bonne réponse libère une lettre magique !</p>
-        <div id="reader"></div>
-        <button class="btn btn-primary" onclick="startCamera()" id="btn-camera">Activer le scanner</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h2 style="font-size: 1.05rem; margin:0;" id="hub-list-title">Vos 17 Questions</h2>
+          <span style="font-size: 0.85rem; font-weight:700; color:var(--accent);" id="hub-progress">0 / 17</span>
+        </div>
+        <div id="questions-hub-list"></div>
+
+        <button class="btn btn-accent" onclick="finishExploration()" id="btn-finish-quiz" style="margin-top: 14px;">
+          ✨ J'ai terminé / Révéler mes lettres
+        </button>
       </div>
     </section>
 
-    <!-- 2. QUESTION / ÉTAPE (MODIFIABLE) -->
+    <!-- 2. QUESTION / ÉTAPE -->
     <section id="screen-step" class="screen">
       <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
           <span class="badge" id="step-badge">Pancarte</span>
-          <button class="btn-text" onclick="showScreen('screen-menu')" style="margin-top:0; font-weight:600;" id="btn-menu-back">📋 Voir toutes les étapes</button>
+          <button class="btn-text" onclick="showScreen('screen-hub')" style="margin-top:0; font-weight:700;" id="btn-hub-back">↩ Revenir au parcours</button>
         </div>
+        
         <h2 id="step-title">Titre</h2>
         
         <!-- Texte intégral traduit pour la version anglaise -->
-        <div id="step-text" style="display: none; margin-bottom: 16px; background:#FAF8F5; padding:14px; border-radius:12px; font-size:0.92rem; border-left:3px solid var(--accent); line-height:1.6;"></div>
+        <div id="step-text" style="display: none; margin-bottom: 14px; background:#FAF8F5; padding:12px; border-radius:12px; font-size:0.9rem; border-left:3px solid var(--accent); line-height:1.55;"></div>
         
         <div id="step-question-box">
-          <p id="step-question" style="font-weight: 600; font-size: 1rem;"></p>
-          <div id="step-options" style="margin-top: 14px;"></div>
-          <div id="step-feedback" class="feedback"></div>
+          <p id="step-question" style="font-weight: 600; font-size: 0.98rem;"></p>
+          <div id="step-options" style="margin-top: 12px;"></div>
+          <div id="step-note" style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">✓ Choix enregistré (modifiable à tout moment).</div>
         </div>
 
-        <button class="btn btn-accent" onclick="showScreen('screen-grid')" style="margin-top: 15px;" id="btn-to-grid">Voir les mots magiques</button>
+        <button class="btn btn-primary" onclick="showScreen('screen-hub')" style="margin-top: 16px;" id="btn-save-step">Valider et continuer</button>
       </div>
     </section>
 
-    <!-- 3. MENU / PARCOURS DES QUESTIONS (POUR REVOIR & MODIFIER) -->
-    <section id="screen-menu" class="screen">
-      <div class="card">
-        <span class="badge" id="menu-badge">Parcours</span>
-        <h2 id="menu-title">Vos questions débloquées</h2>
-        <p id="menu-desc" style="color:var(--text-muted); font-size:0.88rem;">Cliquez sur une étape déjà découverte pour relire le contenu ou modifier votre réponse :</p>
-        <div id="unlocked-steps-list"></div>
-      </div>
-    </section>
-
-    <!-- 4. MOTS MAGIQUES -->
+    <!-- 3. MOTS MAGIQUES (DÉVERROUILLÉ APRÈS AVOIR CLIQUE SUR "J'AI TERMINÉ") -->
     <section id="screen-grid" class="screen">
-      <div class="card">
+      <div class="card card-pattern">
         <span class="badge" id="grid-badge">Mots Magiques</span>
-        <h2 id="grid-title">Décodez l'énigme</h2>
-        <p id="grid-desc">Cliquez sur vos lettres récoltées ou tapez directement dans les cases :</p>
+        <h2 id="grid-title">Décodez l'énigme finale</h2>
+        <p id="grid-desc">Glissez vos lettres récoltées (mélangées) ou tapez directement dans les cases :</p>
         
         <div class="harvested-pool">
-          <h3 id="pool-title">Lettres récoltées (<span id="letter-count">0</span>/17)</h3>
+          <h3 id="pool-title" style="font-size:0.8rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:8px;">
+            Vos Lettres Récoltées (<span id="letter-count">0</span>/17)
+          </h3>
           <div class="letters-flex" id="letters-pool"></div>
         </div>
 
         <div id="grid-container" style="margin: 15px 0;">
           <div class="word-row" id="row-traditions"></div>
-          <div style="text-align: center; font-size: 1.3rem; font-weight: 800; color: var(--accent); margin: 4px 0;">&</div>
+          <div style="text-align: center; font-size: 1.3rem; font-weight: 800; color: var(--accent); margin: 2px 0;">&</div>
           <div class="word-row" id="row-terroir"></div>
         </div>
 
         <button class="btn btn-primary" onclick="validateSecretWord()" id="btn-validate">Valider les mots magiques</button>
-        <button class="btn btn-text" onclick="forceFinishGame()" id="btn-give-up">Terminer le jeu et voir les réponses</button>
+        <button class="btn btn-text" onclick="showScreen('screen-hub')" id="btn-return-edit">↩ Revenir aux questions et modifier mes réponses</button>
+        <button class="btn btn-text" onclick="forceFinishGame()" id="btn-give-up" style="color:var(--danger);">Terminer le jeu et voir les réponses</button>
       </div>
     </section>
 
-    <!-- 5. ÉCRAN DE FIN -->
+    <!-- 4. ÉCRAN DE FIN / CORRECTION -->
     <section id="screen-review" class="screen">
-      <div class="card" style="text-align: center;">
+      <div class="card card-pattern" style="text-align: center;">
         <span class="badge" style="background:#EAF7ED; color:var(--success);" id="review-badge">Challenge Réussi</span>
         <h2 id="review-title">Félicitations ! 🎉</h2>
-        <p id="review-secret" style="font-family: 'Cinzel', serif; font-size: 1.35rem; font-weight: 800; color: var(--primary); margin: 14px 0; letter-spacing: 1.5px; border-top: 1px solid var(--wood-border); border-bottom: 1px solid var(--wood-border); padding: 8px 0;">TRADITIONS & TERROIR</p>
-        <p id="review-desc" style="color: var(--text-muted); font-size: 0.95rem;">Grâce à votre perspicacité, l'histoire et le savoir-faire de notre Domaine à Grand-Coude n'ont plus de secret pour vous. Après cette belle exploration au cœur du Labyrinthe, une dégustation de nos thés artisanaux est bien méritée !</p>
+        <p id="review-secret" style="font-family: 'Cinzel', serif; font-size: 1.35rem; font-weight: 800; color: var(--primary); margin: 12px 0; letter-spacing: 1px; border-top: 1px solid var(--wood-border); border-bottom: 1px solid var(--wood-border); padding: 8px 0;">TRADITIONS & TERROIR</p>
+        <p id="review-desc" style="color: var(--text-muted); font-size: 0.92rem;">Grâce à votre perspicacité, l'histoire et le savoir-faire de notre Domaine à Grand-Coude n'ont plus de secret pour vous. Une dégustation de nos thés artisanaux est bien méritée !</p>
         <button class="btn btn-outline" onclick="renderAllQuestionsReview()" id="btn-show-all">Consulter toutes les explications & réponses</button>
       </div>
       <div id="review-questions-list"></div>
     </section>
   </main>
 
+  <!-- MODAL SCANNER -->
+  <div id="scanner-modal">
+    <div style="width: 100%; max-width: 360px; text-align: right; margin-bottom: 8px;">
+      <button onclick="closeScannerModal()" style="background: white; border: none; border-radius: 50%; width: 32px; height: 32px; font-weight: 800; font-size: 1rem; cursor: pointer;">✕</button>
+    </div>
+    <div id="reader"></div>
+  </div>
+
   <nav class="bottom-nav">
-    <div class="nav-item active" onclick="showScreen('screen-scan');" id="nav-scan">
-      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 4h-4v2h6v-6h-2v4zM7 7h10v10H7z"/></svg>
-      <span>Scanner</span>
-    </div>
-    <div class="nav-item" onclick="showScreen('screen-menu')" id="nav-menu">
+    <div class="nav-item active" onclick="showScreen('screen-hub');" id="nav-hub">
       <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-      <span>Parcours</span>
+      <span id="nav-hub-label">Parcours</span>
     </div>
-    <div class="nav-item" onclick="showScreen('screen-grid')" id="nav-grid">
+    <div class="nav-item" onclick="openScannerModal();" id="nav-scan">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 4h-4v2h6v-6h-2v4zM7 7h10v10H7z"/></svg>
+      <span id="nav-scan-label">Scanner</span>
+    </div>
+    <div class="nav-item" onclick="handleGridNav();" id="nav-grid">
       <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-4h4v4zm0-6H7V7h4v4zm6 6h-4v-4h4v4zm0-6h-4V7h4v4z"/></svg>
-      <span>Mots Magiques</span>
+      <span id="nav-grid-label">Mots Magiques</span>
     </div>
   </nav>
 
@@ -578,9 +618,10 @@
 
     let currentLang = 'fr';
     let gameState = {
-      unlockedSteps: [], // IDs débloqués par QR code
-      harvested: {},     // { stepId: 'T' }
-      answered: {},      // { stepId: selectedOptionId }
+      unlockedSteps: [],
+      answered: {},
+      harvestedShuffled: [],
+      quizFinished: false,
       unlockedAll: false
     };
 
@@ -589,6 +630,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       loadState();
       buildGrid();
+      renderHub();
       checkUrlParams();
     });
 
@@ -599,39 +641,36 @@
       
       const activeStepId = document.getElementById('screen-step').dataset.stepId;
       if (activeStepId) renderStep(parseInt(activeStepId));
-      if (document.getElementById('screen-menu').classList.contains('active')) renderUnlockedStepsMenu();
+      renderHub();
+      if (gameState.quizFinished) renderPool();
       if (gameState.unlockedAll) renderAllQuestionsReview();
     }
 
     function updateUITexts() {
       const isFr = currentLang === 'fr';
-      document.getElementById('app-title').innerText = isFr ? "🌿 Challenge des Experts" : "🌿 Experts Challenge";
-      document.getElementById('scan-badge').innerText = isFr ? "Bienvenue au Domaine" : "Welcome to the Estate";
-      document.getElementById('scan-title').innerText = isFr ? "Carnet de quête ouvert !" : "Quest log activated!";
-      document.getElementById('scan-desc').innerText = isFr 
-        ? "Votre mission : sillonner les allées à la recherche des 17 pancartes réparties dans le Labyrinthe (dans l'ordre de votre choix). À chaque étape, scannez le QR code et répondez à la question : chaque bonne réponse libère une lettre magique !"
-        : "Your mission: explore the paths to hunt down the 17 stations hidden throughout the Labyrinth (in any order). At each stop, scan the QR code and answer the question: every correct answer grants you a magic letter!";
-      document.getElementById('btn-camera').innerText = isFr ? "Activer le scanner" : "Open Camera Scanner";
-      document.getElementById('btn-menu-back').innerText = isFr ? "📋 Voir toutes les étapes" : "📋 View all unlocked stations";
+      document.getElementById('hub-badge').innerText = isFr ? "Aventure au Labyrinthe" : "Maze Adventure";
+      document.getElementById('hub-title').innerText = isFr ? "Bienvenue au Labyrinthe !" : "Welcome to the Labyrinth!";
+      document.getElementById('hub-desc').innerText = isFr 
+        ? "Parcourez les allées et retrouvez les 17 pancartes (dans l'ordre de votre choix). Scannez le QR code de chaque borne pour répondre aux questions."
+        : "Explore the pathways and hunt down all 17 stations (in any order). Scan each marker's QR code to answer questions.";
+      document.getElementById('btn-open-scan').innerText = isFr ? "📷 Scanner une pancarte" : "📷 Scan a Station";
+      document.getElementById('hub-list-title').innerText = isFr ? "Vos 17 Questions" : "Your 17 Questions";
+      document.getElementById('btn-finish-quiz').innerText = isFr ? "✨ J'ai terminé / Révéler mes lettres" : "✨ Finished / Reveal my letters";
       
-      document.getElementById('menu-badge').innerText = isFr ? "Parcours" : "Quest Trail";
-      document.getElementById('menu-title').innerText = isFr ? "Vos questions débloquées" : "Your unlocked questions";
-      document.getElementById('menu-desc').innerText = isFr 
-        ? "Cliquez sur une étape déjà découverte pour relire le contenu ou modifier votre réponse :" 
-        : "Click any discovered station to re-read stories or change your answers:";
-
-      document.getElementById('grid-title').innerText = isFr ? "Décodez l'énigme" : "Decode the mystery words";
-      document.getElementById('grid-desc').innerText = isFr ? "Cliquez sur vos lettres récoltées ou tapez directement dans les cases :" : "Click your harvested letters or type directly into the boxes:";
+      document.getElementById('btn-hub-back').innerText = isFr ? "↩ Revenir au parcours" : "↩ Back to quest trail";
+      document.getElementById('btn-save-step').innerText = isFr ? "Valider et continuer" : "Save & Continue";
+      
+      document.getElementById('grid-title').innerText = isFr ? "Décodez l'énigme finale" : "Decode the Final Mystery";
+      document.getElementById('grid-desc').innerText = isFr 
+        ? "Glissez vos lettres récoltées (mélangées) ou tapez directement dans les cases :" 
+        : "Drag your harvested letters (shuffled) or type directly into boxes:";
       document.getElementById('btn-validate').innerText = isFr ? "Valider les mots magiques" : "Check Secret Words";
+      document.getElementById('btn-return-edit').innerText = isFr ? "↩ Revenir aux questions et modifier mes réponses" : "↩ Edit my previous answers";
       document.getElementById('btn-give-up').innerText = isFr ? "Terminer le jeu et voir les réponses" : "Finish game and reveal answers";
-      document.getElementById('btn-to-grid').innerText = isFr ? "Voir les mots magiques" : "View Mystery Words";
       
-      document.getElementById('review-badge').innerText = isFr ? "Challenge Réussi" : "Challenge Completed";
-      document.getElementById('review-title').innerText = isFr ? "Félicitations ! 🎉" : "Congratulations! 🎉";
-      document.getElementById('review-desc').innerText = isFr 
-        ? "Grâce à votre perspicacité, l'histoire et le savoir-faire de notre Domaine à Grand-Coude n'ont plus de secret pour vous. Après cette belle exploration au cœur du Labyrinthe, une dégustation de nos thés artisanaux est bien méritée !"
-        : "Thanks to your insight, the rich heritage and artisanal craft of our estate in Grand-Coude are no longer a secret to you. After this wonderful journey through the Labyrinth, a tasting of our artisanal teas is well deserved!";
-      document.getElementById('btn-show-all').innerText = isFr ? "Consulter toutes les explications & réponses" : "View all answers and stories";
+      document.getElementById('nav-hub-label').innerText = isFr ? "Parcours" : "Quest Trail";
+      document.getElementById('nav-scan-label').innerText = isFr ? "Scanner" : "Scanner";
+      document.getElementById('nav-grid-label').innerText = isFr ? "Mots Magiques" : "Secret Words";
     }
 
     function showScreen(screenId) {
@@ -639,45 +678,52 @@
       document.getElementById(screenId).classList.add('active');
 
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      if (screenId === 'screen-scan') document.getElementById('nav-scan').classList.add('active');
-      if (screenId === 'screen-menu') {
-        document.getElementById('nav-menu').classList.add('active');
-        renderUnlockedStepsMenu();
-      }
-      if (screenId === 'screen-grid') {
-        document.getElementById('nav-grid').classList.add('active');
-        renderPool();
-      }
-
-      if (screenId !== 'screen-scan' && html5QrCode && html5QrCode.isScanning) {
-        html5QrCode.stop().catch(() => {});
-      }
+      if (screenId === 'screen-hub') document.getElementById('nav-hub').classList.add('active');
+      if (screenId === 'screen-grid') document.getElementById('nav-grid').classList.add('active');
     }
 
-    async function startCamera() {
-      const btn = document.getElementById('btn-camera');
-      btn.innerText = currentLang === 'fr' ? "Initialisation..." : "Starting...";
-      btn.disabled = true;
-
+    /* SCANNER MODAL AMÉLIORÉ (IPHONE & SAMSUNG COMPATIBLE) */
+    async function openScannerModal() {
+      document.getElementById('scanner-modal').classList.add('active');
+      
       try {
         if (html5QrCode) {
-          try { await html5QrCode.stop(); } catch (e) {}
+          try { await html5QrCode.stop(); } catch(e) {}
         }
 
         html5QrCode = new Html5Qrcode("reader");
-        const qrBoxSize = Math.min(window.innerWidth * 0.7, 240);
-
+        
         await html5QrCode.start(
           { facingMode: "environment" },
-          { fps: 10, qrbox: { width: qrBoxSize, height: qrBoxSize } },
-          (decodedText) => handleQrPayload(decodedText)
+          { fps: 15, qrbox: 240, aspectRatio: 1.0 },
+          (decodedText) => {
+            handleQrPayload(decodedText);
+            closeScannerModal();
+          }
         );
-        btn.innerText = currentLang === 'fr' ? "Scanner actif" : "Scanner active";
-      } catch (err) {
-        btn.disabled = false;
-        btn.innerText = currentLang === 'fr' ? "Réessayer la caméra" : "Retry Camera";
-        alert(currentLang === 'fr' ? "Accès caméra refusé. Vérifiez vos autorisations." : "Camera access denied. Please check permissions.");
+      } catch(err) {
+        console.warn("Échec caméra arrière, tentative caméra par défaut...", err);
+        try {
+          await html5QrCode.start(
+            { facingMode: "user" },
+            { fps: 15, qrbox: 240 },
+            (decodedText) => {
+              handleQrPayload(decodedText);
+              closeScannerModal();
+            }
+          );
+        } catch(fallbackErr) {
+          closeScannerModal();
+          alert(currentLang === 'fr' ? "Accès à la caméra refusé. Vérifiez vos réglages de navigateur (HTTPS requis)." : "Camera access denied. Please check permissions.");
+        }
       }
+    }
+
+    async function closeScannerModal() {
+      if (html5QrCode && html5QrCode.isScanning) {
+        try { await html5QrCode.stop(); } catch(e) {}
+      }
+      document.getElementById('scanner-modal').classList.remove('active');
     }
 
     function handleQrPayload(text) {
@@ -697,7 +743,6 @@
               gameState.unlockedSteps.push(step.id);
               saveState();
             }
-            if (html5QrCode && html5QrCode.isScanning) html5QrCode.stop();
             renderStep(step.id);
             showScreen('screen-step');
             return;
@@ -729,103 +774,38 @@
       }
     }
 
-    // AFFICHE ET PERMET DE MODIFIER UNE QUESTION
-    function renderStep(stepId) {
-      const step = GAME_DATA.find(s => s.id === stepId);
-      const isFr = currentLang === 'fr';
-      const screen = document.getElementById('screen-step');
-      screen.dataset.stepId = stepId;
-
-      document.getElementById('step-badge').innerText = `${isFr ? 'Pancarte' : 'Station'} ${step.id} / 17`;
-      document.getElementById('step-title').innerText = isFr ? step.title_fr : step.title_en;
-      
-      // En anglais : texte explicatif TOUJOURS visible
-      const textBox = document.getElementById('step-text');
-      if (!isFr || gameState.unlockedAll) {
-        textBox.innerText = isFr ? step.text_fr : step.text_en;
-        textBox.style.display = 'block';
-      } else {
-        textBox.style.display = 'none';
-      }
-
-      document.getElementById('step-question').innerText = isFr ? step.q_fr : step.q_en;
-      
-      const optionsBox = document.getElementById('step-options');
-      optionsBox.innerHTML = '';
-      const feedbackBox = document.getElementById('step-feedback');
-
-      const options = isFr ? step.options_fr : step.options_en;
-      const currentAnswer = gameState.answered[step.id];
-
-      options.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerHTML = `<span class="option-tag">${opt.id}</span> <span>${opt.text}</span>`;
-        
-        if (currentAnswer) {
-          if (opt.id === currentAnswer && opt.correct) btn.classList.add('selected-correct');
-          if (opt.id === currentAnswer && !opt.correct) btn.classList.add('selected-wrong');
-        }
-
-        // L'utilisateur peut cliquer à tout moment pour modifier sa réponse
-        btn.onclick = () => selectOption(step, opt);
-        optionsBox.appendChild(btn);
-      });
-
-      if (currentAnswer) {
-        const isCorrect = options.find(o => o.id === currentAnswer)?.correct;
-        feedbackBox.innerHTML = isCorrect 
-          ? (isFr ? `✓ Réponse enregistrée ! Lettre remportée : <strong>${step.letter}</strong> (Modifiable à tout moment)` : `✓ Answer saved! Letter collected: <strong>${step.letter}</strong> (Editable anytime)`)
-          : (isFr ? `Mauvaise réponse sélectionnée (aucune lettre). Cliquez sur un autre choix pour corriger.` : `Wrong choice selected (no letter). Click another option to modify.`);
-        feedbackBox.className = `feedback ${isCorrect ? 'success' : 'danger'}`;
-      } else {
-        feedbackBox.style.display = 'none';
-      }
-    }
-
-    function selectOption(step, selectedOpt) {
-      gameState.answered[step.id] = selectedOpt.id;
-      
-      if (selectedOpt.correct) {
-        gameState.harvested[step.id] = step.letter;
-      } else {
-        delete gameState.harvested[step.id]; // Retire la lettre si modifiée en mauvaise réponse
-      }
-      
-      saveState();
-      renderStep(step.id);
-      renderPool();
-    }
-
-    // MENU RÉCAPITULATIF DES QUESTIONS
-    function renderUnlockedStepsMenu() {
-      const list = document.getElementById('unlocked-steps-list');
+    /* RENDU DU HUB (LISTE DES 17 QUESTIONS) */
+    function renderHub() {
+      const list = document.getElementById('questions-hub-list');
       list.innerHTML = '';
       const isFr = currentLang === 'fr';
+
+      let answeredCount = 0;
 
       GAME_DATA.forEach(step => {
         const isUnlocked = gameState.unlockedSteps.includes(step.id) || gameState.unlockedAll;
         const answer = gameState.answered[step.id];
+        if (answer) answeredCount++;
 
         const item = document.createElement('div');
         item.className = `steps-menu-item ${answer ? 'answered' : ''} ${!isUnlocked ? 'locked' : ''}`;
         
         let statusBadge = "";
         if (!isUnlocked) {
-          statusBadge = `<span style="color:#94a3b8; font-size:0.8rem;">🔒 ${isFr ? 'À scanner' : 'Scan needed'}</span>`;
+          statusBadge = `<span style="color:#94a3b8; font-size:0.75rem; font-weight:700;">🔒 ${isFr ? 'À scanner' : 'Scan needed'}</span>`;
         } else if (answer) {
-          const isCorrect = step.options_fr.find(o => o.id === answer)?.correct;
-          statusBadge = isCorrect 
-            ? `<span style="color:var(--success); font-weight:700; font-size:0.85rem;">✓ Lettre: ${step.letter} (Modifier)</span>` 
-            : `<span style="color:var(--danger); font-weight:700; font-size:0.85rem;">✗ Erreur (Modifier)</span>`;
+          statusBadge = `<span style="color:var(--primary); font-weight:700; font-size:0.8rem;">✓ ${isFr ? 'Répondu (Modifier)' : 'Answered (Edit)'}</span>`;
         } else {
-          statusBadge = `<span style="color:var(--accent); font-weight:700; font-size:0.85rem;">⚡ ${isFr ? 'Débloqué (Répondre)' : 'Ready (Answer)'}</span>`;
+          statusBadge = `<span style="color:var(--accent); font-weight:700; font-size:0.8rem;">⚡ ${isFr ? 'À remplir' : 'Open'}</span>`;
         }
 
         item.innerHTML = `
-          <div>
-            <strong style="font-size:0.95rem; color:var(--primary-dark);">${isFr ? 'Pancarte' : 'Station'} ${step.id}</strong>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin:2px 0 0 0;">${isFr ? step.title_fr : step.title_en}</p>
+          <div style="display:flex; align-items:center;">
+            <div class="target-badge">${step.id}</div>
+            <div>
+              <strong style="font-size:0.9rem; color:var(--primary-dark);">${isFr ? 'Pancarte' : 'Station'} ${step.id}</strong>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">${isFr ? step.title_fr : step.title_en}</p>
+            </div>
           </div>
           <div>${statusBadge}</div>
         `;
@@ -839,24 +819,100 @@
 
         list.appendChild(item);
       });
+
+      document.getElementById('hub-progress').innerText = `${answeredCount} / 17`;
     }
 
+    /* AFFICHAGE & ÉDITION D'UNE ÉTAPE */
+    function renderStep(stepId) {
+      const step = GAME_DATA.find(s => s.id === stepId);
+      const isFr = currentLang === 'fr';
+      const screen = document.getElementById('screen-step');
+      screen.dataset.stepId = stepId;
+
+      document.getElementById('step-badge').innerText = `${isFr ? 'Pancarte' : 'Station'} ${step.id} / 17`;
+      document.getElementById('step-title').innerText = isFr ? step.title_fr : step.title_en;
+      
+      const textBox = document.getElementById('step-text');
+      if (!isFr || gameState.unlockedAll) {
+        textBox.innerText = isFr ? step.text_fr : step.text_en;
+        textBox.style.display = 'block';
+      } else {
+        textBox.style.display = 'none';
+      }
+
+      document.getElementById('step-question').innerText = isFr ? step.q_fr : step.q_en;
+      
+      const optionsBox = document.getElementById('step-options');
+      optionsBox.innerHTML = '';
+
+      const options = isFr ? step.options_fr : step.options_en;
+      const currentAnswer = gameState.answered[step.id];
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = `option-btn ${currentAnswer === opt.id ? 'selected-neutral' : ''}`;
+        btn.innerHTML = `<span class="option-tag">${opt.id}</span> <span>${opt.text}</span>`;
+        
+        btn.onclick = () => {
+          gameState.answered[step.id] = opt.id;
+          saveState();
+          renderStep(step.id);
+          renderHub();
+        };
+        optionsBox.appendChild(btn);
+      });
+    }
+
+    /* VALIDATION DU PARCOURS & RÉVÉLATION EN DÉSORDRE */
+    function finishExploration() {
+      // Calcul des lettres gagnées
+      let wonLetters = [];
+      GAME_DATA.forEach(step => {
+        const ans = gameState.answered[step.id];
+        if (ans) {
+          const opt = step.options_fr.find(o => o.id === ans);
+          if (opt && opt.correct) {
+            wonLetters.push(step.letter);
+          }
+        }
+      });
+
+      // Mélange aléatoire (Désordre total)
+      wonLetters.sort(() => Math.random() - 0.5);
+      gameState.harvestedShuffled = wonLetters;
+      gameState.quizFinished = true;
+      saveState();
+
+      renderPool();
+      showScreen('screen-grid');
+    }
+
+    function handleGridNav() {
+      if (!gameState.quizFinished) {
+        finishExploration();
+      } else {
+        renderPool();
+        showScreen('screen-grid');
+      }
+    }
+
+    /* GRILLE MOTS MAGIQUES & DRAG & DROP TACTILE */
     function buildGrid() {
       const row1 = document.getElementById('row-traditions');
       const row2 = document.getElementById('row-terroir');
       row1.innerHTML = '';
       row2.innerHTML = '';
 
-      createInputBoxes("TRADITIONS", row1, 0);
-      createInputBoxes("TERROIR", row2, 10);
+      createInputBoxes("TRADITIONS", row1);
+      createInputBoxes("TERROIR", row2);
     }
 
-    function createInputBoxes(word, container, offset) {
+    function createInputBoxes(word, container) {
       for (let i = 0; i < word.length; i++) {
         const input = document.createElement('input');
         input.className = 'char-box';
         input.maxLength = 1;
-        input.dataset.globalIndex = offset + i;
         input.oninput = (e) => {
           e.target.value = e.target.value.toUpperCase();
           if (e.target.value) {
@@ -871,16 +927,76 @@
     function renderPool() {
       const pool = document.getElementById('letters-pool');
       pool.innerHTML = '';
-      const letters = Object.values(gameState.harvested);
+      const letters = gameState.harvestedShuffled || [];
       document.getElementById('letter-count').innerText = letters.length;
 
-      letters.forEach(letter => {
+      letters.forEach((letter, idx) => {
         const chip = document.createElement('div');
         chip.className = 'letter-chip';
         chip.innerText = letter;
+        chip.dataset.letter = letter;
+        chip.dataset.index = idx;
+
+        // Clic rapide pour remplir
         chip.onclick = () => fillNextEmptyInput(letter);
+
+        // Tactile Drag & Drop (Touch Events)
+        chip.addEventListener('touchstart', handleTouchStart, { passive: false });
+        chip.addEventListener('touchmove', handleTouchMove, { passive: false });
+        chip.addEventListener('touchend', handleTouchEnd, { passive: false });
+
         pool.appendChild(chip);
       });
+    }
+
+    let activeDragChip = null;
+    let touchClone = null;
+
+    function handleTouchStart(e) {
+      activeDragChip = e.currentTarget;
+      const touch = e.touches[0];
+      
+      touchClone = activeDragChip.cloneNode(true);
+      touchClone.style.position = 'fixed';
+      touchClone.style.zIndex = '999';
+      touchClone.style.opacity = '0.85';
+      touchClone.style.pointerEvents = 'none';
+      touchClone.style.left = `${touch.clientX - 20}px`;
+      touchClone.style.top = `${touch.clientY - 20}px`;
+      document.body.appendChild(touchClone);
+      activeDragChip.classList.add('dragging');
+    }
+
+    function handleTouchMove(e) {
+      if (!touchClone) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      touchClone.style.left = `${touch.clientX - 20}px`;
+      touchClone.style.top = `${touch.clientY - 20}px`;
+
+      const targetBox = document.elementFromPoint(touch.clientX, touch.clientY);
+      document.querySelectorAll('.char-box').forEach(b => b.classList.remove('drag-over'));
+      if (targetBox && targetBox.classList.contains('char-box')) {
+        targetBox.classList.add('drag-over');
+      }
+    }
+
+    function handleTouchEnd(e) {
+      if (!touchClone) return;
+      const touch = e.changedTouches[0];
+      const targetBox = document.elementFromPoint(touch.clientX, touch.clientY);
+
+      if (targetBox && targetBox.classList.contains('char-box')) {
+        targetBox.value = activeDragChip.dataset.letter;
+        targetBox.classList.remove('drag-over');
+      }
+
+      touchClone.remove();
+      touchClone = null;
+      if (activeDragChip) {
+        activeDragChip.classList.remove('dragging');
+        activeDragChip = null;
+      }
     }
 
     function fillNextEmptyInput(letter) {
@@ -903,14 +1019,14 @@
       if (w1.toUpperCase() === "TRADITIONS" && w2.toUpperCase() === "TERROIR") {
         finishGameSuccess();
       } else {
-        alert(currentLang === 'fr' ? "Les mots ne sont pas tout à fait corrects, cherchez encore !" : "Not quite right, keep searching!");
+        alert(currentLang === 'fr' ? "Les mots ne sont pas tout à fait corrects, continuez à chercher !" : "Not quite right, keep searching!");
       }
     }
 
     function forceFinishGame() {
       const confirmMsg = currentLang === 'fr' 
-        ? "Voulez-vous terminer l'aventure et afficher toutes les réponses ?" 
-        : "Do you want to end the adventure and view all answers?";
+        ? "Voulez-vous terminer le jeu et voir toutes les explications et réponses ?" 
+        : "Do you want to finish the game and view all answers?";
       if (confirm(confirmMsg)) {
         finishGameSuccess();
       }
@@ -935,7 +1051,7 @@
           <h2>${isFr ? step.title_fr : step.title_en}</h2>
           <p style="font-size:0.9rem; color:#475569; margin-bottom:10px; line-height:1.5;">${isFr ? step.text_fr : step.text_en}</p>
           <p><strong>Q :</strong> ${isFr ? step.q_fr : step.q_en}</p>
-          <p style="color:var(--success); font-weight:600;">✓ ${isFr ? step.options_fr.find(o=>o.correct).text : step.options_en.find(o=>o.correct).text}</p>
+          <p style="color:var(--success); font-weight:700;">✓ ${isFr ? step.options_fr.find(o=>o.correct).text : step.options_en.find(o=>o.correct).text}</p>
         `;
         list.appendChild(card);
       });
