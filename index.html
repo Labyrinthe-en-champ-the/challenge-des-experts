@@ -26,33 +26,31 @@
       --danger: #991B1B;
       --wood-border: #D1C7B7;
       --radius: 16px;
-      --shadow: 0 8px 24px rgba(18, 38, 19, 0.08);
+      --shadow: 0 4px 16px rgba(18, 38, 19, 0.06);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 80px; }
 
-    /* Header avec fond végétal subtil */
+    /* Header Clair pour faire ressortir le Logo */
     header {
-      background: linear-gradient(135deg, rgba(30,63,32,0.95), rgba(18,38,19,0.98)), url('./width_1599.webp');
-      background-size: cover;
-      color: white;
-      padding: 12px 16px;
+      background: #FFFFFF;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
       border-bottom: 2px solid var(--accent);
     }
-    .header-logo { height: 34px; object-fit: contain; }
+    .header-logo { height: 42px; max-width: 70%; object-fit: contain; }
 
     .lang-switch {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid var(--accent);
-      color: white;
+      background: #FAF8F5;
+      border: 1.5px solid var(--accent);
+      color: var(--primary-dark);
       padding: 5px 12px;
       border-radius: 20px;
       font-weight: 700;
@@ -60,21 +58,21 @@
       cursor: pointer;
     }
 
-    main { padding: 14px; max-width: 580px; margin: 0 auto; }
+    main { padding: 12px; max-width: 540px; margin: 0 auto; }
     .screen { display: none; }
-    .screen.active { display: block; animation: fadeIn 0.25s ease-out; }
+    .screen.active { display: block; animation: fadeIn 0.2s ease-out; }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 18px 16px;
+      padding: 16px 14px;
       box-shadow: var(--shadow);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       border: 1px solid var(--wood-border);
       position: relative;
     }
@@ -90,30 +88,30 @@
       gap: 5px;
       background: #EAF2EB;
       color: var(--primary);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
       text-transform: uppercase;
     }
 
     h2 {
       font-family: 'Cinzel', serif;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: var(--primary-dark);
-      margin-bottom: 10px;
-      line-height: 1.35;
+      margin-bottom: 8px;
+      line-height: 1.3;
     }
-    p { margin-bottom: 10px; font-size: 0.93rem; }
+    p { margin-bottom: 8px; font-size: 0.9rem; }
 
     .btn {
       display: block;
       width: 100%;
-      padding: 14px 18px;
+      padding: 13px 16px;
       border: none;
       border-radius: var(--radius);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
       cursor: pointer;
       text-align: center;
@@ -123,46 +121,45 @@
     .btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
-      box-shadow: 0 4px 12px rgba(30, 63, 32, 0.25);
+      box-shadow: 0 4px 12px rgba(30, 63, 32, 0.2);
     }
     .btn-accent {
       background: linear-gradient(135deg, var(--accent), #d6ae3c);
       color: var(--primary-dark);
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .btn-outline {
       background: transparent;
       border: 2px solid var(--primary);
       color: var(--primary);
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .btn-text {
       background: transparent;
       color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-top: 10px;
+      font-size: 0.82rem;
+      margin-top: 8px;
       text-decoration: underline;
     }
 
-    /* Options QCM Sobre (Pas de spoil vert/rouge) */
+    /* Options QCM */
     .option-btn {
       background: #FAF8F5;
-      border: 2px solid var(--wood-border);
-      border-radius: var(--radius);
-      padding: 12px 14px;
+      border: 1.5px solid var(--wood-border);
+      border-radius: 12px;
+      padding: 11px 12px;
       width: 100%;
       text-align: left;
-      font-size: 0.93rem;
+      font-size: 0.9rem;
       margin-bottom: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
-      transition: all 0.15s ease;
+      gap: 8px;
     }
     .option-tag {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       background: #E5DFD5;
       color: var(--primary-dark);
@@ -171,7 +168,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
     .option-btn.selected-neutral {
       background: #EAF2EB;
@@ -181,93 +178,101 @@
     }
     .option-btn.selected-neutral .option-tag { background: var(--selected); color: white; }
 
-    /* Liste des Questions Hub */
+    /* Hub List */
     .steps-menu-item {
       background: #FFFFFF;
       border: 1px solid var(--wood-border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
     }
     .steps-menu-item.answered { border-left: 4px solid var(--accent); background: #FAF8F5; }
-    .steps-menu-item.locked { opacity: 0.65; }
+    .steps-menu-item.locked { opacity: 0.6; }
 
     .target-badge {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: var(--primary);
-      border: 2px solid var(--accent);
+      border: 1.5px solid var(--accent);
       color: white;
       font-family: 'Cinzel', serif;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       flex-shrink: 0;
-      margin-right: 10px;
+      margin-right: 8px;
     }
 
-    /* Grille Mots Magiques Responsive Samsung/iPhone */
+    /* Grille Ultra-Responsive Samsung/iPhone */
+    .grid-wrapper {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 2px 0;
+    }
     .word-row {
       display: flex;
-      gap: min(1.2vw, 5px);
-      justify-content: center;
-      margin: 8px 0;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2px;
       width: 100%;
+      margin: 6px 0;
     }
     .char-box {
-      width: min(8.5vw, 34px);
-      height: min(11.5vw, 44px);
-      border: 2px solid var(--wood-border);
-      border-radius: 6px;
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 32px;
+      height: 38px;
+      border: 1.5px solid var(--wood-border);
+      border-radius: 5px;
       text-align: center;
-      font-size: min(4.5vw, 1.25rem);
+      font-size: 1.05rem;
       font-weight: 800;
       text-transform: uppercase;
       background: #FFFDF9;
       color: var(--primary-dark);
-      user-select: none;
+      padding: 0;
     }
     .char-box:focus { border-color: var(--accent); outline: none; background: #FFFFFF; }
     .char-box.drag-over { border-color: var(--accent); background: #FDF4DC; }
 
-    /* Lettres Récoltées (Jetons Drag & Drop) */
+    /* Jetons de lettres */
     .harvested-pool {
       background: #F3EFE6;
       border-radius: var(--radius);
-      padding: 12px;
-      margin-bottom: 14px;
+      padding: 10px;
+      margin-bottom: 12px;
       border: 1px dashed var(--wood-border);
     }
-    .letters-flex { display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; align-items: center; }
+    .letters-flex { display: flex; flex-wrap: wrap; gap: 6px; min-height: 38px; align-items: center; }
     
     .letter-chip {
       background: linear-gradient(135deg, #FFFDF8, #F3E7C4);
-      border: 2px solid var(--accent);
+      border: 1.5px solid var(--accent);
       color: #7D5D08;
       font-family: 'Cinzel', serif;
       font-weight: 800;
-      font-size: 1.15rem;
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
+      font-size: 1.05rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: grab;
       touch-action: none;
       user-select: none;
-      box-shadow: 0 3px 6px rgba(197, 155, 39, 0.2);
+      box-shadow: 0 2px 5px rgba(197, 155, 39, 0.15);
     }
-    .letter-chip.dragging { opacity: 0.4; }
+    .letter-chip.dragging { opacity: 0.35; }
 
-    /* Scanner Modal Plein Écran */
+    /* Scanner Modal */
     #scanner-modal {
       display: none;
       position: fixed;
@@ -277,16 +282,16 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 14px;
     }
     #scanner-modal.active { display: flex; }
-    #reader { width: 100%; max-width: 360px; border-radius: var(--radius); overflow: hidden; background: black; }
+    #reader { width: 100%; max-width: 340px; border-radius: var(--radius); overflow: hidden; background: black; }
 
-    /* Navigation Basse */
+    /* Bottom Nav */
     nav.bottom-nav {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      height: 64px;
+      height: 60px;
       background: #FFFFFF;
       border-top: 1px solid var(--wood-border);
       display: flex;
@@ -298,13 +303,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       cursor: pointer;
       font-weight: 600;
     }
     .nav-item.active { color: var(--primary); font-weight: 800; }
-    .nav-item svg { width: 22px; height: 22px; margin-bottom: 2px; }
+    .nav-item svg { width: 20px; height: 20px; margin-bottom: 2px; }
   </style>
 </head>
 <body>
@@ -315,26 +320,26 @@
   </header>
 
   <main>
-    <!-- 1. HUB CENTRAL : PARCOURS & SCANNER -->
+    <!-- 1. HUB CENTRAL -->
     <section id="screen-hub" class="screen active">
       <div class="card card-pattern">
         <span class="badge" id="hub-badge">Aventure au Labyrinthe</span>
         <h2 id="hub-title">Bienvenue au Labyrinthe !</h2>
         <p id="hub-desc">Parcourez les allées et retrouvez les 17 pancartes (dans l'ordre de votre choix). Scannez le QR code de chaque borne pour répondre aux questions.</p>
         
-        <button class="btn btn-primary" onclick="openScannerModal()" id="btn-open-scan" style="margin-top: 10px;">
+        <button class="btn btn-primary" onclick="openScannerModal()" id="btn-open-scan" style="margin-top: 6px;">
           📷 Scanner une pancarte
         </button>
       </div>
 
       <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <h2 style="font-size: 1.05rem; margin:0;" id="hub-list-title">Vos 17 Questions</h2>
-          <span style="font-size: 0.85rem; font-weight:700; color:var(--accent);" id="hub-progress">0 / 17</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h2 style="font-size: 1rem; margin:0;" id="hub-list-title">Vos 17 Questions</h2>
+          <span style="font-size: 0.8rem; font-weight:700; color:var(--accent);" id="hub-progress">0 / 17</span>
         </div>
         <div id="questions-hub-list"></div>
 
-        <button class="btn btn-accent" onclick="finishExploration()" id="btn-finish-quiz" style="margin-top: 14px;">
+        <button class="btn btn-accent" onclick="finishExploration()" id="btn-finish-quiz" style="margin-top: 10px;">
           ✨ J'ai terminé / Révéler mes lettres
         </button>
       </div>
@@ -350,20 +355,20 @@
         
         <h2 id="step-title">Titre</h2>
         
-        <!-- Texte intégral traduit pour la version anglaise -->
-        <div id="step-text" style="display: none; margin-bottom: 14px; background:#FAF8F5; padding:12px; border-radius:12px; font-size:0.9rem; border-left:3px solid var(--accent); line-height:1.55;"></div>
+        <!-- Texte explicatif (Uniquement affiché en anglais ou lors de la correction finale) -->
+        <div id="step-text" style="display: none; margin-bottom: 12px; background:#FAF8F5; padding:10px; border-radius:10px; font-size:0.88rem; border-left:3px solid var(--accent); line-height:1.5;"></div>
         
         <div id="step-question-box">
-          <p id="step-question" style="font-weight: 600; font-size: 0.98rem;"></p>
-          <div id="step-options" style="margin-top: 12px;"></div>
-          <div id="step-note" style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">✓ Choix enregistré (modifiable à tout moment).</div>
+          <p id="step-question" style="font-weight: 600; font-size: 0.95rem;"></p>
+          <div id="step-options" style="margin-top: 10px;"></div>
+          <div id="step-note" style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">✓ Choix enregistré (modifiable à tout moment).</div>
         </div>
 
-        <button class="btn btn-primary" onclick="showScreen('screen-hub')" style="margin-top: 16px;" id="btn-save-step">Valider et continuer</button>
+        <button class="btn btn-primary" onclick="showScreen('screen-hub')" style="margin-top: 14px;" id="btn-save-step">Valider et continuer</button>
       </div>
     </section>
 
-    <!-- 3. MOTS MAGIQUES (DÉVERROUILLÉ APRÈS AVOIR CLIQUE SUR "J'AI TERMINÉ") -->
+    <!-- 3. MOTS MAGIQUES -->
     <section id="screen-grid" class="screen">
       <div class="card card-pattern">
         <span class="badge" id="grid-badge">Mots Magiques</span>
@@ -371,19 +376,19 @@
         <p id="grid-desc">Glissez vos lettres récoltées (mélangées) ou tapez directement dans les cases :</p>
         
         <div class="harvested-pool">
-          <h3 id="pool-title" style="font-size:0.8rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:8px;">
+          <h3 id="pool-title" style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
             Vos Lettres Récoltées (<span id="letter-count">0</span>/17)
           </h3>
           <div class="letters-flex" id="letters-pool"></div>
         </div>
 
-        <div id="grid-container" style="margin: 15px 0;">
+        <div class="grid-wrapper">
           <div class="word-row" id="row-traditions"></div>
-          <div style="text-align: center; font-size: 1.3rem; font-weight: 800; color: var(--accent); margin: 2px 0;">&</div>
+          <div style="text-align: center; font-size: 1.2rem; font-weight: 800; color: var(--accent); margin: 2px 0;">&</div>
           <div class="word-row" id="row-terroir"></div>
         </div>
 
-        <button class="btn btn-primary" onclick="validateSecretWord()" id="btn-validate">Valider les mots magiques</button>
+        <button class="btn btn-primary" onclick="validateSecretWord()" id="btn-validate" style="margin-top:12px;">Valider les mots magiques</button>
         <button class="btn btn-text" onclick="showScreen('screen-hub')" id="btn-return-edit">↩ Revenir aux questions et modifier mes réponses</button>
         <button class="btn btn-text" onclick="forceFinishGame()" id="btn-give-up" style="color:var(--danger);">Terminer le jeu et voir les réponses</button>
       </div>
@@ -394,8 +399,8 @@
       <div class="card card-pattern" style="text-align: center;">
         <span class="badge" style="background:#EAF7ED; color:var(--success);" id="review-badge">Challenge Réussi</span>
         <h2 id="review-title">Félicitations ! 🎉</h2>
-        <p id="review-secret" style="font-family: 'Cinzel', serif; font-size: 1.35rem; font-weight: 800; color: var(--primary); margin: 12px 0; letter-spacing: 1px; border-top: 1px solid var(--wood-border); border-bottom: 1px solid var(--wood-border); padding: 8px 0;">TRADITIONS & TERROIR</p>
-        <p id="review-desc" style="color: var(--text-muted); font-size: 0.92rem;">Grâce à votre perspicacité, l'histoire et le savoir-faire de notre Domaine à Grand-Coude n'ont plus de secret pour vous. Une dégustation de nos thés artisanaux est bien méritée !</p>
+        <p id="review-secret" style="font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 800; color: var(--primary); margin: 10px 0; letter-spacing: 1px; border-top: 1px solid var(--wood-border); border-bottom: 1px solid var(--wood-border); padding: 6px 0;">TRADITIONS & TERROIR</p>
+        <p id="review-desc" style="color: var(--text-muted); font-size: 0.9rem;">Grâce à votre perspicacité, l'histoire et le savoir-faire de notre Domaine à Grand-Coude n'ont plus de secret pour vous. Une dégustation de nos thés artisanaux est bien méritée !</p>
         <button class="btn btn-outline" onclick="renderAllQuestionsReview()" id="btn-show-all">Consulter toutes les explications & réponses</button>
       </div>
       <div id="review-questions-list"></div>
@@ -404,7 +409,7 @@
 
   <!-- MODAL SCANNER -->
   <div id="scanner-modal">
-    <div style="width: 100%; max-width: 360px; text-align: right; margin-bottom: 8px;">
+    <div style="width: 100%; max-width: 340px; text-align: right; margin-bottom: 8px;">
       <button onclick="closeScannerModal()" style="background: white; border: none; border-radius: 50%; width: 32px; height: 32px; font-weight: 800; font-size: 1rem; cursor: pointer;">✕</button>
     </div>
     <div id="reader"></div>
@@ -682,7 +687,7 @@
       if (screenId === 'screen-grid') document.getElementById('nav-grid').classList.add('active');
     }
 
-    /* SCANNER MODAL AMÉLIORÉ (IPHONE & SAMSUNG COMPATIBLE) */
+    /* SCANNER MODAL */
     async function openScannerModal() {
       document.getElementById('scanner-modal').classList.add('active');
       
@@ -774,7 +779,7 @@
       }
     }
 
-    /* RENDU DU HUB (LISTE DES 17 QUESTIONS) */
+    /* RENDU DU HUB */
     function renderHub() {
       const list = document.getElementById('questions-hub-list');
       list.innerHTML = '';
@@ -794,7 +799,7 @@
         if (!isUnlocked) {
           statusBadge = `<span style="color:#94a3b8; font-size:0.75rem; font-weight:700;">🔒 ${isFr ? 'À scanner' : 'Scan needed'}</span>`;
         } else if (answer) {
-          statusBadge = `<span style="color:var(--primary); font-weight:700; font-size:0.8rem;">✓ ${isFr ? 'Répondu (Modifier)' : 'Answered (Edit)'}</span>`;
+          statusBadge = `<span style="color:var(--primary); font-weight:700; font-size:0.8rem;">✓ ${isFr ? 'Répondu' : 'Answered'}</span>`;
         } else {
           statusBadge = `<span style="color:var(--accent); font-weight:700; font-size:0.8rem;">⚡ ${isFr ? 'À remplir' : 'Open'}</span>`;
         }
@@ -803,8 +808,8 @@
           <div style="display:flex; align-items:center;">
             <div class="target-badge">${step.id}</div>
             <div>
-              <strong style="font-size:0.9rem; color:var(--primary-dark);">${isFr ? 'Pancarte' : 'Station'} ${step.id}</strong>
-              <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">${isFr ? step.title_fr : step.title_en}</p>
+              <strong style="font-size:0.88rem; color:var(--primary-dark);">${isFr ? 'Pancarte' : 'Station'} ${step.id}</strong>
+              <p style="font-size:0.78rem; color:var(--text-muted); margin:0;">${isFr ? step.title_fr : step.title_en}</p>
             </div>
           </div>
           <div>${statusBadge}</div>
@@ -823,7 +828,7 @@
       document.getElementById('hub-progress').innerText = `${answeredCount} / 17`;
     }
 
-    /* AFFICHAGE & ÉDITION D'UNE ÉTAPE */
+    /* AFFICHAGE QUESTION / ÉTAPE */
     function renderStep(stepId) {
       const step = GAME_DATA.find(s => s.id === stepId);
       const isFr = currentLang === 'fr';
@@ -833,6 +838,7 @@
       document.getElementById('step-badge').innerText = `${isFr ? 'Pancarte' : 'Station'} ${step.id} / 17`;
       document.getElementById('step-title').innerText = isFr ? step.title_fr : step.title_en;
       
+      // Texte explicatif : UNIQUEMENT en anglais ou lors de la correction finale
       const textBox = document.getElementById('step-text');
       if (!isFr || gameState.unlockedAll) {
         textBox.innerText = isFr ? step.text_fr : step.text_en;
@@ -864,9 +870,8 @@
       });
     }
 
-    /* VALIDATION DU PARCOURS & RÉVÉLATION EN DÉSORDRE */
+    /* VALIDATION DU PARCOURS & MÉLANGE ALÉATOIRE DES LETTRES */
     function finishExploration() {
-      // Calcul des lettres gagnées
       let wonLetters = [];
       GAME_DATA.forEach(step => {
         const ans = gameState.answered[step.id];
@@ -878,7 +883,7 @@
         }
       });
 
-      // Mélange aléatoire (Désordre total)
+      // Mélange aléatoire complet
       wonLetters.sort(() => Math.random() - 0.5);
       gameState.harvestedShuffled = wonLetters;
       gameState.quizFinished = true;
@@ -897,7 +902,7 @@
       }
     }
 
-    /* GRILLE MOTS MAGIQUES & DRAG & DROP TACTILE */
+    /* GRILLE MOTS MAGIQUES RESPONSIVE */
     function buildGrid() {
       const row1 = document.getElementById('row-traditions');
       const row2 = document.getElementById('row-terroir');
@@ -937,10 +942,8 @@
         chip.dataset.letter = letter;
         chip.dataset.index = idx;
 
-        // Clic rapide pour remplir
         chip.onclick = () => fillNextEmptyInput(letter);
 
-        // Tactile Drag & Drop (Touch Events)
         chip.addEventListener('touchstart', handleTouchStart, { passive: false });
         chip.addEventListener('touchmove', handleTouchMove, { passive: false });
         chip.addEventListener('touchend', handleTouchEnd, { passive: false });
@@ -961,8 +964,8 @@
       touchClone.style.zIndex = '999';
       touchClone.style.opacity = '0.85';
       touchClone.style.pointerEvents = 'none';
-      touchClone.style.left = `${touch.clientX - 20}px`;
-      touchClone.style.top = `${touch.clientY - 20}px`;
+      touchClone.style.left = `${touch.clientX - 18}px`;
+      touchClone.style.top = `${touch.clientY - 18}px`;
       document.body.appendChild(touchClone);
       activeDragChip.classList.add('dragging');
     }
@@ -971,8 +974,8 @@
       if (!touchClone) return;
       e.preventDefault();
       const touch = e.touches[0];
-      touchClone.style.left = `${touch.clientX - 20}px`;
-      touchClone.style.top = `${touch.clientY - 20}px`;
+      touchClone.style.left = `${touch.clientX - 18}px`;
+      touchClone.style.top = `${touch.clientY - 18}px`;
 
       const targetBox = document.elementFromPoint(touch.clientX, touch.clientY);
       document.querySelectorAll('.char-box').forEach(b => b.classList.remove('drag-over'));
@@ -1049,7 +1052,7 @@
         card.innerHTML = `
           <span class="badge">${isFr ? 'Pancarte' : 'Station'} ${step.id} • Lettre : ${step.letter}</span>
           <h2>${isFr ? step.title_fr : step.title_en}</h2>
-          <p style="font-size:0.9rem; color:#475569; margin-bottom:10px; line-height:1.5;">${isFr ? step.text_fr : step.text_en}</p>
+          <p style="font-size:0.88rem; color:#475569; margin-bottom:8px; line-height:1.5;">${isFr ? step.text_fr : step.text_en}</p>
           <p><strong>Q :</strong> ${isFr ? step.q_fr : step.q_en}</p>
           <p style="color:var(--success); font-weight:700;">✓ ${isFr ? step.options_fr.find(o=>o.correct).text : step.options_en.find(o=>o.correct).text}</p>
         `;
