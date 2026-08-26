@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Challenge des Experts - Labyrinthe En-Champ-Thé</title>
   
-  <!-- Polices Élégantes & Lisibles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Scanner QR -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
   <style>
@@ -19,7 +17,6 @@
       --primary-light: #2D5A2F;
       --primary-dark: #122613;
       --accent: #C59B27;
-      --accent-light: #F4E8C1;
       --bg: #F7F5F0;
       --card-bg: #FFFFFF;
       --text: #18231C;
@@ -28,14 +25,12 @@
       --danger: #991B1B;
       --wood-border: #D1C7B7;
       --radius: 16px;
-      --shadow-sm: 0 2px 6px rgba(18, 38, 19, 0.05);
       --shadow: 0 8px 24px rgba(18, 38, 19, 0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
     body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 80px; }
 
-    /* En-tête */
     header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
@@ -54,9 +49,6 @@
       font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .lang-switch {
@@ -68,7 +60,6 @@
       font-weight: 600;
       font-size: 0.8rem;
       cursor: pointer;
-      backdrop-filter: blur(4px);
     }
 
     main { padding: 16px; max-width: 580px; margin: 0 auto; }
@@ -80,7 +71,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Cartes */
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
@@ -88,7 +78,6 @@
       box-shadow: var(--shadow);
       margin-bottom: 16px;
       border: 1px solid var(--wood-border);
-      position: relative;
     }
 
     .badge {
@@ -103,7 +92,6 @@
       border-radius: 8px;
       margin-bottom: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     h2 {
@@ -113,9 +101,8 @@
       margin-bottom: 12px;
       line-height: 1.35;
     }
-    p { margin-bottom: 12px; font-size: 0.95rem; color: var(--text); }
+    p { margin-bottom: 12px; font-size: 0.95rem; }
 
-    /* Boutons Principaux */
     .btn {
       display: block;
       width: 100%;
@@ -134,13 +121,11 @@
       color: white;
       box-shadow: 0 4px 12px rgba(30, 63, 32, 0.25);
     }
-    .btn-primary:active { transform: scale(0.98); }
     .btn-accent {
       background: linear-gradient(135deg, var(--accent), #d6ae3c);
       color: var(--primary-dark);
       font-weight: 700;
       margin-top: 10px;
-      box-shadow: 0 4px 12px rgba(197, 155, 39, 0.25);
     }
     .btn-outline {
       background: transparent;
@@ -170,9 +155,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      transition: all 0.15s ease;
     }
-    .option-btn:active { transform: scale(0.99); }
     .option-tag {
       width: 30px;
       height: 30px;
@@ -184,7 +167,6 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      font-size: 0.85rem;
     }
     .option-btn.selected-correct {
       background: #EAF7ED;
@@ -200,7 +182,6 @@
     }
     .option-btn.selected-wrong .option-tag { background: var(--danger); color: white; }
 
-    /* Retours */
     .feedback {
       padding: 14px;
       border-radius: var(--radius);
@@ -212,13 +193,8 @@
     .feedback.success { background: #EAF7ED; color: var(--success); border: 1px solid #B8E4C1; display: block; }
     .feedback.danger { background: #FDF2F2; color: var(--danger); border: 1px solid #F8B4B4; display: block; }
 
-    /* Grille des Mots Magiques */
-    .word-row {
-      display: flex;
-      gap: 5px;
-      justify-content: center;
-      margin: 10px 0;
-    }
+    /* Grille Mots Magiques */
+    .word-row { display: flex; gap: 5px; justify-content: center; margin: 10px 0; }
     .char-box {
       width: 32px;
       height: 42px;
@@ -230,11 +206,9 @@
       text-transform: uppercase;
       background: #FFFDF9;
       color: var(--primary-dark);
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
     }
-    .char-box:focus { border-color: var(--accent); outline: none; background: #FFFFFF; }
+    .char-box:focus { border-color: var(--accent); outline: none; }
 
-    /* Réserve de Lettres Récoltées */
     .harvested-pool {
       background: #F3EFE6;
       border-radius: var(--radius);
@@ -247,12 +221,9 @@
       color: var(--text-muted);
       margin-bottom: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       font-weight: 700;
     }
     .letters-flex { display: flex; flex-wrap: wrap; gap: 8px; }
-    
-    /* Jeton façon Sceau de Bois / Cuivre */
     .letter-chip {
       background: linear-gradient(135deg, #FFFDF8, #F3E7C4);
       border: 2px solid var(--accent);
@@ -267,14 +238,25 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 3px 6px rgba(197, 155, 39, 0.2);
-      transition: transform 0.15s ease;
     }
-    .letter-chip:active { transform: scale(0.9); }
+
+    /* Menu Liste des Questions Débloquées */
+    .steps-menu-item {
+      background: #FAF8F5;
+      border: 1px solid var(--wood-border);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .steps-menu-item.answered { border-left: 4px solid var(--success); background: #FFFFFF; }
+    .steps-menu-item.locked { opacity: 0.6; cursor: not-allowed; }
 
     #reader { width: 100%; border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; border: 2px dashed var(--primary-light); }
 
-    /* Barre de Navigation Basse */
     nav.bottom-nav {
       position: fixed;
       bottom: 0;
@@ -287,19 +269,18 @@
       justify-content: space-around;
       align-items: center;
       z-index: 100;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
     }
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       cursor: pointer;
       font-weight: 500;
     }
     .nav-item.active { color: var(--primary); font-weight: 700; }
-    .nav-item svg { width: 22px; height: 22px; margin-bottom: 3px; }
+    .nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; }
   </style>
 </head>
 <body>
@@ -310,7 +291,7 @@
   </header>
 
   <main>
-    <!-- ACCUEIL & SCANNER -->
+    <!-- 1. ACCUEIL & SCANNER -->
     <section id="screen-scan" class="screen active">
       <div class="card">
         <span class="badge" id="scan-badge">Bienvenue au Domaine</span>
@@ -321,22 +302,39 @@
       </div>
     </section>
 
-    <!-- QUESTION / ÉTAPE -->
+    <!-- 2. QUESTION / ÉTAPE (MODIFIABLE) -->
     <section id="screen-step" class="screen">
       <div class="card">
-        <span class="badge" id="step-badge">Pancarte</span>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="badge" id="step-badge">Pancarte</span>
+          <button class="btn-text" onclick="showScreen('screen-menu')" style="margin-top:0; font-weight:600;" id="btn-menu-back">📋 Voir toutes les étapes</button>
+        </div>
         <h2 id="step-title">Titre</h2>
-        <div id="step-text" style="display: none; margin-bottom: 16px; background:#FAF8F5; padding:14px; border-radius:12px; font-size:0.92rem; border-left:3px solid var(--accent);"></div>
+        
+        <!-- Texte intégral traduit pour la version anglaise -->
+        <div id="step-text" style="display: none; margin-bottom: 16px; background:#FAF8F5; padding:14px; border-radius:12px; font-size:0.92rem; border-left:3px solid var(--accent); line-height:1.6;"></div>
+        
         <div id="step-question-box">
           <p id="step-question" style="font-weight: 600; font-size: 1rem;"></p>
           <div id="step-options" style="margin-top: 14px;"></div>
           <div id="step-feedback" class="feedback"></div>
         </div>
+
         <button class="btn btn-accent" onclick="showScreen('screen-grid')" style="margin-top: 15px;" id="btn-to-grid">Voir les mots magiques</button>
       </div>
     </section>
 
-    <!-- MOTS MAGIQUES -->
+    <!-- 3. MENU / PARCOURS DES QUESTIONS (POUR REVOIR & MODIFIER) -->
+    <section id="screen-menu" class="screen">
+      <div class="card">
+        <span class="badge" id="menu-badge">Parcours</span>
+        <h2 id="menu-title">Vos questions débloquées</h2>
+        <p id="menu-desc" style="color:var(--text-muted); font-size:0.88rem;">Cliquez sur une étape déjà découverte pour relire le contenu ou modifier votre réponse :</p>
+        <div id="unlocked-steps-list"></div>
+      </div>
+    </section>
+
+    <!-- 4. MOTS MAGIQUES -->
     <section id="screen-grid" class="screen">
       <div class="card">
         <span class="badge" id="grid-badge">Mots Magiques</span>
@@ -359,7 +357,7 @@
       </div>
     </section>
 
-    <!-- ÉCRAN DE FIN -->
+    <!-- 5. ÉCRAN DE FIN -->
     <section id="screen-review" class="screen">
       <div class="card" style="text-align: center;">
         <span class="badge" style="background:#EAF7ED; color:var(--success);" id="review-badge">Challenge Réussi</span>
@@ -377,6 +375,10 @@
       <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 4h-4v2h6v-6h-2v4zM7 7h10v10H7z"/></svg>
       <span>Scanner</span>
     </div>
+    <div class="nav-item" onclick="showScreen('screen-menu')" id="nav-menu">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+      <span>Parcours</span>
+    </div>
     <div class="nav-item" onclick="showScreen('screen-grid')" id="nav-grid">
       <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-4h4v4zm0-6H7V7h4v4zm6 6h-4v-4h4v4zm0-6h-4V7h4v4z"/></svg>
       <span>Mots Magiques</span>
@@ -388,9 +390,9 @@
       {
         id: 1, token: "gc_t83a9", letter: "T",
         title_fr: "Naissance et développement du village de Grand Coude",
-        title_en: "Birth and development of Grand Coude village",
-        text_fr: "Perché entre 1 000 et 1 300 mètres d'altitude, le plateau s'étend sur 530 hectares. Au début des années 1900, les premiers habitants y ont planté du géranium, lancé en 1887 par Henri Boisjoli-Potier.",
-        text_en: "Perched between 1,000 and 1,300 meters above sea level, the plateau spans 530 hectares. In the early 1900s, settlers planted geranium, introduced in 1887 by Henri Boisjoli-Potier.",
+        title_en: "Birth and Development of Grand Coude Village",
+        text_fr: "Perché entre 1 000 et 1 300 mètres d'altitude, le joli plateau de Grand Coude s'étend sur 530 hectares. Au tout début des années 1900, ses tout premiers habitants arrivés tout droit du village voisin de Grand Galet y ont posé leurs valises pour une mission bien précise : planter du géranium ! Lancée en 1887 au Tampon par un certain Henri Boisjoli-Potier, cette fleur à parfum a vite conquis les hauts de l'île. En 1925, la « ceinture de géranium » faisait fureur, s'étirant de Saint-Joseph jusqu'à La Possession sur près de 12 000 hectares. Durant toute la première moitié du XXe siècle, le géranium était la deuxième star de l'agriculture réunionnaise, juste derrière la canne à sucre !",
+        text_en: "Perched between 1,000 and 1,300 meters above sea level, the lovely plateau of Grand Coude spans 530 hectares. In the early 1900s, its very first inhabitants arrived from the neighboring village of Grand Galet with a specific mission: planting geranium! Introduced in 1887 in Le Tampon by Henri Boisjoli-Potier, this perfume flower quickly took over the island's uplands. By 1925, the 'geranium belt' stretched from Saint-Joseph to La Possession across nearly 12,000 hectares, becoming the island's second agricultural flagship behind sugarcane.",
         q_fr: "Quelle personnalité a structuré l'économie agricole locale en développant la culture du géranium au Tampon à la fin du XIXe siècle ?",
         q_en: "Who structured the local agricultural economy by developing geranium cultivation in Le Tampon at the end of the 19th century?",
         options_fr: [{id: "T", text: "Mr Henri Boisjoli-Potier", correct: true}, {id: "B", text: "Mr Charles Payet", correct: false}],
@@ -399,165 +401,165 @@
       {
         id: 2, token: "gc_k92b1", letter: "R",
         title_fr: "Transition des cultures Géranium/Thé",
-        title_en: "Crop transition: Geranium to Tea",
-        text_fr: "Après la Seconde Guerre mondiale, la culture du géranium s'effondre. En 1955, les premiers essais d'acclimatation débutent à Bagatelle et Menciol avant de s'étendre à Grand Coude.",
-        text_en: "After WWII, geranium cultivation collapsed. In 1955, acclimatization trials for tea began at Bagatelle and Menciol before expanding to Grand Coude.",
+        title_en: "Transition of Crops: Geranium / Tea",
+        text_fr: "Après la Seconde Guerre mondiale, la culture du géranium s'effondre face aux aléas climatiques (cyclones, maladies), à la spéculation internationale et à la concurrence d'Afrique du Nord. Pour sauver l'économie des hauts, les responsables agricoles cherchent une alternative et misent sur le thé. L'île offre des conditions idéales : climat chaud et humide, altitude et sols volcaniques. En 1955, les premiers essais d'acclimatation débutent à Sainte-Suzanne (Bagatelle) et Saint-André (Menciol), avant de s'étendre à Grand Coude sur les terres de Charles Payet.",
+        text_en: "After World War II, geranium cultivation collapsed due to climatic disasters (cyclones, diseases), international speculation, and North African competition. To safeguard the upland economy, agricultural authorities turned to tea. The island offered ideal conditions: a warm, humid climate, altitude, and fertile volcanic soils. In 1955, initial acclimatization trials began in Sainte-Suzanne (Bagatelle) and Saint-André (Menciol), before expanding to Grand Coude on Charles Payet's lands.",
         q_fr: "Avant de concentrer les efforts dans les hauts du Sud, sur quels terrains d'essais de la côte Est la culture du thé a-t-elle été testée en 1955 ?",
-        q_en: "Before concentrating efforts in the southern heights, on which eastern test grounds was tea tested in 1955?",
+        q_en: "Before concentrating efforts in the southern heights, on which East Coast test grounds was tea cultivation tested in 1955?",
         options_fr: [{id: "C", text: "Plaines des Palmistes et Grand Coude", correct: false}, {id: "R", text: "Bagatelle et Menciol", correct: true}],
         options_en: [{id: "C", text: "Plaines des Palmistes and Grand Coude", correct: false}, {id: "R", text: "Bagatelle and Menciol", correct: true}]
       },
       {
         id: 3, token: "gc_m34c7", letter: "A",
         title_fr: "Début de l'aventure du Thé à La Réunion",
-        title_en: "Early days of tea in Reunion Island",
-        text_fr: "En novembre 1957, un expert national analyse un échantillon et conclut à un réel potentiel d'avenir et à une excellente qualité.",
-        text_en: "In 1957, an expert analyzed a sample and concluded that Reunion tea had strong economic potential and premium quality.",
+        title_en: "Beginning of the Tea Adventure in Reunion Island",
+        text_fr: "En parallèle des sucriers, les Services Agricoles testent le thé à différentes altitudes et sur divers sols. En novembre 1957, un expert national analyse un échantillon et conclut à un réel potentiel d'avenir. De nombreux acteurs rejoignent alors l'aventure : les sucriers et propriétaires fonciers, les petits agriculteurs et colons, la Direction des Services Agricoles, et les organismes financiers (Crédit Agricole, FIDOM, SAFER).",
+        text_en: "Alongside sugar producers, Agricultural Services tested tea cultivation across various elevations and soils. In November 1957, a national expert evaluated a tea sample and confirmed its genuine economic potential and exceptional quality. Key stakeholders rallied behind the initiative: sugar estates, smallholders, agricultural boards, and funding institutions (Crédit Agricole, FIDOM, SAFER).",
         q_fr: "Qu'a démontré l'expertise technique de 1957 pour rassurer la Direction des Services Agricoles et lancer la filière ?",
-        q_en: "What did the 1957 technical report demonstrate to reassure authorities and launch the industry?",
+        q_en: "What did the 1957 technical assessment demonstrate to reassure agricultural authorities and launch the industry?",
         options_fr: [{id: "A", text: "L'excellente qualité du produit et son potentiel économique", correct: true}, {id: "G", text: "Un rendement immédiatement supérieur à la canne", correct: false}],
-        options_en: [{id: "A", text: "The excellent quality and economic potential", correct: true}, {id: "G", text: "A yield immediately superior to sugarcane", correct: false}]
+        options_en: [{id: "A", text: "The excellent product quality and its economic potential", correct: true}, {id: "G", text: "An immediate yield higher than sugarcane", correct: false}]
       },
       {
         id: 4, token: "gc_p88d2", letter: "D",
         title_fr: "Développement de l'aventure du Thé à La Réunion",
-        title_en: "Expansion of the tea sector",
-        text_fr: "Le programme officiel vise la plantation de 910 hectares à l'échelle de l'île (et 2 000 hectares à terme), garantissant un revenu à plus de 5 000 personnes.",
-        text_en: "The program aimed to plant 910 hectares across the island (and 2,000 hectares long-term), securing income for over 5,000 workers.",
+        title_en: "Expansion of the Tea Adventure in Reunion Island",
+        text_fr: "Le programme officiel vise la plantation de 910 hectares à l'échelle de l'île (et 2 000 hectares à terme), garantissant un revenu à plus de 5 000 personnes. En 1958, un jardin grainier de 6 hectares est créé à Beauvallon (Saint-Benoît) avec des graines importées du Nyassaland (actuel Malawi). En 1959, premières récoltes sur les terres sucrières de Sainte-Suzanne et ouverture d'une usine expérimentale à Menciol (capacité de 30 à 35 tonnes).",
+        text_en: "The official masterplan targeted 910 hectares across the island (and 2,000 hectares long term), aiming to provide a living for over 5,000 workers. In 1958, a 6-hectare seed garden was established in Beauvallon (Saint-Benoît) using seeds imported from Nyasaland (now Malawi). By 1959, the first harvests were collected in Sainte-Suzanne and a pilot processing factory opened in Menciol.",
         q_fr: "Dans la planification sociale des années 50, quelle surface globale devait atteindre la filière pour créer du travail pour 5 000 personnes à terme ?",
-        q_en: "What overall surface area was planned in the 1950s to provide jobs for 5,000 people?",
+        q_en: "In the 1950s social planning, what total surface area was targeted to generate employment for 5,000 people over time?",
         options_fr: [{id: "D", text: "2 000 hectares", correct: true}, {id: "S", text: "500 hectares", correct: false}],
         options_en: [{id: "D", text: "2,000 hectares", correct: true}, {id: "S", text: "500 hectares", correct: false}]
       },
       {
         id: 5, token: "gc_v51e6", letter: "I",
         title_fr: "Développement de l'aventure du Thé (suite)",
-        title_en: "Pioneers of Grand Coude",
-        text_fr: "À Grand Coude, deux planteurs pionniers, Charles Payet et Yves Mondon, démarrent en 1959 sur 40 hectares avant d'agrandir leurs surfaces.",
-        text_en: "In Grand Coude, two daring planters, Charles Payet and Yves Mondon, pioneered tea planting in 1959 starting on 40 hectares.",
+        title_en: "Expansion of the Tea Adventure (Continued)",
+        text_fr: "La culture s'étend rapidement : 138 hectares sont cultivés à la Plaine des Palmistes en 1962 par une coopérative de propriétaires, et une centaine d'hectares supplémentaires sont plantés par les Sucreries d'Outre-mer et de Bourbon. À Grand Coude, deux planteurs pionniers, Charles Payet et Yves Mondon, démarrent en 1959 sur 40 hectares avant d'agrandir progressivement leurs surfaces.",
+        text_en: "Cultivation spread rapidly: 138 hectares were planted in La Plaine des Palmistes in 1962 by a landowners cooperative, alongside hundreds more by major sugar corporations. In Grand Coude, two pioneering planters, Charles Payet and Yves Mondon, started out in 1959 with 40 hectares before expanding their acreage.",
         q_fr: "Quels planteurs audacieux ont été les premiers à installer leurs parcelles de thé sur les terres de Grand Coude en 1959 ?",
-        q_en: "Which daring planters set up the first tea plots in Grand Coude in 1959?",
+        q_en: "Which daring planters were the first to establish tea plots on Grand Coude soil in 1959?",
         options_fr: [{id: "U", text: "Benoit Mondon et Charles Henri", correct: false}, {id: "I", text: "Charles Payet et Yves Mondon", correct: true}],
         options_en: [{id: "U", text: "Benoit Mondon and Charles Henri", correct: false}, {id: "I", text: "Charles Payet and Yves Mondon", correct: true}]
       },
       {
         id: 6, token: "gc_x74f0", letter: "T",
-        title_fr: "Commercialisation du thé de La Réunion",
-        title_en: "Commercialization on international markets",
-        text_fr: "En 1960, le thé réunionnais s'arrache à Londres à 7,12 francs le kilo, soit le tarif des grands thés de Ceylan et d'Inde.",
-        text_en: "In 1960, Bourbon tea was auctioned in London, competing directly with top Ceylon and Indian teas at 7.12 francs/kg.",
+        title_fr: "Commercialisation du thé de la Réunion",
+        title_en: "Commercialization of Reunion Tea",
+        text_fr: "En 1960, les premières livraisons sur le marché londonien sont un succès : le thé réunionnais s'arrache à 7,12 francs le kilo, soit le tarif des grands thés de Ceylan et d'Inde. Face à ce volume, la construction d'une grande usine à la Plaine des Palmistes devient urgente. Cependant, l'augmentation rapide du SMIG pousse les sucriers à juger la culture non rentable et à l'abandonner en 1963-1964. L'usine est malgré tout mise en service fin 1964.",
+        text_en: "In 1960, the first tea batches shipped to the London auctions were an instant hit, selling at 7.12 francs per kilo—matching top Ceylon and Indian varieties. To handle output, constructing a major factory in La Plaine des Palmistes became urgent. However, rapid minimum wage increases led sugar companies to deem tea unprofitable by 1963-1964. The factory was nonetheless inaugurated in late 1964.",
         q_fr: "À l'époque de son âge d'or, sur quel grand marché international le « Thé de Bourbon » était-il vendu ?",
-        q_en: "In its golden age, on which major international market was 'Bourbon Tea' auctioned?",
+        q_en: "During its golden age, in which major international market was 'Bourbon Tea' sold?",
         options_fr: [{id: "Y", text: "La Réunion", correct: false}, {id: "T", text: "Londres", correct: true}],
         options_en: [{id: "Y", text: "Reunion Island", correct: false}, {id: "T", text: "London", correct: true}]
       },
       {
         id: 7, token: "gc_q19g8", letter: "I",
         title_fr: "Restructuration de la culture du thé à Grand Coude",
-        title_en: "Restructuring by SAFER",
-        text_fr: "La SAFER réorganise le domaine avec des clones plus rentables du Kenya. En 1969, Grand Coude obtient le meilleur rendement de l'île (5 tonnes/ha).",
-        text_en: "With clonal varieties from Kenya, Grand Coude farmers achieved the island's best yield: 5 tons/ha in 1969.",
+        title_en: "Restructuring of Tea Cultivation in Grand Coude",
+        text_fr: "En 1966, Charles Payet vend à regret ses 150 hectares à la SAFER. La SAFER réorganise le domaine en replantant des clones plus rentables du Kenya, puis recède les terres aux agriculteurs sous forme d'exploitations mixtes (thé et géranium). Grâce à cet encadrement strict, les 27 planteurs de Grand Coude obtiennent en 1969 le meilleur rendement de l'île (5 tonnes/ha).",
+        text_en: "In 1966, Charles Payet sold his 150 hectares to the SAFER. The land agency restructured the estate by introducing high-yielding clones from Kenya and redistributing plots into mixed family farms (tea & geranium). Under this strict supervision, Grand Coude's 27 growers achieved the island's top yield in 1969 (5 tons/hectare).",
         q_fr: "En adoptant les plants importés du Kenya, quel niveau de récolte exceptionnel notre village est-il parvenu à produire ?",
-        q_en: "Using Kenyan clonal plants, what record yield did Grand Coude achieve?",
+        q_en: "By adopting clones imported from Kenya, what exceptional harvest level did Grand Coude achieve?",
         options_fr: [{id: "I", text: "5 tonnes par hectare", correct: true}, {id: "B", text: "6 tonnes par hectare", correct: false}],
         options_en: [{id: "I", text: "5 tons per hectare", correct: true}, {id: "B", text: "6 tons per hectare", correct: false}]
       },
       {
         id: 8, token: "gc_z63h4", letter: "O",
-        title_fr: "Déclin et fin de l'aventure thé à La Réunion",
-        title_en: "Decline and closure",
-        text_fr: "Le 4 janvier 1972, le Conseil Général vote l'arrêt des crédits et la fermeture de l'usine, marquant la fin de la filière.",
-        text_en: "On January 4, 1972, the General Council voted to discontinue subsidies, sealing the industry's fate.",
+        title_fr: "Déclin et fin de l'aventure thé à la Réunion",
+        title_en: "Decline and Fall of Reunion's Tea Industry",
+        text_fr: "En 1970, Grand Coude cultive 110 hectares et produit 102 tonnes de thé vert, soit 55% de la production totale de l'île. Bien qu'une usine y soit enfin construite en 1970, les pouvoirs publics suppriment la coopérative de Grand Coude en 1971 et imposent d'acheminer les récoltes à l'usine de la Plaine des Palmistes (80 km plus loin, soit 3h de trajet). Le 4 janvier 1972, le Conseil Général vote l'arrêt des crédits et la fermeture de l'usine.",
+        text_en: "In 1970, Grand Coude farmed 110 hectares, accounting for 55% of the island's total harvest (102 tons). Although a local processing plant was completed in 1970, authorities dissolved the cooperative in 1971 and mandated transporting fresh leaves 80 km away to La Plaine des Palmistes (a 3-hour drive). On January 4, 1972, the General Council discontinued all financial aid, sealing the industry's fate.",
         q_fr: "Quel arrêté politique met fin au soutien financier et scelle le sort de la filière théière réunionnaise au début des années 70 ?",
-        q_en: "What political decree ended subsidies in the early 1970s?",
+        q_en: "What political decree ended financial support and sealed the fate of Reunion's tea industry in the early 1970s?",
         options_fr: [{id: "O", text: "La décision du Conseil Général du 4 janvier 1972", correct: true}, {id: "R", text: "La fermeture de l'usine en 1970", correct: false}],
-        options_en: [{id: "O", text: "General Council decision on Jan 4, 1972", correct: true}, {id: "R", text: "Factory closure in 1970", correct: false}]
+        options_en: [{id: "O", text: "The General Council decision of January 4, 1972", correct: true}, {id: "R", text: "The factory closure in 1970", correct: false}]
       },
       {
         id: 9, token: "gc_b82j3", letter: "N",
-        title_fr: "Les raisons de l'échec du thé à La Réunion",
-        title_en: "Economic factors behind the decline",
-        text_fr: "L'augmentation continue du SMIG fait grimper le coût de revient de cueillette à 5,62 F/kg en 1970, rendant la filière non rentable face aux pays voisins.",
-        text_en: "Wage increases pushed picking costs to 5.62 F/kg by 1970, rendering Reunion uncompetitive against East African producers.",
+        title_fr: "Les raisons de l'échec du thé à la Réunion",
+        title_en: "Reasons for the Failure of Tea in Reunion",
+        text_fr: "Plusieurs facteurs expliquent cet arrêt : une main-d'œuvre coûteuse (cueillette à 3,00 F/kg à La Réunion contre 0,60 F au Kenya), la hausse des charges avec l'augmentation continue du SMIG faisant grimper le coût de revient à 5,62 F/kg en 1970, un faible marché local (les Réunionnais lui préférant le café), et la spéculation internationale à la Bourse de Londres.",
+        text_en: "Several factors caused this decline: expensive labor (picking cost 3.00 F/kg in Reunion vs 0.60 F in Kenya), surging wages raising production costs to 5.62 F/kg in 1970, low local demand (Reunion consumers heavily preferred coffee), and global price fluctuations on the London stock exchange.",
         q_fr: "Quel facteur économique principal a rendu le thé réunionnais non compétitif entre 1960 et 1970 ?",
-        q_en: "What economic factor caused Reunion tea to lose competitiveness between 1960 and 1970?",
+        q_en: "What primary economic factor made Reunion tea uncompetitive between 1960 and 1970?",
         options_fr: [{id: "N", text: "Le coût de cueillette passant de 3.82 F à 5.62 F", correct: true}, {id: "C", text: "La conversion des coûts de francs en euros", correct: false}],
-        options_en: [{id: "N", text: "Picking cost rising from 3.82 F to 5.62 F", correct: true}, {id: "C", text: "Franc to Euro conversion", correct: false}]
+        options_en: [{id: "N", text: "The picking cost increasing from 3.82 F to 5.62 F", correct: true}, {id: "C", text: "The conversion of franc costs into euros", correct: false}]
       },
       {
         id: 10, token: "gc_w14k9", letter: "S",
         title_fr: "Le Thé dans le monde",
-        title_en: "Tea around the world",
-        text_fr: "C'est la variété indienne (Camellia sinensis var. Assamica) qui a été retenue à La Réunion pour sa résistance, sa productivité et sa richesse en tanins.",
-        text_en: "The Assamica variety from India was selected in Reunion for its resilience, tannin content, and large leaves.",
-        q_fr: "La sous-espèce Assamica puise ses origines botaniques dans quel pays ?",
-        q_en: "From which country does the subspecies Assamica originate?",
+        title_en: "Tea Around the World",
+        text_fr: "Originaire d'Asie, le théier est un arbre à feuilles persistantes de la famille des Théacées (genre Camellia). Deux variétés principales existent : Camellia Sinensis var. Sinensis (Chine) et Camellia Sinensis var. Assamica (Inde). C'est la variété indienne (Assamica) qui a été retenue à La Réunion pour sa grande résistance, ses larges feuilles, sa productivité et sa richesse en tanins.",
+        text_en: "Native to Asia, the tea plant is an evergreen tree of the Theaceae family (genus Camellia). Two primary botanical varieties exist: Camellia sinensis var. sinensis (China) and Camellia sinensis var. assamica (India). The Indian variety (Assamica) was chosen in Reunion for its hardiness, broad leaves, heavy yield, and rich tannin content.",
+        q_fr: "La sous-espèce Assamica, adaptée aux climats humides et subtropicaux, puise ses origines botaniques dans quel pays ?",
+        q_en: "The Assamica subspecies, adapted to humid and subtropical climates, draws its botanical origins from which country?",
         options_fr: [{id: "A", text: "Chine", correct: false}, {id: "S", text: "Inde", correct: true}],
         options_en: [{id: "A", text: "China", correct: false}, {id: "S", text: "India", correct: true}]
       },
       {
         id: 11, token: "gc_l47m2", letter: "&",
         title_fr: "Le thé au naturel",
-        title_en: "Wild tea trees",
-        text_fr: "À l'état sauvage, la variété indienne (Camellia sinensis var. assamica) pousse jusqu'à 15 à 20 mètres de hauteur.",
-        text_en: "Unpruned, Indian tea trees (Assamica) can reach 15 to 20 meters in height.",
+        title_en: "Tea in Its Natural State",
+        text_fr: "Laissez pousser un théier en liberté, et il devient un véritable arbre ! La variété chinoise atteint 10 à 12 mètres. La variété indienne (Assamica) pousse jusqu'à 15 à 20 mètres (dans le Labyrinthe, certains dépassent les 10 mètres !). La variété cambodgienne peut culminer jusqu'à 30 mètres de hauteur ! Il existe aussi de nombreux hybrides et cultivars développés pour résister au climat et sublimer le goût.",
+        text_en: "Allowed to grow wild, a tea bush turns into a magnificent tree! The Chinese variety reaches 10 to 12 meters. The Indian variety (Assamica) reaches 15 to 20 meters (several in our Labyrinth exceed 10 meters!). The Cambodian variety can soar up to 30 meters high. Beyond wild types, countless cultivars exist today to improve flavor and weather resistance.",
         q_fr: "En l'absence de taille d'entretien, quelle dimension un théier de souche indienne peut-il développer à l'état sauvage ?",
-        q_en: "How tall can an unpruned Indian tea tree grow in the wild?",
+        q_en: "In the absence of maintenance pruning, how large can a tea tree of Indian origin grow in the wild?",
         options_fr: [{id: "V", text: "10 à 12 mètres", correct: false}, {id: "&", text: "15 à 20 mètres", correct: true}],
         options_en: [{id: "V", text: "10 to 12 meters", correct: false}, {id: "&", text: "15 to 20 meters", correct: true}]
       },
       {
         id: 12, token: "gc_n66p5", letter: "T",
         title_fr: "Le thé cultivé",
-        title_en: "Cultivated tea",
-        text_fr: "Le théier commence à produire 4 à 5 ans après le semis et est continuellement taillé à 1 m / 1,20 m sous forme de « table de cueillette ».",
-        text_en: "Tea bushes begin producing 4 to 5 years after sowing, pruned into a harvesting table at waist height.",
+        title_en: "Cultivated Tea",
+        text_fr: "Le théier apprécie les climats chauds et humides, de la plaine jusqu'à 3 000 mètres d'altitude, et peut vivre plus d'un siècle. Il commence à produire 4 à 5 ans après le semis. Pour faciliter la récolte à hauteur d'homme, les planteurs le taillent continuellement sous forme d'arbuste (1 m à 1,20 m), créant ainsi une « table de cueillette ». La récolte peut s'effectuer toute l'année.",
+        text_en: "Tea thrives in warm, humid climates from lowlands up to 3,000 meters altitude and can live for over a century. It begins productive harvesting 4 to 5 years after sowing. To allow hand-plucking at standing height, growers continuously prune it into a flat waist-high bush (1.00m to 1.20m), forming a 'plucking table'. Harvest takes place year-round.",
         q_fr: "Combien d'années de développement végétatif sont nécessaires avant d'effectuer la première taille de formation et la récolte ?",
-        q_en: "How many years of growth are needed before the first formation pruning and harvest?",
+        q_en: "How many years of vegetative development are required before carrying out the first formation pruning and harvest?",
         options_fr: [{id: "D", text: "2 à 3 ans", correct: false}, {id: "T", text: "4 à 5 ans", correct: true}],
         options_en: [{id: "D", text: "2 to 3 years", correct: false}, {id: "T", text: "4 to 5 years", correct: true}]
       },
       {
         id: 13, token: "gc_h29r1", letter: "E",
         title_fr: "Cueillir le thé",
-        title_en: "Harvesting methods",
-        text_fr: "Au domaine, notre thé noir est exclusivement produit à partir de la cueillette « Grand Cru » (jeunes pousses précoces).",
-        text_en: "At the estate, black tea is crafted exclusively from 'Grand Cru' hand-picked young shoots.",
-        q_fr: "Quelle gamme de cueillette manuelle est exclusivement utilisée au domaine pour élaborer le thé noir ?",
-        q_en: "Which hand-picking grade is exclusively used at the estate to produce black tea?",
+        title_en: "Harvesting Tea",
+        text_fr: "Le type de récolte varie selon le profil recherché : Cueillette Impériale (le bourgeon uniquement), Cueillette Grand Cru (jeunes pousses précoces — notre thé noir est produit exclusivement à partir de cette gamme !), et Cueillette Tardive (feuilles vert clair, utilisée pour nos thés blanc et vert). Toutes les déclinaisons de thé proviennent exactement du même plant ; c'est le procédé de transformation qui détermine le produit final !",
+        text_en: "The plucking method determines the aromatic profile: Imperial plucking (bud only), Grand Cru plucking (early young tender shoots — our black tea is crafted exclusively from this grade!), and Late plucking (light green leaves used for white & green tea). All teas come from the exact same plant; processing alone dictates whether it becomes white, green, or black tea!",
+        q_fr: "En lisant le détail des récoltes, quelle gamme de cueillette manuelle est exclusivement utilisée au domaine pour élaborer le thé noir ?",
+        q_en: "Looking at harvest details, which range of hand-picking is exclusively used at the estate to make black tea?",
         options_fr: [{id: "E", text: "La cueillette 'Grand Cru'", correct: true}, {id: "W", text: "La cueillette 'Impériale'", correct: false}],
-        options_en: [{id: "E", text: "The 'Grand Cru' picking", correct: true}, {id: "W", text: "The 'Imperial' picking", correct: false}]
+        options_en: [{id: "E", text: "The 'Grand Cru' picking", correct: true}, {id: "W", text: "The 'Impériale' picking", correct: false}]
       },
       {
         id: 14, token: "gc_c73s8", letter: "R",
         title_fr: "Les différentes sortes de thé",
-        title_en: "Types of tea",
-        text_fr: "Autrefois, La Réunion produisait exclusivement du thé noir. La relance en 2005 a introduit le blanc et le vert avant le retour du noir en 2022.",
-        text_en: "Historically, Reunion produced exclusively black tea. White and green were revived in 2005.",
-        q_fr: "Autrefois, quel était le seul type de thé fabriqué par les anciens ?",
-        q_en: "In the past, what was the only type of tea manufactured in Reunion?",
+        title_en: "Different Types of Tea",
+        text_fr: "Thé blanc : simple séchage naturel préservant la fraîcheur. Thé vert : fixé par chauffage rapide pour stopper toute oxydation. Thé noir : oxydation enzymatique complète après roulage. Autrefois, La Réunion produisait exclusivement du thé noir. Depuis la relance en 2005 par le Labyrinthe En-Champ-Thé, la production s'est concentrée sur le blanc et le vert, avant le retour du thé noir en 2022.",
+        text_en: "White tea: gentle dehydration preserving pure fresh leaves. Green tea: pan-fired or steamed to prevent oxidation. Black tea: fully oxidized through enzymatic fermentation after rolling. Historically, Reunion produced black tea exclusively. Since our revival in 2005, we focused on rare white and green teas, before reintroducing artisan black tea in 2022.",
+        q_fr: "Aujourd'hui, le Labyrinthe propose plusieurs thés. Mais autrefois, quel était le seul type de thé fabriqué par les anciens ?",
+        q_en: "Today, the Labyrinth offers several teas. But in the past, what was the only type of tea made by the ancients?",
         options_fr: [{id: "L", text: "Le thé blanc", correct: false}, {id: "R", text: "Le thé noir", correct: true}],
         options_en: [{id: "L", text: "White tea", correct: false}, {id: "R", text: "Black tea", correct: true}]
       },
       {
         id: 15, token: "gc_y38t4", letter: "R",
         title_fr: "La renaissance grâce au Labyrinthe En-Champ-Thé",
-        title_en: "Rebirth with Labyrinthe En-Champ-Thé",
-        text_fr: "Créé en 2005 par Johny et Emmanuelle Guichard, le domaine réhabilite plus de 6 hectares de théiers à 1 100 m d'altitude.",
-        text_en: "Founded in 2005 by Johny and Emmanuelle Guichard over 10 hectares, rehabilitating 6 hectares of tea plots.",
+        title_en: "Rebirth Through Labyrinthe En-Champ-Thé",
+        text_fr: "Créé par Johny et Emmanuelle Guichard et ouvert au public le 1er juillet 2005, le Labyrinthe En-Champ-Thé est une exploitation agricole familiale de 10 hectares à 1 100 m d'altitude à Grand Coude. L'objectif était de défricher une ancienne plantation abandonnée depuis 1972 pour la transformer en parcours touristique et relancer la production artisanale. En remettant en valeur plus de 6 hectares de récolte, le domaine fait renaître la première production de thé de France.",
+        text_en: "Founded by Johny and Emmanuelle Guichard and opened on July 1, 2005, Labyrinthe En-Champ-Thé is a 10-hectare family estate at 1,100 meters elevation in Grand Coude. The goal was to clear wild plots abandoned since 1972, creating an educational maze and reviving artisan tea production. By rehabilitating over 6 hectares, the estate brought tea back to France.",
         q_fr: "À Grand Coude, quelle superficie a été réhabilitée au Labyrinthe pour relancer l'activité ?",
-        q_en: "How many hectares were rehabilitated at the Labyrinth to restart tea production?",
+        q_en: "In Grand Coude, how much land has been rehabilitated at the Labyrinthe to boost activity?",
         options_fr: [{id: "R", text: "6 hectares", correct: true}, {id: "I", text: "10 hectares", correct: false}],
         options_en: [{id: "R", text: "6 hectares", correct: true}, {id: "I", text: "10 hectares", correct: false}]
       },
       {
         id: 16, token: "gc_e91u6", letter: "O",
         title_fr: "L'avenir de la culture du thé",
-        title_en: "Future and recognition",
-        text_fr: "En 2014, le théier retrouve enfin un cadre légal en étant réinscrit sur la liste officielle des plantes aromatiques et médicinales.",
-        text_en: "In 2014, the tea plant was officially reinstated in France's official register of aromatic and medicinal plants.",
-        q_fr: "En quelle année la réinscription du théier sur la liste officielle a-t-elle offert un cadre légal à sa renaissance ?",
-        q_en: "In what year was the tea tree officially reinstated on the aromatic/medicinal plant list?",
+        title_en: "The Future of Tea Cultivation",
+        text_fr: "Une culture entièrement écologique au cœur de la visite ! Considéré comme une friche depuis les années 70, le théier retrouve sa crédibilité grâce au Labyrinthe : en 2014, l'Administration le réinscrit officiellement sur la liste des plantes aromatiques et médicinales, offrant un cadre légal à sa renaissance. Le thé de Grand Coude est désormais savouré sur l'île, concrétisé par la pose de la 1ère pierre de la Maison du Thé en 2015 !",
+        text_en: "An organic cultivation integrated into the visitor trail! Considered mere 'scrubland' since the 1970s, tea plants regained formal standing thanks to the Labyrinth: in 2014, authorities reinstated tea on the official register of aromatic & medicinal plants. Grand Coude tea is now cherished locally, celebrated by breaking ground on the Tea House in 2015!",
+        q_fr: "En quelle année la réinscription du théier sur la liste des plantes aromatiques et médicinales a-t-elle offert un cadre légal à sa renaissance ?",
+        q_en: "In what year did the reinstatement of the tea tree on the list of aromatic and medicinal plants provide a legal framework for its rebirth?",
         options_fr: [{id: "O", text: "2014", correct: true}, {id: "H", text: "2005", correct: false}],
         options_en: [{id: "O", text: "2014", correct: true}, {id: "H", text: "2005", correct: false}]
       },
@@ -565,10 +567,10 @@
         id: 17, token: "gc_j55v0", letter: "R",
         title_fr: "Distinctions et reconnaissance",
         title_en: "Awards & International Recognition",
-        text_fr: "En 2026, la région d'Hadong (Corée du Sud, UNESCO) a rendu hommage au domaine lors du Tea Symposium en lui offrant un wok traditionnel.",
-        text_en: "In 2026, during the Tea Symposium, Hadong (South Korea, UNESCO) presented the estate with a traditional wok.",
-        q_fr: "Quelle année marque l'attribution du wok traditionnel coréen concrétisant la reconnaissance internationale du Domaine ?",
-        q_en: "Which year marks the gifting of the Korean wok acknowledging the Domain's international standing?",
+        text_fr: "Le savoir-faire du domaine est primé à l'international : Prix Paris Gourmet en 2021 pour le Thé Blanc ; Médaille d'Or AVPA 2022 & 2024 pour le Thé Impérial et Médaille d'Argent pour le Thé Noir des Remparts ; Certificat UNESCO Community Association en 2025 remis à Johny Guichard pour la sauvegarde du patrimoine vivant. En 2026, la région d'Hadong (Corée du Sud, UNESCO) rend hommage au domaine en lui offrant son wok traditionnel lors du Tea Symposium.",
+        text_en: "Our artisan craft has received global honors: Paris Gourmet Award 2021 (White Tea); AVPA Gold Medals 2022 & 2024 (Imperial Tea) and Silver (Thé Noir des Remparts); UNESCO Community Association Certificate in 2025 presented to Johny Guichard. In 2026, during the Tea Symposium, Hadong county (South Korea, UNESCO) paid tribute to the estate by gifting a traditional tea wok.",
+        q_fr: "Quelle année marque l'attribution du wok traditionnel coréen, concrétisant la reconnaissance internationale du Domaine ?",
+        q_en: "What year marks the awarding of the traditional Korean wok, giving concrete expression to the Domaine's international recognition?",
         options_fr: [{id: "E", text: "2024", correct: false}, {id: "R", text: "2026", correct: true}],
         options_en: [{id: "E", text: "2024", correct: false}, {id: "R", text: "2026", correct: true}]
       }
@@ -576,8 +578,9 @@
 
     let currentLang = 'fr';
     let gameState = {
-      harvested: {},
-      answered: {},
+      unlockedSteps: [], // IDs débloqués par QR code
+      harvested: {},     // { stepId: 'T' }
+      answered: {},      // { stepId: selectedOptionId }
       unlockedAll: false
     };
 
@@ -593,8 +596,10 @@
       currentLang = currentLang === 'fr' ? 'en' : 'fr';
       document.getElementById('lang-btn').innerText = currentLang === 'fr' ? 'EN 🇬🇧' : 'FR 🇫🇷';
       updateUITexts();
+      
       const activeStepId = document.getElementById('screen-step').dataset.stepId;
       if (activeStepId) renderStep(parseInt(activeStepId));
+      if (document.getElementById('screen-menu').classList.contains('active')) renderUnlockedStepsMenu();
       if (gameState.unlockedAll) renderAllQuestionsReview();
     }
 
@@ -607,6 +612,14 @@
         ? "Votre mission : sillonner les allées à la recherche des 17 pancartes réparties dans le Labyrinthe (dans l'ordre de votre choix). À chaque étape, scannez le QR code et répondez à la question : chaque bonne réponse libère une lettre magique !"
         : "Your mission: explore the paths to hunt down the 17 stations hidden throughout the Labyrinth (in any order). At each stop, scan the QR code and answer the question: every correct answer grants you a magic letter!";
       document.getElementById('btn-camera').innerText = isFr ? "Activer le scanner" : "Open Camera Scanner";
+      document.getElementById('btn-menu-back').innerText = isFr ? "📋 Voir toutes les étapes" : "📋 View all unlocked stations";
+      
+      document.getElementById('menu-badge').innerText = isFr ? "Parcours" : "Quest Trail";
+      document.getElementById('menu-title').innerText = isFr ? "Vos questions débloquées" : "Your unlocked questions";
+      document.getElementById('menu-desc').innerText = isFr 
+        ? "Cliquez sur une étape déjà découverte pour relire le contenu ou modifier votre réponse :" 
+        : "Click any discovered station to re-read stories or change your answers:";
+
       document.getElementById('grid-title').innerText = isFr ? "Décodez l'énigme" : "Decode the mystery words";
       document.getElementById('grid-desc').innerText = isFr ? "Cliquez sur vos lettres récoltées ou tapez directement dans les cases :" : "Click your harvested letters or type directly into the boxes:";
       document.getElementById('btn-validate').innerText = isFr ? "Valider les mots magiques" : "Check Secret Words";
@@ -627,6 +640,10 @@
 
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       if (screenId === 'screen-scan') document.getElementById('nav-scan').classList.add('active');
+      if (screenId === 'screen-menu') {
+        document.getElementById('nav-menu').classList.add('active');
+        renderUnlockedStepsMenu();
+      }
       if (screenId === 'screen-grid') {
         document.getElementById('nav-grid').classList.add('active');
         renderPool();
@@ -676,6 +693,10 @@
         if (token) {
           const step = GAME_DATA.find(s => s.token === token);
           if (step) {
+            if (!gameState.unlockedSteps.includes(step.id)) {
+              gameState.unlockedSteps.push(step.id);
+              saveState();
+            }
             if (html5QrCode && html5QrCode.isScanning) html5QrCode.stop();
             renderStep(step.id);
             showScreen('screen-step');
@@ -698,12 +719,17 @@
       if (token) {
         const step = GAME_DATA.find(s => s.token === token);
         if (step) {
+          if (!gameState.unlockedSteps.includes(step.id)) {
+            gameState.unlockedSteps.push(step.id);
+            saveState();
+          }
           renderStep(step.id);
           showScreen('screen-step');
         }
       }
     }
 
+    // AFFICHE ET PERMET DE MODIFIER UNE QUESTION
     function renderStep(stepId) {
       const step = GAME_DATA.find(s => s.id === stepId);
       const isFr = currentLang === 'fr';
@@ -713,6 +739,7 @@
       document.getElementById('step-badge').innerText = `${isFr ? 'Pancarte' : 'Station'} ${step.id} / 17`;
       document.getElementById('step-title').innerText = isFr ? step.title_fr : step.title_en;
       
+      // En anglais : texte explicatif TOUJOURS visible
       const textBox = document.getElementById('step-text');
       if (!isFr || gameState.unlockedAll) {
         textBox.innerText = isFr ? step.text_fr : step.text_en;
@@ -726,43 +753,92 @@
       const optionsBox = document.getElementById('step-options');
       optionsBox.innerHTML = '';
       const feedbackBox = document.getElementById('step-feedback');
-      feedbackBox.className = 'feedback';
-      feedbackBox.style.display = 'none';
 
       const options = isFr ? step.options_fr : step.options_en;
-      const alreadyAnswered = gameState.answered[step.id];
+      const currentAnswer = gameState.answered[step.id];
 
       options.forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         btn.innerHTML = `<span class="option-tag">${opt.id}</span> <span>${opt.text}</span>`;
         
-        if (alreadyAnswered) {
-          if (opt.correct) btn.classList.add('selected-correct');
-          if (alreadyAnswered === opt.id && !opt.correct) btn.classList.add('selected-wrong');
-        } else {
-          btn.onclick = () => selectOption(step, opt);
+        if (currentAnswer) {
+          if (opt.id === currentAnswer && opt.correct) btn.classList.add('selected-correct');
+          if (opt.id === currentAnswer && !opt.correct) btn.classList.add('selected-wrong');
         }
+
+        // L'utilisateur peut cliquer à tout moment pour modifier sa réponse
+        btn.onclick = () => selectOption(step, opt);
         optionsBox.appendChild(btn);
       });
 
-      if (alreadyAnswered) {
-        const correct = options.find(o => o.id === alreadyAnswered)?.correct;
-        feedbackBox.innerHTML = correct 
-          ? (isFr ? `✓ Bravo ! Lettre remportée : <strong>${step.letter}</strong>` : `✓ Correct! Letter collected: <strong>${step.letter}</strong>`)
-          : (isFr ? `Mauvaise réponse. Aucune lettre récoltée.` : `Wrong answer. No letter gained.`);
-        feedbackBox.className = `feedback ${correct ? 'success' : 'danger'}`;
+      if (currentAnswer) {
+        const isCorrect = options.find(o => o.id === currentAnswer)?.correct;
+        feedbackBox.innerHTML = isCorrect 
+          ? (isFr ? `✓ Réponse enregistrée ! Lettre remportée : <strong>${step.letter}</strong> (Modifiable à tout moment)` : `✓ Answer saved! Letter collected: <strong>${step.letter}</strong> (Editable anytime)`)
+          : (isFr ? `Mauvaise réponse sélectionnée (aucune lettre). Cliquez sur un autre choix pour corriger.` : `Wrong choice selected (no letter). Click another option to modify.`);
+        feedbackBox.className = `feedback ${isCorrect ? 'success' : 'danger'}`;
+      } else {
+        feedbackBox.style.display = 'none';
       }
     }
 
     function selectOption(step, selectedOpt) {
       gameState.answered[step.id] = selectedOpt.id;
+      
       if (selectedOpt.correct) {
         gameState.harvested[step.id] = step.letter;
+      } else {
+        delete gameState.harvested[step.id]; // Retire la lettre si modifiée en mauvaise réponse
       }
+      
       saveState();
       renderStep(step.id);
       renderPool();
+    }
+
+    // MENU RÉCAPITULATIF DES QUESTIONS
+    function renderUnlockedStepsMenu() {
+      const list = document.getElementById('unlocked-steps-list');
+      list.innerHTML = '';
+      const isFr = currentLang === 'fr';
+
+      GAME_DATA.forEach(step => {
+        const isUnlocked = gameState.unlockedSteps.includes(step.id) || gameState.unlockedAll;
+        const answer = gameState.answered[step.id];
+
+        const item = document.createElement('div');
+        item.className = `steps-menu-item ${answer ? 'answered' : ''} ${!isUnlocked ? 'locked' : ''}`;
+        
+        let statusBadge = "";
+        if (!isUnlocked) {
+          statusBadge = `<span style="color:#94a3b8; font-size:0.8rem;">🔒 ${isFr ? 'À scanner' : 'Scan needed'}</span>`;
+        } else if (answer) {
+          const isCorrect = step.options_fr.find(o => o.id === answer)?.correct;
+          statusBadge = isCorrect 
+            ? `<span style="color:var(--success); font-weight:700; font-size:0.85rem;">✓ Lettre: ${step.letter} (Modifier)</span>` 
+            : `<span style="color:var(--danger); font-weight:700; font-size:0.85rem;">✗ Erreur (Modifier)</span>`;
+        } else {
+          statusBadge = `<span style="color:var(--accent); font-weight:700; font-size:0.85rem;">⚡ ${isFr ? 'Débloqué (Répondre)' : 'Ready (Answer)'}</span>`;
+        }
+
+        item.innerHTML = `
+          <div>
+            <strong style="font-size:0.95rem; color:var(--primary-dark);">${isFr ? 'Pancarte' : 'Station'} ${step.id}</strong>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin:2px 0 0 0;">${isFr ? step.title_fr : step.title_en}</p>
+          </div>
+          <div>${statusBadge}</div>
+        `;
+
+        if (isUnlocked) {
+          item.onclick = () => {
+            renderStep(step.id);
+            showScreen('screen-step');
+          };
+        }
+
+        list.appendChild(item);
+      });
     }
 
     function buildGrid() {
@@ -771,9 +847,7 @@
       row1.innerHTML = '';
       row2.innerHTML = '';
 
-      // TRADITIONS (10 lettres)
       createInputBoxes("TRADITIONS", row1, 0);
-      // TERROIR (7 lettres)
       createInputBoxes("TERROIR", row2, 10);
     }
 
@@ -859,7 +933,7 @@
         card.innerHTML = `
           <span class="badge">${isFr ? 'Pancarte' : 'Station'} ${step.id} • Lettre : ${step.letter}</span>
           <h2>${isFr ? step.title_fr : step.title_en}</h2>
-          <p style="font-size:0.9rem; color:#475569; margin-bottom:10px;">${isFr ? step.text_fr : step.text_en}</p>
+          <p style="font-size:0.9rem; color:#475569; margin-bottom:10px; line-height:1.5;">${isFr ? step.text_fr : step.text_en}</p>
           <p><strong>Q :</strong> ${isFr ? step.q_fr : step.q_en}</p>
           <p style="color:var(--success); font-weight:600;">✓ ${isFr ? step.options_fr.find(o=>o.correct).text : step.options_en.find(o=>o.correct).text}</p>
         `;
