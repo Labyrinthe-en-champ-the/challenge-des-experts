@@ -32,7 +32,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 80px; }
 
-    /* Header Clair pour faire ressortir le Logo */
+    /* Header Clair pour le Logo */
     header {
       background: #FFFFFF;
       padding: 10px 14px;
@@ -377,7 +377,7 @@
         
         <div class="harvested-pool">
           <h3 id="pool-title" style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
-            Vos Lettres Récoltées (<span id="letter-count">0</span>/17)
+            Vos Lettres Disponibles (<span id="letter-count">0</span>)
           </h3>
           <div class="letters-flex" id="letters-pool"></div>
         </div>
@@ -436,8 +436,8 @@
         id: 1, token: "gc_t83a9", letter: "T",
         title_fr: "Naissance et développement du village de Grand Coude",
         title_en: "Birth and Development of Grand Coude Village",
-        text_fr: "Perché entre 1 000 et 1 300 mètres d'altitude, le joli plateau de Grand Coude s'étend sur 530 hectares. Au tout début des années 1900, ses tout premiers habitants arrivés tout droit du village voisin de Grand Galet y ont posé leurs valises pour une mission bien précise : planter du géranium ! Lancée en 1887 au Tampon par un certain Henri Boisjoli-Potier, cette fleur à parfum a vite conquis les hauts de l'île. En 1925, la « ceinture de géranium » faisait fureur, s'étirant de Saint-Joseph jusqu'à La Possession sur près de 12 000 hectares. Durant toute la première moitié du XXe siècle, le géranium était la deuxième star de l'agriculture réunionnaise, juste derrière la canne à sucre !",
-        text_en: "Perched between 1,000 and 1,300 meters above sea level, the lovely plateau of Grand Coude spans 530 hectares. In the early 1900s, its very first inhabitants arrived from the neighboring village of Grand Galet with a specific mission: planting geranium! Introduced in 1887 in Le Tampon by Henri Boisjoli-Potier, this perfume flower quickly took over the island's uplands. By 1925, the 'geranium belt' stretched from Saint-Joseph to La Possession across nearly 12,000 hectares, becoming the island's second agricultural flagship behind sugarcane.",
+        text_fr: "Perché entre 1 000 et 1 300 mètres d'altitude, le joli plateau de Grand Coude s'étend sur 530 hectares. Au tout début des années 1900, ses tout premiers habitants arrivés tout droit du village voisin de Grand Galet y ont posé leurs valises pour une mission bien précise : planter du géranium ! Lancée en 1887 au Tampon par un certain Henri Boisjoli-Potier, cette plante à parfum a vite conquis les hauts de l'île. En 1925, la « ceinture de géranium » faisait fureur, s'étirant de Saint-Joseph jusqu'à La Possession sur près de 12 000 hectares. Durant toute la première moitié du XXe siècle, le géranium était la deuxième star de l'agriculture réunionnaise, juste derrière la canne à sucre !",
+        text_en: "Perched between 1,000 and 1,300 meters above sea level, the lovely plateau of Grand Coude spans 530 hectares. In the early 1900s, its very first inhabitants arrived from the neighboring village of Grand Galet with a specific mission: planting geranium! Introduced in 1887 in Le Tampon by Henri Boisjoli-Potier, this perfume plant quickly took over the island's uplands. By 1925, the 'geranium belt' stretched from Saint-Joseph to La Possession across nearly 12,000 hectares, becoming the island's second agricultural flagship behind sugarcane.",
         q_fr: "Qui a aidé les agriculteurs du Tampon en y développant la culture du géranium à la fin du XIXe siècle ?",
         q_en: "Who helped farmers in Le Tampon by developing geranium cultivation at the end of the 19th century?",
         options_fr: [{id: "T", text: "Mr Henri Boisjoli-Potier", correct: true}, {id: "B", text: "Mr Charles Payet", correct: false}],
@@ -543,18 +543,18 @@
         options_en: [{id: "A", text: "China", correct: false}, {id: "S", text: "India", correct: true}]
       },
       {
-        id: 11, token: "gc_l47m2", letter: "&",
+        id: 11, token: "gc_l47m2", letter: "T",
         title_fr: "Le thé au naturel",
         title_en: "Tea in Its Natural State",
-        text_fr: "Laissez pousser un théier en liberté, et il devient un véritable arbre ! La variété chinoise atteint 10 à 12 mètres. La variété indienne (Assamica) pousse jusqu'à 15 à 20 mètres (dans le Labyrinthe, certains dépassent les 10 mètres !). La variété cambodgienne peut culminer jusqu'à 30 mètres de hauteur ! Il existe aussi de nombreux hybrides et cultivars développés pour résister au climat et sublimer le goût.",
-        text_en: "Allowed to grow wild, a tea bush turns into a magnificent tree! The Chinese variety reaches 10 to 12 meters. The Indian variety (Assamica) reaches 15 to 20 meters (several in our Labyrinth exceed 10 meters!). The Cambodian variety can soar up to 30 meters high. Beyond wild types, countless cultivars exist today to improve flavor and weather resistance.",
+        text_fr: "Laissez pousser un théier en liberté, et il devient un véritable arbre ! La variété chinoise atteint 10 à 12 mètres. La variété indienne (Assamica) pousse jusqu'à 15 à 20 mètres (dans le Labyrinthe En-Champ-Thé, certains dépassent les 10 mètres !). La variété cambodgienne peut culminer jusqu'à 30 mètres de hauteur ! Il existe aussi de nombreux hybrides et cultivars développés pour résister au climat et sublimer le goût.",
+        text_en: "Allowed to grow wild, a tea bush turns into a magnificent tree! The Chinese variety reaches 10 to 12 meters. The Indian variety (Assamica) reaches 15 to 20 meters (several in Labyrinthe En-Champ-Thé exceed 10 meters!). The Cambodian variety can soar up to 30 meters high. Beyond wild types, countless cultivars exist today to improve flavor and weather resistance.",
         q_fr: "En l'absence de taille d'entretien, quelle dimension un théier de souche indienne peut-il développer à l'état sauvage ?",
         q_en: "In the absence of maintenance pruning, how large can a tea tree of Indian origin grow in the wild?",
         options_fr: [{id: "V", text: "10 à 12 mètres", correct: false}, {id: "T", text: "15 à 20 mètres", correct: true}],
         options_en: [{id: "V", text: "10 to 12 meters", correct: false}, {id: "T", text: "15 to 20 meters", correct: true}]
       },
       {
-        id: 12, token: "gc_n66p5", letter: "T",
+        id: 12, token: "gc_n66p5", letter: "E",
         title_fr: "Le thé cultivé",
         title_en: "Cultivated Tea",
         text_fr: "Le théier apprécie les climats chauds et humides, de la plaine jusqu'à 3 000 mètres d'altitude, et peut vivre plus d'un siècle. Il commence à produire 4 à 5 ans après le semis. Pour faciliter la récolte à hauteur d'homme, les planteurs le taillent continuellement sous forme d'arbuste (1 m à 1,20 m), créant ainsi une « table de cueillette ». La récolte peut s'effectuer toute l'année.",
@@ -565,44 +565,44 @@
         options_en: [{id: "D", text: "2 to 3 years", correct: false}, {id: "E", text: "4 to 5 years", correct: true}]
       },
       {
-        id: 13, token: "gc_h29r1", letter: "E",
+        id: 13, token: "gc_h29r1", letter: "R",
         title_fr: "Cueillir le thé",
         title_en: "Harvesting Tea",
-        text_fr: "Le type de récolte varie selon le profil recherché : Cueillette Impériale (le bourgeon uniquement), Cueillette Grand Cru / Précoce (jeunes pousses précoces — notre thé noir est produit exclusivement à partir de cette gamme !), et Cueillette Tardive (feuilles vert clair, utilisée pour nos thés blanc et vert). Toutes les déclinaisons de thé proviennent exactement du même plant ; c'est le procédé de transformation qui détermine le produit final !",
-        text_en: "The plucking method determines the aromatic profile: Imperial plucking (bud only), Early / Grand Cru plucking (early young tender shoots — our black tea is crafted exclusively from this grade!), and Late plucking (light green leaves used for white & green tea). All teas come from the exact same plant; processing alone dictates whether it becomes white, green, or black tea!",
+        text_fr: "Le type de récolte varie selon le profil recherché : Cueillette Impériale (le bourgeon uniquement), Cueillette Précoce / Grand Cru (jeunes pousses précoces — notre thé noir est produit exclusivement à partir de cette gamme !), et Cueillette Tardive (feuilles vert clair, utilisée pour nos thés blanc et vert). Toutes les déclinaisons de thé proviennent exactement du même plant ; c'est le procédé de transformation qui détermine le produit final !",
+        text_en: "The type of harvest varies according to the desired profile: Imperial Harvest (bud only, reserved for exceptional tea), Early Harvest (young early tender shoots — our black tea is crafted exclusively from this grade!), and Late Harvest (light green leaves used for our white and green teas). All teas come from the exact same plant; processing alone dictates whether it becomes white, green, or black tea!",
         q_fr: "Quel type de ramassage fait à la main utilise-t-on au domaine pour fabriquer le thé noir ?",
         q_en: "What type of hand-picking is used at the estate to make black tea?",
         options_fr: [{id: "R", text: "La cueillette 'Précoce'", correct: true}, {id: "W", text: "La cueillette 'Impériale'", correct: false}],
-        options_en: [{id: "R", text: "The 'Early' picking", correct: true}, {id: "W", text: "The 'Imperial' picking", correct: false}]
+        options_en: [{id: "R", text: "The 'Early Harvest' picking", correct: true}, {id: "W", text: "The 'Imperial Harvest' picking", correct: false}]
       },
       {
         id: 14, token: "gc_c73s8", letter: "R",
         title_fr: "Les différentes sortes de thé",
         title_en: "Different Types of Tea",
-        text_fr: "Thé blanc : simple séchage naturel préservant la fraîcheur. Thé vert : fixé par chauffage rapide pour stopper toute oxydation. Thé noir : oxydation enzymatique complète après roulage. Autrefois, La Réunion produisait exclusivement du thé noir. Depuis la relance en 2005 par le Labyrinthe En-Champ-Thé, la production s'est concentrée sur le blanc et le vert, avant le retour du thé noir en 2022.",
-        text_en: "White tea: gentle dehydration preserving pure fresh leaves. Green tea: pan-fired or steamed to prevent oxidation. Black tea: fully oxidized through enzymatic fermentation after rolling. Historically, Reunion produced black tea exclusively. Since our revival in 2005, we focused on rare white and green teas, before reintroducing artisan black tea in 2022.",
+        text_fr: "Thé blanc : simple séchage préservant la fraîcheur de la feuille. Thé vert : fixé par chauffage rapide pour éviter toute oxydation. Thé noir : résulte d'une oxydation enzymatique complète après roulage. La qualité dépend du terroir, de la cueillette et du calibre des feuilles après broyage (feuilles entières, feuilles brisées, résidus/poussières). Autrefois, La Réunion produisait exclusivement du thé noir. Depuis la relance en 2005 par le Labyrinthe En-Champ-Thé, la production s'est concentrée sur le blanc et le vert, avant le retour du thé noir en 2022.",
+        text_en: "White tea: simple drying that preserves the leaf's fresh character. Green tea: quickly heated to prevent oxidation. Black tea: undergoes full enzymatic oxidation after rolling. Quality depends on terroir, harvesting grade, and particle size after crushing (whole leaves, broken leaves, fannings/dust). Historically, Reunion produced black tea exclusively. Since the revival in 2005 by Labyrinthe En-Champ-Thé, production focused on white and green teas, before black tea returned in 2022.",
         q_fr: "Aujourd'hui, le Labyrinthe En-Champ-Thé propose plusieurs thés. Mais autrefois, quel était le seul thé fabriqué par les anciens ?",
         q_en: "Today, Labyrinthe En-Champ-Thé offers several teas. But in the past, what was the only tea made by the ancients?",
         options_fr: [{id: "L", text: "Le thé blanc", correct: false}, {id: "R", text: "Le thé noir", correct: true}],
         options_en: [{id: "L", text: "White tea", correct: false}, {id: "R", text: "Black tea", correct: true}]
       },
       {
-        id: 15, token: "gc_y38t4", letter: "R",
+        id: 15, token: "gc_y38t4", letter: "O",
         title_fr: "La renaissance grâce au Labyrinthe En-Champ-Thé",
         title_en: "Rebirth Through Labyrinthe En-Champ-Thé",
-        text_fr: "Créé par Johny et Emmanuelle Guichard et ouvert au public le 1er juillet 2005, le Labyrinthe En-Champ-Thé est une exploitation agricole familiale de 10 hectares à 1 100 m d'altitude à Grand Coude. L'objectif était de défricher une ancienne plantation abandonnée depuis 1972 pour la transformer en parcours touristique et relancer la production artisanale. En remettant en valeur plus de 6 hectares de récolte, le domaine fait renaître la première production de thé de France.",
-        text_en: "Founded by Johny and Emmanuelle Guichard and opened on July 1, 2005, Labyrinthe En-Champ-Thé is a 10-hectare family estate at 1,100 meters elevation in Grand Coude. The goal was to clear wild plots abandoned since 1972, creating an educational maze and reviving artisan tea production. By rehabilitating over 6 hectares, the estate brought tea back to France.",
+        text_fr: "Créé par Johny et Emmanuelle Guichard et ouvert au public le 1er juillet 2005, le Labyrinthe En-Champ-Thé est une exploitation agricole familiale de 10 hectares à 1 100 m d'altitude à Grand Coude. L'objectif était de défricher une ancienne plantation abandonnée depuis 1972 pour la transformer en parcours touristique et relancer la production artisanale de thé. En remettant en valeur plus de 6 hectares de récolte, le domaine réalise l'exploit de faire renaître la toute première production de thé de France.",
+        text_en: "Founded by Johny and Emmanuelle Guichard and opened to the public on July 1, 2005, Labyrinthe En-Champ-Thé is a 10-hectare family farm located at 1,100 m altitude in Grand Coude. The goal was to clear an old plantation abandoned since 1972 to turn it into a tourist trail and relaunch artisan tea production. By rehabilitating over 6 hectares, the estate achieved the milestone of reviving the very first tea production in France.",
         q_fr: "À Grand Coude, quelle superficie a été réhabilitée au Labyrinthe En-Champ-Thé pour relancer l'activité ?",
         q_en: "In Grand Coude, how much land has been rehabilitated at Labyrinthe En-Champ-Thé to restart tea activity?",
         options_fr: [{id: "O", text: "6 hectares", correct: true}, {id: "I", text: "10 hectares", correct: false}],
         options_en: [{id: "O", text: "6 hectares", correct: true}, {id: "I", text: "10 hectares", correct: false}]
       },
       {
-        id: 16, token: "gc_e91u6", letter: "O",
+        id: 16, token: "gc_e91u6", letter: "I",
         title_fr: "L'avenir de la culture du thé",
         title_en: "The Future of Tea Cultivation",
-        text_fr: "Une culture entièrement écologique au cœur de la visite ! Considéré comme une friche depuis les années 70, le théier retrouve sa crédibilité grâce au Labyrinthe : en 2014, l'Administration le réinscrit officiellement sur la liste des plantes aromatiques et médicinales, offrant un cadre légal à sa renaissance. Le thé de Grand Coude est désormais savouré sur l'île, concrétisé par la pose de la 1ère pierre de la Maison du Thé en 2015 !",
-        text_en: "An organic cultivation integrated into the visitor trail! Considered mere 'scrubland' since the 1970s, tea plants regained formal standing thanks to the Labyrinth: in 2014, authorities reinstated tea on the official register of aromatic & medicinal plants. Grand Coude tea is now cherished locally, celebrated by breaking ground on the Tea House in 2015!",
+        text_fr: "Une culture entièrement écologique au cœur du parcours de visite ! Le défi : la main-d'œuvre. La cueillette manuelle quotidienne coûte cher comparée aux géants mondiaux. Le domaine équilibre ses comptes en se diversifiant : thé, géranium, boutique etc. Une victoire : le thé réhabilité ! Considéré comme une simple friche depuis les années 70, le théier retrouve sa crédibilité grâce au Labyrinthe En-Champ-Thé : en 2014, l'Administration le reconnaît enfin comme culture à part entière ! Un marché local dynamique : le thé de Grand Coude est désormais consommé principalement sur l'île, avec la pose de la 1ère pierre de la Maison du Thé en 2015 !",
+        text_en: "An entirely eco-friendly crop integrated into the tour! The challenge: labor costs. Hand-picking remains expensive compared to global competitors. The estate balances its activity through diversification: tea, geranium, shop, etc. A major victory: tea reinstated! Treated as mere scrubland since the 1970s, the tea plant regained legal credibility thanks to Labyrinthe En-Champ-Thé: in 2014, authorities officially recognized it as an agricultural crop. Grand Coude tea is now mainly enjoyed locally, marked by breaking ground on the Tea House in 2015!",
         q_fr: "En quelle année le théier a-t-il été remis sur la liste des plantes aromatiques et médicinales ?",
         q_en: "In what year was the tea tree reinstated on the list of aromatic and medicinal plants?",
         options_fr: [{id: "I", text: "2014", correct: true}, {id: "H", text: "2005", correct: false}],
@@ -612,8 +612,8 @@
         id: 17, token: "gc_j55v0", letter: "R",
         title_fr: "Distinctions et reconnaissance",
         title_en: "Awards & International Recognition",
-        text_fr: "Le savoir-faire du domaine est primé à l'international : Prix Paris Gourmet en 2021 pour le Thé Blanc ; Médaille d'Or AVPA 2022 & 2024 pour le Thé Impérial et Médaille d'Argent pour le Thé Noir des Remparts ; Certificat UNESCO Community Association en 2025 remis à Johny Guichard pour la sauvegarde du patrimoine vivant. En 2026, la région d'Hadong (Corée du Sud, UNESCO) rend hommage au domaine en lui offrant son wok traditionnel lors du Tea Symposium.",
-        text_en: "Our artisan craft has received global honors: Paris Gourmet Award 2021 (White Tea); AVPA Gold Medals 2022 & 2024 (Imperial Tea) and Silver (Thé Noir des Remparts); UNESCO Community Association Certificate in 2025 presented to Johny Guichard. In 2026, during the Tea Symposium, Hadong county (South Korea, UNESCO) paid tribute to the estate by gifting a traditional tea wok.",
+        text_fr: "Le travail du domaine est récompensé à l'international par l'AVPA (Agence pour la Valorisation des Produits Agricoles) : Prix Paris Gourmet en 2021 pour le Thé Blanc ; Médaille d'Or en 2022 & 2024 pour le Thé Impérial, Médaille d'Argent pour le Thé Noir des Remparts, et prix Paris Gourmet pour le Tea Z'anana, le Thé Vert Grand Cru et le Thé Blanc Géranium Rosat ; Certificat de reconnaissance remis à Johny Guichard en 2025 par l'UNESCO Community Association pour la sauvegarde du patrimoine vivant. En 2026, lors de l'accueil du Tea Symposium, la région d'Hadong (Corée du Sud, UNESCO) rend hommage au domaine en offrant un wok traditionnel.",
+        text_en: "The estate's work has been recognized internationally by the AVPA: Paris Gourmet Award in 2021 (White Tea); Gold Medals in 2022 & 2024 (Imperial Tea), Silver Medal for Thé Noir des Remparts, and Paris Gourmet awards for flavored & green teas; Certificate of recognition in 2025 from the UNESCO Community Association presented to Johny Guichard. In 2026, during the Tea Symposium, Hadong county (South Korea, UNESCO) honored the estate by gifting a traditional tea wok.",
         q_fr: "En quelle année le domaine a-t-il reçu le wok coréen traditionnel qui l'a fait connaître dans le monde entier ?",
         q_en: "In what year did the estate receive the traditional Korean wok that brought it worldwide recognition?",
         options_fr: [{id: "E", text: "2024", correct: false}, {id: "R", text: "2026", correct: true}],
@@ -625,7 +625,7 @@
     let gameState = {
       unlockedSteps: [],
       answered: {},
-      harvestedShuffled: [],
+      harvestedPool: [],
       quizFinished: false,
       unlockedAll: false
     };
@@ -871,19 +871,34 @@
 
     /* VALIDATION DU PARCOURS & MÉLANGE ALÉATOIRE */
     function finishExploration() {
-      let wonLetters = [];
+      let won = [];
+      let uidCounter = 0;
+      
       GAME_DATA.forEach(step => {
         const ans = gameState.answered[step.id];
         if (ans) {
           const opt = step.options_fr.find(o => o.id === ans);
           if (opt && opt.correct) {
-            wonLetters.push(step.letter);
+            won.push({ uid: `chip_${uidCounter++}`, letter: step.letter });
           }
         }
       });
 
-      wonLetters.sort(() => Math.random() - 0.5);
-      gameState.harvestedShuffled = wonLetters;
+      won.sort(() => Math.random() - 0.5);
+
+      const inputs = document.querySelectorAll('.char-box');
+      const usedChips = [];
+      inputs.forEach(input => {
+        if (input.dataset.chipUid) {
+          usedChips.push(input.dataset.chipUid);
+        }
+      });
+
+      gameState.harvestedPool = won.map(item => ({
+        ...item,
+        used: usedChips.includes(item.uid)
+      }));
+
       gameState.quizFinished = true;
       saveState();
 
@@ -900,7 +915,7 @@
       }
     }
 
-    /* GRILLE MOTS MAGIQUES RESPONSIVE */
+    /* GRILLE MOTS MAGIQUES */
     function buildGrid() {
       const row1 = document.getElementById('row-traditions');
       const row2 = document.getElementById('row-terroir');
@@ -916,31 +931,75 @@
         const input = document.createElement('input');
         input.className = 'char-box';
         input.maxLength = 1;
+        
         input.oninput = (e) => {
-          e.target.value = e.target.value.toUpperCase();
-          if (e.target.value) {
+          const val = e.target.value.toUpperCase();
+          e.target.value = val;
+
+          if (input.dataset.chipUid) {
+            releaseChip(input.dataset.chipUid);
+            delete input.dataset.chipUid;
+          }
+
+          if (val) {
+            claimMatchingChip(val, input);
             const next = input.nextElementSibling || (container.id === 'row-traditions' ? document.querySelector('#row-terroir input') : null);
             if (next) next.focus();
           }
+          renderPool();
         };
+
+        input.onkeydown = (e) => {
+          if (e.key === 'Backspace' && !input.value) {
+            const prev = input.previousElementSibling || (container.id === 'row-terroir' ? document.querySelector('#row-traditions input:last-child') : null);
+            if (prev) {
+              if (prev.dataset.chipUid) {
+                releaseChip(prev.dataset.chipUid);
+                delete prev.dataset.chipUid;
+              }
+              prev.value = '';
+              prev.focus();
+              renderPool();
+            }
+          }
+        };
+
         container.appendChild(input);
+      }
+    }
+
+    function claimMatchingChip(letter, inputEl) {
+      const available = gameState.harvestedPool.find(c => c.letter === letter && !c.used);
+      if (available) {
+        available.used = true;
+        inputEl.dataset.chipUid = available.uid;
+        saveState();
+      }
+    }
+
+    function releaseChip(chipUid) {
+      const chipObj = gameState.harvestedPool.find(c => c.uid === chipUid);
+      if (chipObj) {
+        chipObj.used = false;
+        saveState();
       }
     }
 
     function renderPool() {
       const pool = document.getElementById('letters-pool');
       pool.innerHTML = '';
-      const letters = gameState.harvestedShuffled || [];
-      document.getElementById('letter-count').innerText = letters.length;
+      
+      const availableLetters = (gameState.harvestedPool || []).filter(c => !c.used);
+      document.getElementById('letter-count').innerText = availableLetters.length;
 
-      letters.forEach((letter, idx) => {
+      availableLetters.forEach(item => {
         const chip = document.createElement('div');
         chip.className = 'letter-chip';
-        chip.innerText = letter;
-        chip.dataset.letter = letter;
-        chip.dataset.index = idx;
+        chip.innerText = item.letter;
+        chip.dataset.letter = item.letter;
+        chip.dataset.chipUid = item.uid;
 
-        chip.onclick = () => fillNextEmptyInput(letter);
+        chip.onclick = () => fillNextEmptyInput(item);
 
         chip.addEventListener('touchstart', handleTouchStart, { passive: false });
         chip.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -988,8 +1047,22 @@
       const targetBox = document.elementFromPoint(touch.clientX, touch.clientY);
 
       if (targetBox && targetBox.classList.contains('char-box')) {
-        targetBox.value = activeDragChip.dataset.letter;
+        if (targetBox.dataset.chipUid) {
+          releaseChip(targetBox.dataset.chipUid);
+        }
+
+        const chipUid = activeDragChip.dataset.chipUid;
+        const letter = activeDragChip.dataset.letter;
+
+        targetBox.value = letter;
+        targetBox.dataset.chipUid = chipUid;
         targetBox.classList.remove('drag-over');
+
+        const chipObj = gameState.harvestedPool.find(c => c.uid === chipUid);
+        if (chipObj) chipObj.used = true;
+
+        saveState();
+        renderPool();
       }
 
       touchClone.remove();
@@ -1000,11 +1073,16 @@
       }
     }
 
-    function fillNextEmptyInput(letter) {
+    function fillNextEmptyInput(chipItem) {
       const inputs = document.querySelectorAll('.char-box');
       for (let input of inputs) {
         if (!input.value) {
-          input.value = letter;
+          input.value = chipItem.letter;
+          input.dataset.chipUid = chipItem.uid;
+          
+          chipItem.used = true;
+          saveState();
+          renderPool();
           break;
         }
       }
