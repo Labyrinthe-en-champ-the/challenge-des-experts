@@ -240,37 +240,14 @@
       padding: 0;
     }
     .char-box:focus { border-color: var(--accent); outline: none; background: #FFFFFF; }
-    .char-box.drag-over { border-color: var(--accent); background: #FDF4DC; }
-
-    /* Jetons de lettres */
-    .harvested-pool {
-      background: #F3EFE6;
-      border-radius: var(--radius);
-      padding: 10px;
-      margin-bottom: 12px;
-      border: 1px dashed var(--wood-border);
-    }
-    .letters-flex { display: flex; flex-wrap: wrap; gap: 6px; min-height: 38px; align-items: center; }
     
-    .letter-chip {
-      background: linear-gradient(135deg, #FFFDF8, #F3E7C4);
-      border: 1.5px solid var(--accent);
-      color: #7D5D08;
-      font-family: 'Cinzel', serif;
-      font-weight: 800;
-      font-size: 1.05rem;
-      width: 34px;
-      height: 34px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: grab;
-      touch-action: none;
-      user-select: none;
-      box-shadow: 0 2px 5px rgba(197, 155, 39, 0.15);
+    /* Style pour les lettres trouvées automatiquement */
+    .char-box.auto-filled {
+      background: #EAF7ED;
+      border-color: var(--success);
+      color: var(--success);
+      cursor: default;
     }
-    .letter-chip.dragging { opacity: 0.35; }
 
     /* Scanner Modal */
     #scanner-modal {
@@ -339,8 +316,8 @@
         </div>
         <div id="questions-hub-list"></div>
 
-        <button class="btn btn-accent" onclick="finishExploration()" id="btn-finish-quiz" style="margin-top: 10px;">
-          ✨ J'ai terminé / Révéler mes lettres
+        <button class="btn btn-accent" onclick="goToGrid()" id="btn-finish-quiz" style="margin-top: 10px;">
+          ✨ Accéder aux mots magiques
         </button>
       </div>
     </section>
@@ -355,7 +332,7 @@
         
         <h2 id="step-title">Titre</h2>
         
-        <!-- Texte explicatif (Uniquement affiché en anglais ou lors de la correction finale) -->
+        <!-- Texte explicatif -->
         <div id="step-text" style="display: none; margin-bottom: 12px; background:#FAF8F5; padding:10px; border-radius:10px; font-size:0.88rem; border-left:3px solid var(--accent); line-height:1.5;"></div>
         
         <div id="step-question-box">
@@ -373,14 +350,9 @@
       <div class="card card-pattern">
         <span class="badge" id="grid-badge">Mots Magiques</span>
         <h2 id="grid-title">Décodez l'énigme finale</h2>
-        <p id="grid-desc">Glissez vos lettres récoltées (mélangées) ou tapez directement dans les cases :</p>
-        
-        <div class="harvested-pool">
-          <h3 id="pool-title" style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
-            Vos Lettres Disponibles (<span id="letter-count">0</span>)
-          </h3>
-          <div class="letters-flex" id="letters-pool"></div>
-        </div>
+        <p id="grid-desc" style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">
+          « Au fil de vos pas entre les théiers et les alambics de Grand-Coude, chaque bonne réponse a gravé une lettre de notre secret. Observez bien votre récolte : déduisez les lettres manquantes au clavier pour révéler les deux piliers qui font battre le cœur de notre domaine ! »
+        </p>
 
         <div class="grid-wrapper">
           <div class="word-row" id="row-traditions"></div>
@@ -388,7 +360,7 @@
           <div class="word-row" id="row-terroir"></div>
         </div>
 
-        <button class="btn btn-primary" onclick="validateSecretWord()" id="btn-validate" style="margin-top:12px;">Valider les mots magiques</button>
+        <button class="btn btn-primary" onclick="validateSecretWord()" id="btn-validate" style="margin-top:16px;">Valider les mots magiques</button>
         <button class="btn btn-text" onclick="showScreen('screen-hub')" id="btn-return-edit">↩ Revenir aux questions et modifier mes réponses</button>
         <button class="btn btn-text" onclick="forceFinishGame()" id="btn-give-up" style="color:var(--danger);">Terminer le jeu et voir les réponses</button>
       </div>
@@ -424,7 +396,7 @@
       <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 4h-4v2h6v-6h-2v4zM7 7h10v10H7z"/></svg>
       <span id="nav-scan-label">Scanner</span>
     </div>
-    <div class="nav-item" onclick="handleGridNav();" id="nav-grid">
+    <div class="nav-item" onclick="goToGrid();" id="nav-grid">
       <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-4h4v4zm0-6H7V7h4v4zm6 6h-4v-4h4v4zm0-6h-4V7h4v4z"/></svg>
       <span id="nav-grid-label">Mots Magiques</span>
     </div>
@@ -625,8 +597,7 @@
     let gameState = {
       unlockedSteps: [],
       answered: {},
-      harvestedPool: [],
-      quizFinished: false,
+      manualInputs: {},
       unlockedAll: false
     };
 
@@ -647,7 +618,6 @@
       const activeStepId = document.getElementById('screen-step').dataset.stepId;
       if (activeStepId) renderStep(parseInt(activeStepId));
       renderHub();
-      if (gameState.quizFinished) renderPool();
       if (gameState.unlockedAll) renderAllQuestionsReview();
     }
 
@@ -660,15 +630,15 @@
         : "Explore the pathways and hunt down all 17 stations (in any order). Scan each marker's QR code to answer questions.";
       document.getElementById('btn-open-scan').innerText = isFr ? "📷 Scanner une pancarte" : "📷 Scan a Station";
       document.getElementById('hub-list-title').innerText = isFr ? "Vos 17 Questions" : "Your 17 Questions";
-      document.getElementById('btn-finish-quiz').innerText = isFr ? "✨ J'ai terminé / Révéler mes lettres" : "✨ Finished / Reveal my letters";
+      document.getElementById('btn-finish-quiz').innerText = isFr ? "✨ Accéder aux mots magiques" : "✨ Go to Secret Words";
       
       document.getElementById('btn-hub-back').innerText = isFr ? "↩ Revenir au parcours" : "↩ Back to quest trail";
       document.getElementById('btn-save-step').innerText = isFr ? "Valider et continuer" : "Save & Continue";
       
       document.getElementById('grid-title').innerText = isFr ? "Décodez l'énigme finale" : "Decode the Final Mystery";
       document.getElementById('grid-desc').innerText = isFr 
-        ? "Glissez vos lettres récoltées (mélangées) ou tapez directement dans les cases :" 
-        : "Drag your harvested letters (shuffled) or type directly into boxes:";
+        ? "« Au fil de vos pas entre les théiers et les alambics de Grand-Coude, chaque bonne réponse a gravé une lettre de notre secret. Observez bien votre récolte : déduisez les lettres manquantes au clavier pour révéler les deux piliers qui font battre le cœur de notre domaine ! »" 
+        : "« Walking through the tea bushes and geranium stills of Grand-Coude, each correct answer has engraved a secret letter. Deduce the missing letters on your keyboard to reveal the two pillars of our heritage! »";
       document.getElementById('btn-validate').innerText = isFr ? "Valider les mots magiques" : "Check Secret Words";
       document.getElementById('btn-return-edit').innerText = isFr ? "↩ Revenir aux questions et modifier mes réponses" : "↩ Edit my previous answers";
       document.getElementById('btn-give-up').innerText = isFr ? "Terminer le jeu et voir les réponses" : "Finish game and reveal answers";
@@ -869,97 +839,51 @@
       });
     }
 
-    /* VALIDATION DU PARCOURS & MÉLANGE ALÉATOIRE */
-    function finishExploration() {
-      let won = [];
-      let uidCounter = 0;
-      
-      GAME_DATA.forEach(step => {
-        const ans = gameState.answered[step.id];
-        if (ans) {
-          const opt = step.options_fr.find(o => o.id === ans);
-          if (opt && opt.correct) {
-            won.push({ uid: `chip_${uidCounter++}`, letter: step.letter });
-          }
-        }
-      });
-
-      won.sort(() => Math.random() - 0.5);
-
-      const inputs = document.querySelectorAll('.char-box');
-      const usedChips = [];
-      inputs.forEach(input => {
-        if (input.dataset.chipUid) {
-          usedChips.push(input.dataset.chipUid);
-        }
-      });
-
-      gameState.harvestedPool = won.map(item => ({
-        ...item,
-        used: usedChips.includes(item.uid)
-      }));
-
-      gameState.quizFinished = true;
-      saveState();
-
-      renderPool();
+    /* NAVIGATION VERS LA GRILLE */
+    function goToGrid() {
+      refreshGridValues();
       showScreen('screen-grid');
     }
 
-    function handleGridNav() {
-      if (!gameState.quizFinished) {
-        finishExploration();
-      } else {
-        renderPool();
-        showScreen('screen-grid');
-      }
-    }
-
-    /* GRILLE MOTS MAGIQUES */
+    /* CRÉATION DE LA GRILLE */
     function buildGrid() {
       const row1 = document.getElementById('row-traditions');
       const row2 = document.getElementById('row-terroir');
       row1.innerHTML = '';
       row2.innerHTML = '';
 
-      createInputBoxes("TRADITIONS", row1);
-      createInputBoxes("TERROIR", row2);
+      createInputBoxes(1, 10, row1);
+      createInputBoxes(11, 17, row2);
+      refreshGridValues();
     }
 
-    function createInputBoxes(word, container) {
-      for (let i = 0; i < word.length; i++) {
+    function createInputBoxes(startStep, endStep, container) {
+      for (let stepId = startStep; stepId <= endStep; stepId++) {
         const input = document.createElement('input');
         input.className = 'char-box';
         input.maxLength = 1;
-        
+        input.dataset.stepId = stepId;
+
         input.oninput = (e) => {
           const val = e.target.value.toUpperCase();
           e.target.value = val;
-
-          if (input.dataset.chipUid) {
-            releaseChip(input.dataset.chipUid);
-            delete input.dataset.chipUid;
-          }
+          gameState.manualInputs[stepId] = val;
+          saveState();
 
           if (val) {
-            claimMatchingChip(val, input);
-            const next = input.nextElementSibling || (container.id === 'row-traditions' ? document.querySelector('#row-terroir input') : null);
+            const next = getNextInput(input);
             if (next) next.focus();
           }
-          renderPool();
         };
 
         input.onkeydown = (e) => {
           if (e.key === 'Backspace' && !input.value) {
-            const prev = input.previousElementSibling || (container.id === 'row-terroir' ? document.querySelector('#row-traditions input:last-child') : null);
-            if (prev) {
-              if (prev.dataset.chipUid) {
-                releaseChip(prev.dataset.chipUid);
-                delete prev.dataset.chipUid;
-              }
+            const prev = getPrevInput(input);
+            if (prev && !prev.readOnly) {
               prev.value = '';
+              delete gameState.manualInputs[prev.dataset.stepId];
+              saveState();
               prev.focus();
-              renderPool();
             }
           }
         };
@@ -968,126 +892,51 @@
       }
     }
 
-    function claimMatchingChip(letter, inputEl) {
-      const available = gameState.harvestedPool.find(c => c.letter === letter && !c.used);
-      if (available) {
-        available.used = true;
-        inputEl.dataset.chipUid = available.uid;
-        saveState();
+    function getNextInput(current) {
+      const allInputs = Array.from(document.querySelectorAll('.char-box'));
+      const currentIndex = allInputs.indexOf(current);
+      for (let i = currentIndex + 1; i < allInputs.length; i++) {
+        if (!allInputs[i].readOnly) return allInputs[i];
       }
+      return null;
     }
 
-    function releaseChip(chipUid) {
-      const chipObj = gameState.harvestedPool.find(c => c.uid === chipUid);
-      if (chipObj) {
-        chipObj.used = false;
-        saveState();
+    function getPrevInput(current) {
+      const allInputs = Array.from(document.querySelectorAll('.char-box'));
+      const currentIndex = allInputs.indexOf(current);
+      for (let i = currentIndex - 1; i >= 0; i--) {
+        if (!allInputs[i].readOnly) return allInputs[i];
       }
+      return null;
     }
 
-    function renderPool() {
-      const pool = document.getElementById('letters-pool');
-      pool.innerHTML = '';
-      
-      const availableLetters = (gameState.harvestedPool || []).filter(c => !c.used);
-      document.getElementById('letter-count').innerText = availableLetters.length;
+    /* SYNCHRONISATION AUTOMATIQUE DES LETTRES GAGNÉES */
+    function refreshGridValues() {
+      const inputs = document.querySelectorAll('.char-box');
+      inputs.forEach(input => {
+        const stepId = parseInt(input.dataset.stepId);
+        const step = GAME_DATA.find(s => s.id === stepId);
+        const answer = gameState.answered[stepId];
+        
+        let isCorrect = false;
+        if (answer && step) {
+          const opt = step.options_fr.find(o => o.id === answer);
+          if (opt && opt.correct) isCorrect = true;
+        }
 
-      availableLetters.forEach(item => {
-        const chip = document.createElement('div');
-        chip.className = 'letter-chip';
-        chip.innerText = item.letter;
-        chip.dataset.letter = item.letter;
-        chip.dataset.chipUid = item.uid;
-
-        chip.onclick = () => fillNextEmptyInput(item);
-
-        chip.addEventListener('touchstart', handleTouchStart, { passive: false });
-        chip.addEventListener('touchmove', handleTouchMove, { passive: false });
-        chip.addEventListener('touchend', handleTouchEnd, { passive: false });
-
-        pool.appendChild(chip);
+        if (isCorrect) {
+          input.value = step.letter;
+          input.readOnly = true;
+          input.classList.add('auto-filled');
+        } else {
+          input.readOnly = false;
+          input.classList.remove('auto-filled');
+          input.value = gameState.manualInputs[stepId] || "";
+        }
       });
     }
 
-    let activeDragChip = null;
-    let touchClone = null;
-
-    function handleTouchStart(e) {
-      activeDragChip = e.currentTarget;
-      const touch = e.touches[0];
-      
-      touchClone = activeDragChip.cloneNode(true);
-      touchClone.style.position = 'fixed';
-      touchClone.style.zIndex = '999';
-      touchClone.style.opacity = '0.85';
-      touchClone.style.pointerEvents = 'none';
-      touchClone.style.left = `${touch.clientX - 18}px`;
-      touchClone.style.top = `${touch.clientY - 18}px`;
-      document.body.appendChild(touchClone);
-      activeDragChip.classList.add('dragging');
-    }
-
-    function handleTouchMove(e) {
-      if (!touchClone) return;
-      e.preventDefault();
-      const touch = e.touches[0];
-      touchClone.style.left = `${touch.clientX - 18}px`;
-      touchClone.style.top = `${touch.clientY - 18}px`;
-
-      const targetBox = document.elementFromPoint(touch.clientX, touch.clientY);
-      document.querySelectorAll('.char-box').forEach(b => b.classList.remove('drag-over'));
-      if (targetBox && targetBox.classList.contains('char-box')) {
-        targetBox.classList.add('drag-over');
-      }
-    }
-
-    function handleTouchEnd(e) {
-      if (!touchClone) return;
-      const touch = e.changedTouches[0];
-      const targetBox = document.elementFromPoint(touch.clientX, touch.clientY);
-
-      if (targetBox && targetBox.classList.contains('char-box')) {
-        if (targetBox.dataset.chipUid) {
-          releaseChip(targetBox.dataset.chipUid);
-        }
-
-        const chipUid = activeDragChip.dataset.chipUid;
-        const letter = activeDragChip.dataset.letter;
-
-        targetBox.value = letter;
-        targetBox.dataset.chipUid = chipUid;
-        targetBox.classList.remove('drag-over');
-
-        const chipObj = gameState.harvestedPool.find(c => c.uid === chipUid);
-        if (chipObj) chipObj.used = true;
-
-        saveState();
-        renderPool();
-      }
-
-      touchClone.remove();
-      touchClone = null;
-      if (activeDragChip) {
-        activeDragChip.classList.remove('dragging');
-        activeDragChip = null;
-      }
-    }
-
-    function fillNextEmptyInput(chipItem) {
-      const inputs = document.querySelectorAll('.char-box');
-      for (let input of inputs) {
-        if (!input.value) {
-          input.value = chipItem.letter;
-          input.dataset.chipUid = chipItem.uid;
-          
-          chipItem.used = true;
-          saveState();
-          renderPool();
-          break;
-        }
-      }
-    }
-
+    /* VALIDATION DU MOT MYSTÈRE */
     function validateSecretWord() {
       const inputs1 = document.querySelectorAll('#row-traditions input');
       const inputs2 = document.querySelectorAll('#row-terroir input');
@@ -1098,7 +947,7 @@
       if (w1.toUpperCase() === "TRADITIONS" && w2.toUpperCase() === "TERROIR") {
         finishGameSuccess();
       } else {
-        alert(currentLang === 'fr' ? "Les mots ne sont pas tout à fait corrects, continuez à chercher !" : "Not quite right, keep searching!");
+        alert(currentLang === 'fr' ? "Les mots ne sont pas tout à fait corrects, vérifiez vos cases et continuez à chercher !" : "Not quite right, check your letters and keep searching!");
       }
     }
 
@@ -1142,7 +991,12 @@
 
     function loadState() {
       const raw = localStorage.getItem('enchampthe_challenge_state');
-      if (raw) gameState = JSON.parse(raw);
+      if (raw) {
+        try {
+          gameState = JSON.parse(raw);
+          if (!gameState.manualInputs) gameState.manualInputs = {};
+        } catch(e) {}
+      }
     }
   </script>
 </body>
