@@ -287,13 +287,25 @@
     }
     .nav-item.active { color: var(--primary); font-weight: 800; }
     .nav-item svg { width: 20px; height: 20px; margin-bottom: 2px; }
+
+    /* ===== AJOUT ZARLOR : boutons « Tous les jeux » et « Zarlor » dans l'en-tête ===== */
+    .header-actions { display: flex; align-items: center; gap: 6px; }
+    header .header-logo { max-width: 46%; }
+    .game-switch { text-decoration: none; display: inline-flex; align-items: center; min-height: 32px; white-space: nowrap; }
+    /* ===== FIN AJOUT ZARLOR ===== */
   </style>
 </head>
 <body>
 
   <header>
     <img src="./Challenge des expert 2026.png" alt="Challenge des Experts" class="header-logo">
-    <button class="lang-switch" id="lang-btn" onclick="toggleLanguage()">EN 🇬🇧</button>
+    <!-- AJOUT ZARLOR : liens vers la page d'accueil des jeux et vers le Zarlor Vivant -->
+    <div class="header-actions">
+      <a class="lang-switch game-switch" id="link-home" href="/home/" aria-label="Tous les jeux">🏠</a>
+      <a class="lang-switch game-switch" id="link-zarlor" href="/zarlor-vivant/">🌍 Zarlor</a>
+      <button class="lang-switch" id="lang-btn" onclick="toggleLanguage()">EN 🇬🇧</button>
+    </div>
+    <!-- FIN AJOUT ZARLOR -->
   </header>
 
   <main>
@@ -999,5 +1011,68 @@
       }
     }
   </script>
+  <!-- =====================================================================
+       AJOUT ZARLOR – passerelle avec Le Zarlor Vivant
+       Ce bloc ne modifie pas le jeu : il ajoute seulement
+       1. la langue partagée avec la page d'accueil et le Zarlor ;
+       2. le scanner croisé (un QR du Zarlor ouvre le Zarlor) ;
+       3. le mode hors ligne (fichier sw.js du même dossier).
+       Pour tout retirer : supprimer ce bloc, les deux blocs « AJOUT ZARLOR »
+       plus haut, et le fichier sw.js.
+       ===================================================================== -->
+  <script>
+    (function () {
+      var CLE_LANGUE = 'labyrinthe_lang';
+
+      function majLiensZarlor() {
+        try { localStorage.setItem(CLE_LANGUE, currentLang); } catch (e) {}
+        var z = document.getElementById('link-zarlor');
+        var h = document.getElementById('link-home');
+        if (z) z.href = '/zarlor-vivant/?lang=' + currentLang;
+        if (h) {
+          h.href = '/home/?lang=' + currentLang;
+          h.setAttribute('aria-label', currentLang === 'fr' ? 'Tous les jeux' : 'All games');
+        }
+      }
+
+      // Bouton FR/EN : comportement d'origine, puis mémorisation de la langue
+      var toggleOrigine = toggleLanguage;
+      toggleLanguage = function () { toggleOrigine(); majLiensZarlor(); };
+
+      // Scanner : un QR du Zarlor (ou de la page d'accueil) ouvre cette page dans la langue du joueur.
+      // Les QR du Challenge sont traités exactement comme avant.
+      var lectureOrigine = handleQrPayload;
+      handleQrPayload = function (texte) {
+        try {
+          var u = new URL(texte);
+          if (u.pathname.indexOf('/zarlor-vivant') !== -1 || u.pathname.indexOf('/home') === 0) {
+            u.searchParams.set('lang', currentLang);
+            window.location.href = u.toString();
+            return;
+          }
+        } catch (e) {}
+        lectureOrigine(texte);
+        majLiensZarlor();
+      };
+
+      // Au démarrage : si l'adresse n'impose pas de langue, on reprend celle choisie
+      // sur la page d'accueil ou dans le Zarlor.
+      window.addEventListener('DOMContentLoaded', function () {
+        var langueAdresse = new URLSearchParams(window.location.search).get('lang');
+        if (!langueAdresse) {
+          var memo = null;
+          try { memo = localStorage.getItem(CLE_LANGUE); } catch (e) {}
+          if ((memo === 'en' || memo === 'fr') && memo !== currentLang) toggleOrigine();
+        }
+        majLiensZarlor();
+      });
+
+      // Mode hors ligne
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () { navigator.serviceWorker.register('./sw.js').catch(function () {}); });
+      }
+    })();
+  </script>
+  <!-- FIN AJOUT ZARLOR -->
 </body>
 </html>
